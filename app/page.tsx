@@ -13,7 +13,7 @@ export default function Home() {
 
   if (isLoading)
     return (
-      <div className="flex h-screen justify-center items-center">
+      <div className="flex h-screen items-center justify-center">
         <LoadingSpinner />
       </div>
     );
@@ -23,10 +23,10 @@ export default function Home() {
       <section className="w-full py-6 md:py-12">
         <div className="flex flex-col gap-4 md:gap-8">
           <div className="max-w-[700px] space-y-2">
-            <h1 className="text-3xl text-blue-600 font-bold tracking-tighter sm:text-5xl">
+            <h1 className="text-3xl font-bold tracking-tighter text-blue-600 sm:text-5xl">
               Welcome to the World of Pokémon
             </h1>
-            <p className="text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
+            <p className="text-gray-500 dark:text-gray-400 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
               Explore the Pokémon universe with our comprehensive database.
               Enter a name or select a type to get started.
             </p>
@@ -42,7 +42,7 @@ export default function Home() {
             <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl">
               Gotta catch &apos;em all!
             </h2>
-            <p className="text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
+            <p className="text-gray-500 dark:text-gray-400 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
               The world of Pokémon is vast and full of wonders. Our app helps
               you discover and learn about all the amazing creatures in the
               Pokémon universe. Whether you&apos;re a seasoned Trainer or just
@@ -56,7 +56,7 @@ export default function Home() {
               height="200"
               alt="Pokémon"
               src={getPokemonImage(25)}
-              className="w-auto h-auto object-contain"
+              className="h-auto w-auto object-contain"
             />
           </div>
         </div>
@@ -74,7 +74,7 @@ export default function Home() {
                 key={pokemon.name}
                 href={`/pokemon/${pokemon.url.split("/")[6]}`}
               >
-                <div className="flex flex-col items-center gap-4 p-4 bg-gray-100 rounded-md shadow-md">
+                <div className="flex flex-col items-center gap-4 rounded-md bg-gray-100 p-4 shadow-md">
                   <Image
                     width={150}
                     height={150}
@@ -87,7 +87,7 @@ export default function Home() {
               </Link>
             ))
           ) : (
-            <div className="flex justify-center items-center h-32">
+            <div className="flex h-32 items-center justify-center">
               No data available
             </div>
           )}

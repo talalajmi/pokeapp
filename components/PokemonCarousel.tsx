@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import routes from "@/lib/routes";
 import React, { useRef } from "react";
 import { Card, CardContent } from "./ui/card";
 import {
@@ -29,7 +28,7 @@ const PokemonCarousel = () => {
       <CarouselContent>
         {Array.from({ length: 10 }).map((_, index) => (
           <CarouselItem key={index} className="md:basis-1/3">
-            <Link href={routes.pokemon(index + 1)} className="p-1">
+            <Link href={`/pokemon/${index + 1}`} className="p-1">
               <Card className="w-72">
                 <CardContent className="flex aspect-square items-center justify-center">
                   <Image
@@ -37,7 +36,7 @@ const PokemonCarousel = () => {
                     height={150}
                     alt={`${index + 1}`}
                     src={getPokemonImage(index + 1)}
-                    className="w-auto h-auto object-contain"
+                    className="h-auto w-auto object-contain"
                   />
                 </CardContent>
               </Card>

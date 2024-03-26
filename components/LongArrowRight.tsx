@@ -1,7 +1,6 @@
 import React from "react";
 
 interface LongArrowRightProps {
-  color?: string;
   className?: string;
   flipIcon?: boolean;
   width?: number | string;
@@ -13,7 +12,6 @@ const LongArrowRight = ({
   className,
   width = 24,
   height = 24,
-  color = "#000000",
 }: LongArrowRightProps) => {
   return (
     <svg
@@ -23,8 +21,8 @@ const LongArrowRight = ({
       viewBox="0 0 256 256"
       className={
         flipIcon
-          ? `${className} transform rotate-180`
-          : `${className} transform rotate-0`
+          ? `${className} rotate-180 transform`
+          : `${className} rotate-0 transform`
       }
       xmlns="http://www.w3.org/2000/svg"
       enable-background="new 0 0 256 256"
@@ -35,8 +33,8 @@ const LongArrowRight = ({
       </metadata>
       <g>
         <g>
-          <path fill={color} d="M10,123.8h219.1v8.4H10V123.8z" />
-          <path fill={color} d="M203.9,115.4L246,128l-42.1,12.6V115.4z" />
+          <path d="M10,123.8h219.1v8.4H10V123.8z" />
+          <path d="M203.9,115.4L246,128l-42.1,12.6V115.4z" />
         </g>
       </g>
     </svg>

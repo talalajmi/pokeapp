@@ -1,0 +1,65 @@
+"use client";
+
+import React from "react";
+import {
+  Sheet,
+  SheetTrigger,
+  SheetContent,
+  SheetClose,
+} from "@/components/ui/sheet";
+import Image from "next/image";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { navbarLinks } from "@/lib/constants";
+import { Icon } from "@iconify/react";
+
+const NavContent = () => {
+  const pathname = usePathname();
+
+  return (
+    <section className="flex h-full flex-col gap-6 pt-16">
+      {navbarLinks.map((link, index) => {
+        const isActive =
+          (pathname.includes(link.route) && link.route.length > 1) ||
+          pathname === link.route;
+        return (
+          <SheetClose asChild key={index}>
+            <Link
+              href={link.route}
+              className={`${
+                isActive ? "text-primary" : "text-black"
+              } flex items-center justify-start gap-4 bg-transparent`}
+            >
+              <p className={`${isActive ? "font-bold" : ""}`}>{link.label}</p>
+            </Link>
+          </SheetClose>
+        );
+      })}
+    </section>
+  );
+};
+
+const MobileNav = () => {
+  return (
+    <Sheet>
+      <SheetTrigger asChild>
+        <Icon
+          icon="material-symbols:menu"
+          className="text-primary"
+          fontSize={40}
+        />
+      </SheetTrigger>
+      <SheetContent side="right" className="border-none">
+        <Link href="/" className="flex items-center gap-1">
+          <Image src="/pokemon.svg" width={150} height={150} alt="pokeapp" />
+        </Link>
+        <hr className="mt-5" />
+        <SheetClose asChild>
+          <NavContent />
+        </SheetClose>
+      </SheetContent>
+    </Sheet>
+  );
+};
+
+export default MobileNav;

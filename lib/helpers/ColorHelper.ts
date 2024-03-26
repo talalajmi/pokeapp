@@ -1,5 +1,4 @@
 export const getColorByType = (typeName: string) => {
-  console.log(typeName);
   const typeColors: { [key: string]: string } = {
     grass: "bg-green-500 text-white",
     fire: "bg-red-500 text-white",
@@ -20,5 +19,5 @@ export const getColorByType = (typeName: string) => {
     steel: "bg-gray-500 text-white",
   };
 
-  return typeColors[typeName] || "bg-gray-500 text-white";
+  return typeColors[typeName.toLowerCase()] || "bg-gray-500 text-white";
 };
