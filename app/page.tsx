@@ -1,12 +1,22 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
+import { getPokemonImage } from "@/lib/helpers";
 import useGetPokemons from "@/lib/hooks/useGetPokemons";
+import LoadingSpinner from "@/components/LoadingSpinner";
 import PokemonCarousel from "@/components/PokemonCarousel";
 
 export default function Home() {
   // ** Hooks
   const { data, isLoading } = useGetPokemons();
+
+  if (isLoading)
+    return (
+      <div className="flex h-screen justify-center items-center">
+        <LoadingSpinner />
+      </div>
+    );
 
   return (
     <main className="flex min-h-screen flex-col items-center bg-white p-8">
@@ -45,8 +55,8 @@ export default function Home() {
               width="200"
               height="200"
               alt="Pokémon"
-              className="object-contain"
-              src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/108.svg"
+              src={getPokemonImage(25)}
+              className="w-auto h-auto object-contain"
             />
           </div>
         </div>
@@ -58,24 +68,29 @@ export default function Home() {
           some of them:
         </p>
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
-          {isLoading && <p>Loading...</p>}
-          {data?.results.map((pokemon) => (
-            <div
-              key={pokemon.name}
-              className="flex flex-col items-center justify-center"
-            >
-              <Image
-                width="150"
-                height="150"
-                alt={pokemon.name}
-                className="object-contain"
-                src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${
-                  pokemon.url.split("/")[6]
-                }.svg`}
-              />
-              <p className="text-lg font-semibold">{pokemon.name}</p>
+          {data ? (
+            data.results.map((pokemon) => (
+              <Link
+                key={pokemon.name}
+                href={`/pokemon/${pokemon.url.split("/")[6]}`}
+              >
+                <div className="flex flex-col items-center gap-4 p-4 bg-gray-100 rounded-md shadow-md">
+                  <Image
+                    width={150}
+                    height={150}
+                    alt={pokemon.name}
+                    className="w-150 h-150 object-contain"
+                    src={getPokemonImage(parseInt(pokemon.url.split("/")[6]))}
+                  />
+                  <p className="text-lg font-semibold">{pokemon.name}</p>
+                </div>
+              </Link>
+            ))
+          ) : (
+            <div className="flex justify-center items-center h-32">
+              No data available
             </div>
-          ))}
+          )}
         </div>
       </section>
     </main>

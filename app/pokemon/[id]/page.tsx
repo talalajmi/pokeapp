@@ -9,6 +9,8 @@ import useGetPokemon from "@/lib/hooks/useGetPokemon";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import { fixWordCasing, getColorByType } from "@/lib/helpers";
 import useGetPokemonEvolution from "@/lib/hooks/useGetPokemonEvolution";
+import LongArrowRight from "@/components/LongArrowRight";
+import pokeAppColors from "@/lib/constants";
 
 interface PokemonDetailsProps {
   params: {
@@ -36,15 +38,30 @@ const PokemonDetails = ({ params }: PokemonDetailsProps) => {
   return (
     <div className="flex justify-start items-start flex-col p-8 space-y-5">
       <div className="flex justify-between items-center w-full">
-        <Button disabled={pokemon.id === 1}>
-          <Link href={routes.pokemon(pokemon.id - 1)}>Back</Link>
-        </Button>
+        {parseInt(params.id) > 1 ? (
+          <Link href={routes.pokemon(parseInt(params.id) - 1)}>
+            <LongArrowRight
+              flipIcon
+              width={100}
+              height={100}
+              color={pokeAppColors.primary}
+              className="hover:-translate-x-5 transition-transform duration-300 ease-in-out"
+            />
+          </Link>
+        ) : (
+          <div />
+        )}
         <p>
           {pokemon.id} - {fixWordCasing(pokemon.name)}
         </p>
-        <Button>
-          <Link href={routes.pokemon(pokemon.id + 1)}>Next</Link>
-        </Button>
+        <Link href={routes.pokemon(pokemon.id + 1)}>
+          <LongArrowRight
+            width={100}
+            height={100}
+            color={pokeAppColors.primary}
+            className="hover:translate-x-5 transition-transform duration-300 ease-in-out"
+          />
+        </Link>
       </div>
       <div className="flex flex-col md:flex-row justify-between items-start md:space-x-5 space-y-5">
         <div className="flex flex-col items-start space-y-3">
@@ -52,7 +69,8 @@ const PokemonDetails = ({ params }: PokemonDetailsProps) => {
             width={200}
             height={200}
             alt={pokemon.name}
-            src={pokemon.sprites.other["dream_world"].front_default}
+            className="w-auto h-auto object-contain"
+            src={pokemon.sprites.other["official-artwork"].front_default}
           />
           <div className="space-y-3">
             <div className="flex space-x-5">
@@ -108,7 +126,7 @@ const PokemonDetails = ({ params }: PokemonDetailsProps) => {
           </div>
         </div>
         <div>
-          <p className="text-blue-700 font-bold text-3xl">
+          <p className="text-blue-700 font-bold text-3xl font-pokemon-solid">
             {fixWordCasing(pokemon.name)}
           </p>
           Evolutionary Line:

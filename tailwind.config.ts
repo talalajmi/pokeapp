@@ -21,6 +21,8 @@ const config = {
     extend: {
       fontFamily: {
         sans: ["var(--font-sans)", ...fontFamily.sans],
+        "pokemon-solid": "PokemonSolid",
+        "pokemon-hollow": "PokemonHollow",
       },
       colors: {
         border: "hsl(var(--border))",
