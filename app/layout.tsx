@@ -1,8 +1,9 @@
+import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import "./globals.css";
-import ReactQueryProvider from "@/components/ReactQueryProvider";
 import Navbar from "@/components/Navbar";
+import { Themeprovider } from "@/context/ThemeProvider";
+import ReactQueryProvider from "@/components/ReactQueryProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,11 +23,13 @@ export default function RootLayout({
       <head>
         <link rel="icon" href="/images/poke-ball.png" />
       </head>
-      <body className={inter.className}>
-        <ReactQueryProvider>
-          <Navbar />
-          {children}
-        </ReactQueryProvider>
+      <body className={`${inter.className} dark:bg-black`}>
+        <Themeprovider>
+          <ReactQueryProvider>
+            <Navbar />
+            <div className="pt-20 ">{children}</div>
+          </ReactQueryProvider>
+        </Themeprovider>
       </body>
     </html>
   );

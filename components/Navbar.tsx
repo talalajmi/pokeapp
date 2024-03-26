@@ -6,17 +6,18 @@ import React from "react";
 import MobileNav from "./MobileNavbar";
 import { navbarLinks } from "@/lib/constants";
 import { usePathname } from "next/navigation";
+import ThemeSwitcher from "./ThemeSwitcher";
 
 const Navbar = () => {
   const pathname = usePathname();
 
   return (
-    <nav className="fixed z-10 flex w-full items-center justify-between gap-5 bg-white/85 px-8 py-6 backdrop-blur-sm">
+    <nav className="fixed z-50 flex w-full items-center justify-between gap-5 bg-white/85 px-8 py-6 shadow-sm backdrop-blur-sm dark:bg-black/85">
       <Link href="/">
         <Image src="/pokemon.svg" width={150} height={150} alt="pokeapp" />
       </Link>
 
-      <div className="gap-5 sm:hidden md:flex">
+      <div className="hidden gap-5 md:flex">
         {navbarLinks.map((link, index) => {
           const isActive =
             (pathname.includes(link.route) && link.route.length > 1) ||
@@ -26,7 +27,9 @@ const Navbar = () => {
               <p
                 className={`
                 ${
-                  isActive ? "font-bold text-primary" : "font-normal text-black"
+                  isActive
+                    ? "font-bold text-primary"
+                    : "font-normal text-black dark:text-white"
                 }
                 `}
               >
@@ -36,9 +39,11 @@ const Navbar = () => {
           );
         })}
       </div>
-
-      <div className="md:hidden">
-        <MobileNav />
+      <div className="flex items-center">
+        <ThemeSwitcher />
+        <div className="md:hidden">
+          <MobileNav />
+        </div>
       </div>
     </nav>
   );

@@ -1,0 +1,82 @@
+"use client";
+
+import React from "react";
+
+import { useTheme } from "@/context/ThemeProvider";
+import {
+  Menubar,
+  MenubarItem,
+  MenubarMenu,
+  MenubarTrigger,
+  MenubarContent,
+} from "@/components/ui/menubar";
+import Image from "next/image";
+import { themes } from "@/lib/constants";
+import { Icon } from "@iconify/react";
+
+interface ThemeType {
+  value: string;
+  label: string;
+  icon: string;
+}
+
+const ThemeSwitcher = () => {
+  const { mode, setMode } = useTheme();
+
+  const handleThemeChange = (theme: ThemeType) => {
+    setMode(theme.value);
+
+    if (theme.value !== "system") {
+      localStorage.theme = theme.value;
+    } else {
+      localStorage.removeItem("theme");
+    }
+  };
+
+  return (
+    <Menubar className="relative border-none bg-transparent shadow-none">
+      <MenubarMenu>
+        <MenubarTrigger className="focus:bg-light-900 data-[state=open]:bg-light-900 dark:focus:bg-dark-200 dark:data-[state=open]:bg-dark-200">
+          {mode === "dark" ? (
+            <Icon
+              width={24}
+              height={24}
+              className="text-primary"
+              icon="material-symbols:dark-mode"
+            />
+          ) : (
+            <Icon
+              width={24}
+              height={24}
+              className="text-primary"
+              icon="material-symbols:light-mode"
+            />
+          )}
+        </MenubarTrigger>
+        <MenubarContent className="dark:border-dark-400 dark:bg-dark-300 absolute right-[-3rem] mt-3 min-w-[120px] rounded border py-2">
+          {themes.map((theme, index) => (
+            <MenubarItem
+              key={index}
+              onSelect={() => handleThemeChange(theme)}
+              className="focus:bg-light-800 dark:focus:bg-dark-400 flex cursor-pointer items-center gap-4 rounded px-2.5 py-2 hover:bg-blue-500/10 hover:dark:bg-blue-500/20"
+            >
+              <Icon
+                icon={theme.icon}
+                width={24}
+                height={24}
+                className={`${mode === theme.value && "text-primary"}`}
+              />
+              <p
+                className={`body-semibold text-light-500 ${mode === theme.value ? "text-primary" : "text-black dark:text-white"}`}
+              >
+                {theme.label}
+              </p>
+            </MenubarItem>
+          ))}
+        </MenubarContent>
+      </MenubarMenu>
+    </Menubar>
+  );
+};
+
+export default ThemeSwitcher;

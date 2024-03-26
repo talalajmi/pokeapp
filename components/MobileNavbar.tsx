@@ -44,9 +44,9 @@ const MobileNav = () => {
     <Sheet>
       <SheetTrigger asChild>
         <Icon
-          icon="material-symbols:menu"
+          fontSize={28}
           className="text-primary"
-          fontSize={40}
+          icon="material-symbols:menu"
         />
       </SheetTrigger>
       <SheetContent side="right" className="border-none">
