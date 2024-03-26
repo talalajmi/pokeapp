@@ -27,10 +27,12 @@ const NavContent = () => {
             <Link
               href={link.route}
               className={`${
-                isActive ? "text-primary" : "text-black"
+                isActive ? "text-primary" : "text-black dark:text-white"
               } flex items-center justify-start gap-4 bg-transparent`}
             >
-              <p className={`${isActive ? "font-bold" : ""}`}>{link.label}</p>
+              <p className={`${isActive ? "font-bold text-primary" : ""}`}>
+                {link.label}
+              </p>
             </Link>
           </SheetClose>
         );
@@ -49,11 +51,11 @@ const MobileNav = () => {
           icon="material-symbols:menu"
         />
       </SheetTrigger>
-      <SheetContent side="right" className="border-none">
-        <Link href="/" className="flex items-center gap-1">
+      <SheetContent side="right" className="border-none dark:bg-black">
+        <Link href="/">
           <Image src="/pokemon.svg" width={150} height={150} alt="pokeapp" />
         </Link>
-        <hr className="mt-5" />
+        <hr className="mt-5 bg-blue-500/20" />
         <SheetClose asChild>
           <NavContent />
         </SheetClose>

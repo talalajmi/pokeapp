@@ -27,7 +27,7 @@ export default function RootLayout({
         <Themeprovider>
           <ReactQueryProvider>
             <Navbar />
-            <div className="pt-20 ">{children}</div>
+            <div className="px-8 pt-32">{children}</div>
           </ReactQueryProvider>
         </Themeprovider>
       </body>

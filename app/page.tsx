@@ -1,8 +1,10 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
+import { Icon } from "@iconify/react";
+import { Button } from "@/components/ui/button";
 import { getPokemonImage } from "@/lib/helpers";
+import PokemonCard from "@/components/PokemonCard";
 import useGetPokemons from "@/lib/hooks/useGetPokemons";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import PokemonCarousel from "@/components/PokemonCarousel";
@@ -18,15 +20,25 @@ export default function Home() {
       </div>
     );
 
+  const fetchNextPage = () => {
+    if (data?.next) {
+      fetch(data.next)
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+        });
+    }
+  };
+
   return (
-    <main className="flex min-h-screen flex-col items-center bg-white p-8 dark:bg-black">
-      <section className="w-full py-6 md:py-12">
+    <main className="flex min-h-screen flex-col items-center bg-white dark:bg-black">
+      <section className="w-full">
         <div className="flex flex-col gap-4 md:gap-8">
           <div className="max-w-[700px] space-y-2">
-            <h1 className="text-3xl font-bold tracking-tighter text-blue-600 sm:text-5xl">
+            <h1 className="font-pokemon-solid text-3xl tracking-wider text-blue-600 sm:text-5xl">
               Welcome to the World of Pokémon
             </h1>
-            <p className="text-gray-500 dark:text-gray-400 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+            <p className="font-pokemon-solid tracking-wider text-gray-500 dark:text-gray-400 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
               Explore the Pokémon universe with our comprehensive database.
               Enter a name or select a type to get started.
             </p>
@@ -39,10 +51,10 @@ export default function Home() {
       <section className="w-full py-6 md:py-12">
         <div className="grid items-center gap-4 md:gap-8 lg:grid-cols-2 lg:gap-16">
           <div className="space-y-4">
-            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl">
+            <h2 className="font-pokemon-solid text-3xl tracking-wider text-primary sm:text-4xl">
               Gotta catch &apos;em all!
             </h2>
-            <p className="text-gray-500 dark:text-gray-400 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+            <p className="font-pokemon-solid tracking-wider text-gray-500 dark:text-gray-400 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
               The world of Pokémon is vast and full of wonders. Our app helps
               you discover and learn about all the amazing creatures in the
               Pokémon universe. Whether you&apos;re a seasoned Trainer or just
@@ -62,29 +74,41 @@ export default function Home() {
         </div>
       </section>
       <section className="w-full space-y-4">
-        <p className="text-3xl font-bold tracking-tighter">All Pokémons</p>
-        <p>
+        <div className="flex justify-between">
+          <p className="font-pokemon-solid text-3xl tracking-wider text-primary">
+            All Pokémons
+          </p>
+          <div className="flex items-center justify-between gap-3">
+            <Button
+              disabled={data?.previous === null}
+              className="bg-transaprent group rounded-full border border-primary"
+            >
+              <Icon
+                fontSize={20}
+                icon="akar-icons:arrow-left"
+                className="text-primary transition duration-300 ease-in-out group-hover:text-white"
+              />
+            </Button>
+            <Button
+              onClick={fetchNextPage}
+              className="bg-transaprent group rounded-full border border-primary"
+            >
+              <Icon
+                fontSize={20}
+                icon="akar-icons:arrow-right"
+                className="text-primary transition duration-300 ease-in-out group-hover:text-white"
+              />
+            </Button>
+          </div>
+        </div>
+        <p className="font-pokemon-solid tracking-wider dark:text-gray-400">
           There are a total of {data?.count} Pokémon in the database. Here are
           some of them:
         </p>
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">
           {data ? (
             data.results.map((pokemon) => (
-              <Link
-                key={pokemon.name}
-                href={`/pokemon/${pokemon.url.split("/")[6]}`}
-              >
-                <div className="flex flex-col items-center gap-4 rounded-md bg-gray-100 p-4 shadow-md">
-                  <Image
-                    width={150}
-                    height={150}
-                    alt={pokemon.name}
-                    className="w-150 h-150 object-contain"
-                    src={getPokemonImage(parseInt(pokemon.url.split("/")[6]))}
-                  />
-                  <p className="text-lg font-semibold">{pokemon.name}</p>
-                </div>
-              </Link>
+              <PokemonCard key={pokemon.name} pokemon={pokemon} />
             ))
           ) : (
             <div className="flex h-32 items-center justify-center">

@@ -36,30 +36,24 @@ const PokemonDetails = ({ params }: PokemonDetailsProps) => {
   if (!pokemon) return <div>Not Found</div>;
 
   return (
-    <div className="flex flex-col items-start justify-start space-y-5 p-8">
+    <div className="flex flex-col items-start justify-start space-y-5">
       <div className="flex w-full items-center justify-between">
         {pokemon.id > 1 ? (
           <Link href={`/pokemon/${pokemon.id - 1}`}>
             <LongArrowRight
               flipIcon
-              width={100}
-              height={100}
-              className="fill-primary transition-transform duration-300 ease-in-out hover:-translate-x-5"
+              className="h-24 w-24 fill-primary transition-transform duration-300 ease-in-out hover:-translate-x-5 md:h-36 md:w-32"
             />
           </Link>
         ) : (
-          <div />
+          <div className="w-28" />
         )}
-        <p className="font-pokemon-hollow text-3xl text-blue-700">
+        <p className="font-pokemon-hollow text-2xl text-blue-700 md:text-3xl">
           {String(pokemon.id).padStart(String(pokemons?.count).length, "0")} /{" "}
           {pokemons?.count}
         </p>
         <Link href={`/pokemon/${pokemon.id + 1}`}>
-          <LongArrowRight
-            width={100}
-            height={100}
-            className="fill-primary transition-transform duration-300 ease-in-out hover:translate-x-5"
-          />
+          <LongArrowRight className="h-24 w-24 fill-primary transition-transform duration-300 ease-in-out hover:translate-x-5 md:h-36 md:w-32" />
         </Link>
       </div>
       <div className="flex w-full flex-col items-start justify-between space-y-5 md:flex-row md:space-x-5">
