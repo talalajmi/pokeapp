@@ -10,6 +10,8 @@ import LoadingSpinner from "@/components/LoadingSpinner";
 import { fixWordCasing, getColorByType } from "@/lib/helpers";
 import useGetPokemonEvolution from "@/lib/hooks/useGetPokemonEvolution";
 import { navbarLinks } from "@/lib/constants";
+import { Tooltip, TooltipContent } from "@/components/ui/tooltip";
+import { TooltipTrigger } from "@radix-ui/react-tooltip";
 
 interface PokemonDetailsProps {
   params: {
@@ -39,22 +41,36 @@ const PokemonDetails = ({ params }: PokemonDetailsProps) => {
     <div className="flex flex-col items-start justify-start space-y-5">
       <div className="flex w-full items-center justify-between">
         {pokemon.id > 1 ? (
-          <Link href={`/pokemon/${pokemon.id - 1}`}>
-            <LongArrowRight
-              flipIcon
-              className="h-24 w-24 fill-primary transition-transform duration-300 ease-in-out hover:-translate-x-5 md:h-36 md:w-32"
-            />
-          </Link>
+          <Tooltip>
+            <TooltipTrigger>
+              <Link href={`/pokemon/${pokemon.id - 1}`}>
+                <LongArrowRight
+                  flipIcon
+                  className="h-24 w-24 fill-primary transition-transform duration-300 ease-in-out hover:-translate-x-5 md:h-32 md:w-32"
+                />
+              </Link>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p className=" text-white">Previous Pokémon</p>
+            </TooltipContent>
+          </Tooltip>
         ) : (
           <div className="w-28" />
         )}
-        <p className="font-pokemon-hollow text-2xl text-blue-700 md:text-3xl">
+        <p className="font-pokemon-hollow text-2xl tracking-widest text-blue-700 md:text-3xl">
           {String(pokemon.id).padStart(String(pokemons?.count).length, "0")} /{" "}
           {pokemons?.count}
         </p>
-        <Link href={`/pokemon/${pokemon.id + 1}`}>
-          <LongArrowRight className="h-24 w-24 fill-primary transition-transform duration-300 ease-in-out hover:translate-x-5 md:h-36 md:w-32" />
-        </Link>
+        <Tooltip>
+          <TooltipTrigger>
+            <Link href={`/pokemon/${pokemon.id + 1}`}>
+              <LongArrowRight className="h-24 w-24 fill-primary transition-transform duration-300 ease-in-out hover:translate-x-5 md:h-32 md:w-32" />
+            </Link>
+          </TooltipTrigger>
+          <TooltipContent>
+            <p className=" text-black dark:text-white">Next Pokémon</p>
+          </TooltipContent>
+        </Tooltip>
       </div>
       <div className="flex w-full flex-col items-start justify-between space-y-5 md:flex-row md:space-x-5">
         <div className="flex flex-col items-start space-y-3">
@@ -122,7 +138,7 @@ const PokemonDetails = ({ params }: PokemonDetailsProps) => {
           </div>
         </div>
         <div>
-          <p className="font-pokemon-solid text-3xl font-bold text-blue-700">
+          <p className="font-pokemon-solid text-3xl font-bold tracking-widest text-blue-700">
             {fixWordCasing(pokemon.name)}
           </p>
           Evolutionary Line:

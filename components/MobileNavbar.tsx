@@ -27,8 +27,10 @@ const NavContent = () => {
             <Link
               href={link.route}
               className={`${
-                isActive ? "text-primary" : "text-black dark:text-white"
-              } flex items-center justify-start gap-4 bg-transparent`}
+                isActive
+                  ? "w-fit border-b-2 border-primary font-pokemon-solid text-primary"
+                  : "font-pokemon-hollow text-black dark:text-white dark:hover:text-primary "
+              }tracking-widest text-xl transition duration-300 ease-in-out`}
             >
               <p className={`${isActive ? "font-bold text-primary" : ""}`}>
                 {link.label}

@@ -16,7 +16,7 @@ const PokemonCard = ({ pokemon }: PokemonCardProps) => {
   return (
     <Link href={`/pokemon/${pokemon.url.split("/")[6]}`}>
       <Card className="group">
-        <CardContent className="flex aspect-square flex-col items-start justify-center">
+        <CardContent className="flex aspect-square flex-col items-center justify-center gap-5">
           <Image
             width={150}
             height={150}
@@ -25,7 +25,7 @@ const PokemonCard = ({ pokemon }: PokemonCardProps) => {
             src={getPokemonImage(parseInt(pokemon.url.split("/")[6]))}
           />
           <div className="flex w-full items-center justify-between">
-            <p className="font-pokemon-solid tracking-wider dark:text-gray-400">
+            <p className=" dark:text-gray-400">
               {" "}
               {pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)}
             </p>

@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Navbar from "@/components/Navbar";
 import { Themeprovider } from "@/context/ThemeProvider";
+import { TooltipProvider } from "@/components/ui/tooltip";
 import ReactQueryProvider from "@/components/ReactQueryProvider";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -26,8 +27,10 @@ export default function RootLayout({
       <body className={`${inter.className} dark:bg-black`}>
         <Themeprovider>
           <ReactQueryProvider>
-            <Navbar />
-            <div className="px-8 pt-32">{children}</div>
+            <TooltipProvider>
+              <Navbar />
+              <main className="px-8 py-32">{children}</main>
+            </TooltipProvider>
           </ReactQueryProvider>
         </Themeprovider>
       </body>

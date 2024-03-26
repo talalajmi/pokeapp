@@ -61,7 +61,7 @@
 
 @layer base {
   * {
-    @apply border-border;
+    @apply border-border font-pokemon-solid tracking-widest;
   }
   body {
     @apply bg-background text-foreground;
