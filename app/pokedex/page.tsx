@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { Icon } from "@iconify/react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -14,18 +14,47 @@ import {
 import PokemonCard from "@/components/PokemonCard";
 import { useGetPokemons } from "@/lib/hooks";
 import LoadingSpinner from "@/components/LoadingSpinner";
-import {
-  Pagination,
-  PaginationContent,
-  PaginationEllipsis,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from "@/components/ui/pagination";
+import Image from "next/image";
+import Pagination from "@/components/Pagination";
+import { GetPokemonsResponse } from "@/lib/types";
 
 const Pokedex = () => {
-  const { data: pokemons, isLoading } = useGetPokemons();
+  const [offset, setOffset] = useState(0);
+
+  // ** Hooks
+  const { data: pokemons, isLoading } = useGetPokemons(offset);
+
+  const renderPokemons = (pokemons: GetPokemonsResponse) => {
+    return (
+      <div className="flex flex-col gap-5">
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
+          {pokemons.results.map((pokemon) => (
+            <PokemonCard key={pokemon.name} pokemon={pokemon} />
+          ))}
+        </div>
+        <div className="flex flex-col justify-start gap-5 lg:flex-row lg:justify-between">
+          <div className="group flex items-center justify-between gap-5 rounded-full border-[3px] border-black bg-red-500 px-2 py-1 text-white">
+            <Image
+              width={30}
+              height={30}
+              alt="pokeball"
+              src="/images/poke-ball.png"
+              className="h-auto w-auto object-contain group-hover:animate-spin"
+            />
+            <p>
+              Showing {pokemons.results.length} of {pokemons.count} Pokémons
+            </p>
+          </div>
+
+          <Pagination
+            currentPage={offset / 20 + 1}
+            totalPages={Math.ceil(pokemons.count / 20)}
+            onPageChange={(page) => setOffset((page - 1) * 20)}
+          />
+        </div>
+      </div>
+    );
+  };
 
   return (
     <div className="mt-5 flex w-full flex-col items-center space-y-5">
@@ -42,7 +71,7 @@ const Pokedex = () => {
           placeholder="Search for a Pokémon by either name, number or type"
           className="border-none text-gray-400 ease-in-out placeholder:transition placeholder:duration-300 focus:text-black group-hover:placeholder:translate-x-1"
         />
-        <Button className="bg-yellow-400 text-primary transition duration-300 ease-in-out hover:scale-105 hover:bg-yellow-500 active:scale-95">
+        <Button className="bg-yellow-400 text-primary transition duration-300 ease-in-out hover:scale-110 hover:bg-yellow-500 active:scale-95">
           Search
         </Button>
       </div>
@@ -71,10 +100,10 @@ const Pokedex = () => {
             </Select>
           </div>
           <div className="md-flex-row flex flex-col gap-5">
-            <Button className="w-full bg-yellow-400 text-primary transition duration-300 ease-in-out hover:scale-105 hover:bg-yellow-500 active:scale-95">
+            <Button className="w-full bg-yellow-400 text-primary transition duration-300 ease-in-out hover:scale-110 hover:bg-yellow-500 active:scale-95">
               Apply
             </Button>
-            <Button className="w-full border border-primary bg-transparent text-primary transition duration-300 ease-in-out hover:scale-105 hover:bg-gray-100 active:scale-95">
+            <Button className="w-full border border-primary bg-transparent text-primary transition duration-300 ease-in-out hover:scale-110 hover:bg-gray-100 active:scale-95">
               Reset
             </Button>
           </div>
@@ -99,49 +128,15 @@ const Pokedex = () => {
               </div>
             </div>
           </div>
-          <div className="grid  gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
-            {isLoading ? (
-              <LoadingSpinner />
-            ) : !pokemons ? (
-              <div className="flex h-32 items-center justify-center">
-                No data available
-              </div>
-            ) : (
-              <>
-                {pokemons.results.map((pokemon) => (
-                  <PokemonCard key={pokemon.name} pokemon={pokemon} />
-                ))}
-
-                <Pagination>
-                  <PaginationContent>
-                    <PaginationItem>
-                      <PaginationPrevious
-                        className="bg-yellow-400 text-primary transition duration-300 ease-in-out hover:scale-105 hover:bg-yellow-500 hover:text-primary active:scale-95"
-                        href={pokemons.previous!}
-                      />
-                    </PaginationItem>
-                    <PaginationItem>
-                      <PaginationLink
-                        href="#"
-                        className="mx-2 rounded-full bg-yellow-400 p-2 text-primary"
-                      >
-                        1
-                      </PaginationLink>
-                    </PaginationItem>
-                    <PaginationItem>
-                      <PaginationEllipsis />
-                    </PaginationItem>
-                    <PaginationItem>
-                      <PaginationNext
-                        href={pokemons.next!}
-                        className="bg-yellow-400 text-primary transition duration-300 ease-in-out hover:scale-105 hover:bg-yellow-500 hover:text-primary active:scale-95"
-                      />
-                    </PaginationItem>
-                  </PaginationContent>
-                </Pagination>
-              </>
-            )}
-          </div>
+          {isLoading ? (
+            <LoadingSpinner />
+          ) : !pokemons ? (
+            <div className="flex h-32 items-center justify-center">
+              No data available
+            </div>
+          ) : (
+            renderPokemons(pokemons)
+          )}
         </div>
       </div>
     </div>

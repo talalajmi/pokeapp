@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { useState } from "react";
 import { Icon } from "@iconify/react";
 import { Button } from "@/components/ui/button";
 import { getPokemonImage } from "@/lib/helpers";
@@ -10,24 +11,18 @@ import LoadingSpinner from "@/components/LoadingSpinner";
 import PokemonCarousel from "@/components/PokemonCarousel";
 
 export default function Home() {
-  // ** Hooks
-  const { data, isLoading } = useGetPokemons();
+  // ** States
+  const [offset, setOffset] = useState(0);
 
-  if (isLoading)
-    return (
-      <div className="flex h-screen items-center justify-center">
-        <LoadingSpinner />
-      </div>
-    );
+  // ** Hooks
+  const { data, isLoading } = useGetPokemons(offset);
 
   const fetchNextPage = () => {
-    if (data?.next) {
-      fetch(data.next)
-        .then((res) => res.json())
-        .then((data) => {
-          console.log(data);
-        });
-    }
+    setOffset(offset + 20);
+  };
+
+  const fetchPreviousPage = () => {
+    setOffset(offset - 20);
   };
 
   return (
@@ -80,8 +75,9 @@ export default function Home() {
           </p>
           <div className="flex items-center justify-between gap-3">
             <Button
+              onClick={fetchPreviousPage}
               disabled={data?.previous === null}
-              className="group rounded-full border bg-yellow-400 transition duration-300 ease-in-out hover:scale-105 hover:bg-yellow-500 active:scale-95"
+              className="group rounded-full  bg-yellow-400 transition duration-300 ease-in-out hover:scale-105 hover:bg-yellow-500 active:scale-95"
             >
               <Icon
                 fontSize={20}
@@ -90,8 +86,9 @@ export default function Home() {
               />
             </Button>
             <Button
+              disabled={data?.next === null}
               onClick={fetchNextPage}
-              className="group rounded-full border bg-yellow-400 transition duration-300 ease-in-out hover:scale-105 hover:bg-yellow-500 active:scale-95"
+              className="group rounded-full  bg-yellow-400 transition duration-300 ease-in-out hover:scale-105 hover:bg-yellow-500 active:scale-95"
             >
               <Icon
                 fontSize={20}
@@ -106,12 +103,16 @@ export default function Home() {
           some of them:
         </p>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 ">
-          {data ? (
+          {isLoading ? (
+            <div className="flex h-full w-full items-center justify-center">
+              <LoadingSpinner />
+            </div>
+          ) : data ? (
             data.results.map((pokemon) => (
               <PokemonCard key={pokemon.name} pokemon={pokemon} />
             ))
           ) : (
-            <div className="flex h-32 items-center justify-center">
+            <div className="flex items-center justify-center">
               No data available
             </div>
           )}

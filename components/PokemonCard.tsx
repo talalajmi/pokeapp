@@ -1,4 +1,4 @@
-import { getPokemonImage } from "@/lib/helpers";
+import { fixWordCasing, getPokemonImage } from "@/lib/helpers";
 import Link from "next/link";
 import React from "react";
 import { Card, CardContent } from "./ui/card";
@@ -15,19 +15,18 @@ interface PokemonCardProps {
 const PokemonCard = ({ pokemon }: PokemonCardProps) => {
   return (
     <Link href={`/pokemon/${pokemon.url.split("/")[6]}`}>
-      <Card className="group border-transparent transition duration-300 ease-in-out hover:border-primary">
-        <CardContent className="flex aspect-square flex-col items-center justify-center gap-5">
+      <Card className="group border-transparent bg-primary/10 transition duration-300 ease-in-out hover:border-primary hover:bg-primary/20">
+        <CardContent className="flex aspect-square flex-col items-center justify-around gap-5">
           <Image
             width={150}
             height={150}
             alt={`${pokemon.name + 1}`}
-            className="h-auto w-auto object-contain"
             src={getPokemonImage(parseInt(pokemon.url.split("/")[6]))}
+            className="h-auto w-auto object-contain transition duration-300 ease-in-out group-hover:scale-110 group-active:scale-95"
           />
           <div className="flex w-full items-center justify-between">
-            <p className=" dark:text-gray-400">
-              {" "}
-              {pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)}
+            <p className=" transition duration-300 ease-in-out dark:text-gray-400 dark:group-hover:text-white">
+              {fixWordCasing(pokemon.name)}
             </p>
             <div className="flex items-center gap-2 border-primary text-sm text-primary transition-transform duration-300 ease-in-out group-hover:translate-x-3">
               View Details
