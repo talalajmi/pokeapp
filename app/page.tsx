@@ -105,7 +105,7 @@ export default function Home() {
           There are a total of {data?.count} Pokémon in the database. Here are
           some of them:
         </p>
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 ">
           {data ? (
             data.results.map((pokemon) => (
               <PokemonCard key={pokemon.name} pokemon={pokemon} />

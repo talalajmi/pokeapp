@@ -15,7 +15,7 @@ interface PokemonCardProps {
 const PokemonCard = ({ pokemon }: PokemonCardProps) => {
   return (
     <Link href={`/pokemon/${pokemon.url.split("/")[6]}`}>
-      <Card className="group">
+      <Card className="group border-transparent transition duration-300 ease-in-out hover:border-primary">
         <CardContent className="flex aspect-square flex-col items-center justify-center gap-5">
           <Image
             width={150}

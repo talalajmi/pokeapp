@@ -29,7 +29,7 @@ const Navbar = () => {
                 ${
                   isActive
                     ? "border-b-2 border-primary font-pokemon-solid font-bold tracking-widest text-primary transition duration-300 ease-in-out "
-                    : "font-pokemon-hollow font-normal tracking-widest text-black transition duration-300 ease-in-out hover:text-primary dark:text-white dark:hover:text-primary"
+                    : "font-pokemon-hollow font-normal tracking-widest text-black transition duration-300 ease-in-out hover:text-primary dark:text-white dark:hover:text-primary "
                 }
                 `}
               >

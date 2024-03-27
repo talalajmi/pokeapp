@@ -10,7 +10,6 @@ import {
   MenubarTrigger,
   MenubarContent,
 } from "@/components/ui/menubar";
-import Image from "next/image";
 import { themes } from "@/lib/constants";
 import { Icon } from "@iconify/react";
 
