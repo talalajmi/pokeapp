@@ -81,22 +81,22 @@ export default function Home() {
           <div className="flex items-center justify-between gap-3">
             <Button
               disabled={data?.previous === null}
-              className="bg-transaprent group rounded-full border border-primary"
+              className="group rounded-full border bg-yellow-400 transition duration-300 ease-in-out hover:scale-105 hover:bg-yellow-500 active:scale-95"
             >
               <Icon
                 fontSize={20}
                 icon="akar-icons:arrow-left"
-                className="text-primary transition duration-300 ease-in-out group-hover:text-white"
+                className="text-primary transition duration-300 ease-in-out "
               />
             </Button>
             <Button
               onClick={fetchNextPage}
-              className="bg-transaprent group rounded-full border border-primary"
+              className="group rounded-full border bg-yellow-400 transition duration-300 ease-in-out hover:scale-105 hover:bg-yellow-500 active:scale-95"
             >
               <Icon
                 fontSize={20}
                 icon="akar-icons:arrow-right"
-                className="text-primary transition duration-300 ease-in-out group-hover:text-white"
+                className="text-primary transition duration-300 ease-in-out "
               />
             </Button>
           </div>

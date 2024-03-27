@@ -14,6 +14,15 @@ import {
 import PokemonCard from "@/components/PokemonCard";
 import { useGetPokemons } from "@/lib/hooks";
 import LoadingSpinner from "@/components/LoadingSpinner";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination";
 
 const Pokedex = () => {
   const { data: pokemons, isLoading } = useGetPokemons();
@@ -102,14 +111,34 @@ const Pokedex = () => {
                 {pokemons.results.map((pokemon) => (
                   <PokemonCard key={pokemon.name} pokemon={pokemon} />
                 ))}
-                <div className="flex gap-5">
-                  <Button className="bg-yellow-400 text-primary transition duration-300 ease-in-out hover:scale-105 hover:bg-yellow-500 active:scale-95">
-                    Previous
-                  </Button>
-                  <Button className="bg-yellow-400 text-primary transition duration-300 ease-in-out hover:scale-105 hover:bg-yellow-500 active:scale-95">
-                    Next
-                  </Button>
-                </div>
+
+                <Pagination>
+                  <PaginationContent>
+                    <PaginationItem>
+                      <PaginationPrevious
+                        className="bg-yellow-400 text-primary transition duration-300 ease-in-out hover:scale-105 hover:bg-yellow-500 hover:text-primary active:scale-95"
+                        href={pokemons.previous!}
+                      />
+                    </PaginationItem>
+                    <PaginationItem>
+                      <PaginationLink
+                        href="#"
+                        className="mx-2 rounded-full bg-yellow-400 p-2 text-primary"
+                      >
+                        1
+                      </PaginationLink>
+                    </PaginationItem>
+                    <PaginationItem>
+                      <PaginationEllipsis />
+                    </PaginationItem>
+                    <PaginationItem>
+                      <PaginationNext
+                        href={pokemons.next!}
+                        className="bg-yellow-400 text-primary transition duration-300 ease-in-out hover:scale-105 hover:bg-yellow-500 hover:text-primary active:scale-95"
+                      />
+                    </PaginationItem>
+                  </PaginationContent>
+                </Pagination>
               </>
             )}
           </div>
