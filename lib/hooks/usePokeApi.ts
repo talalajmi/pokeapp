@@ -1,16 +1,18 @@
 import axios from "axios";
-import pokemonEndpoints from "../services/api";
 import { useQuery } from "@tanstack/react-query";
 
-const PokeApi = async (endpoint: string): Promise<any | undefined> => {
-  const response = await axios.get(endpoint);
-  return response.data as any;
+const PokeApi = async <T>(endpoint: string): Promise<T> => {
+  const response = await axios.get<T>(endpoint);
+  if (response.data === undefined) {
+    throw new Error("API response data is undefined");
+  }
+  return response.data;
 };
 
-const usePokeApi = (endpoint: string) => {
-  return useQuery({
+const usePokeApi = <T>(endpoint: string) => {
+  return useQuery<T>({
     queryKey: ["PokeApi", endpoint],
-    queryFn: () => PokeApi(endpoint),
+    queryFn: () => PokeApi<T>(endpoint),
   });
 };
 

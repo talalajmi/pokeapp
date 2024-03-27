@@ -1,13 +1,13 @@
 import axios from "axios";
-import { PokemonEvolution } from "../types";
+import { PokemonEvolutionChain } from "../types";
 import pokemonEndpoints from "../services/api";
 import { useQuery } from "@tanstack/react-query";
 
 const GetPokemonEvolution = async (
-  id: number
-): Promise<PokemonEvolution | undefined> => {
+  id: number,
+): Promise<PokemonEvolutionChain | undefined> => {
   const response = await axios.get(pokemonEndpoints.getPokemonEvolution(id));
-  return response.data as PokemonEvolution;
+  return response.data as PokemonEvolutionChain;
 };
 
 const useGetPokemonEvolution = (id: number) => {

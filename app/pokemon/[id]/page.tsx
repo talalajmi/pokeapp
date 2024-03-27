@@ -12,6 +12,7 @@ import { TooltipTrigger } from "@radix-ui/react-tooltip";
 import { fixWordCasing, getColorByType } from "@/lib/helpers";
 import { Tooltip, TooltipContent } from "@/components/ui/tooltip";
 import useGetPokemonEvolution from "@/lib/hooks/useGetPokemonEvolution";
+import PokemonSpeciesAndEvolution from "@/components/PokemonSpeciesAndEvolution";
 
 interface PokemonDetailsProps {
   params: {
@@ -23,10 +24,6 @@ const PokemonDetails = ({ params }: PokemonDetailsProps) => {
   // ** Hooks
   const { data: pokemons } = useGetPokemons(0);
   const { data: pokemon, isLoading } = useGetPokemon(parseInt(params.id));
-  const { data: pokemonEvolutions, isLoading: isPokemonEvolutionLoading } =
-    useGetPokemonEvolution(parseInt(params.id));
-
-  console.log(pokemonEvolutions);
 
   if (isLoading)
     return (
@@ -82,7 +79,7 @@ const PokemonDetails = ({ params }: PokemonDetailsProps) => {
         <p className="mb-5 text-start text-2xl text-primary">
           {fixWordCasing(pokemon.name)}
         </p>
-        <div className="flex w-full flex-col-reverse items-start justify-start gap-10 md:flex-row">
+        <div className="flex w-full flex-col-reverse items-start justify-start gap-10 lg:flex-row">
           <div className="flex w-full flex-1 flex-col gap-5">
             <div className="flex gap-3">
               <p className="font-bold">Height:</p>
@@ -157,34 +154,8 @@ const PokemonDetails = ({ params }: PokemonDetailsProps) => {
                 Lorem Ipsum.
               </p>
             </div>
-            <div className="flex flex-col items-start justify-start gap-5">
-              <p className="font-pokemon-hollow text-xl text-primary">
-                Evolution Line
-              </p>
-              {isPokemonEvolutionLoading ? (
-                <LoadingSpinner />
-              ) : (
-                <div className="flex gap-5">
-                  {!pokemonEvolutions ? (
-                    <p>Not Found</p>
-                  ) : pokemonEvolutions.chain.species.name === pokemon.name ? (
-                    <p>Final Evolution</p>
-                  ) : (
-                    <div className="flex flex-col gap-5">
-                      <Image
-                        width={50}
-                        height={50}
-                        alt={pokemonEvolutions.chain.species.name}
-                        className="h-auto w-auto object-contain"
-                        src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemonEvolutions.chain.species.url.split("/").slice(-2)[0]}.png`}
-                      />
-                      <p className="text-primary">
-                        {fixWordCasing(pokemonEvolutions.chain.species.name)}
-                      </p>
-                    </div>
-                  )}
-                </div>
-              )}
+            <div className="w-full">
+              <PokemonSpeciesAndEvolution pokemon={pokemon} />
             </div>
           </div>
         </div>

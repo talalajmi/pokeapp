@@ -1,5 +1,11 @@
 import { Pokemon } from "./Pokemon";
-import { PokemonEvolution } from "./PokemonEvolution";
+import { PokemonSpecies } from "./PokemonSepcies";
+import { PokemonEvolutionChain } from "./PokemonEvolution";
 import { GetPokemonsResponse } from "./GetPokemonsResponse";
 
-export type { Pokemon, PokemonEvolution, GetPokemonsResponse };
+export type {
+  Pokemon,
+  PokemonSpecies,
+  GetPokemonsResponse,
+  PokemonEvolutionChain,
+};

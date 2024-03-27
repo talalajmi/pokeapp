@@ -1,44 +1,44 @@
+interface EvolutionTrigger {
+  name: string;
+  url: string;
+}
+
 interface EvolutionDetail {
-  item: null | {
-    name: string;
-    url: string;
-  };
-  trigger: {
-    name: string;
-    url: string;
-  };
   gender: null;
   held_item: null;
+  item: {
+    name: string;
+    url: string;
+  } | null;
   known_move: null;
   known_move_type: null;
   location: null;
-  min_level: number | null;
-  min_happiness: null;
-  min_beauty: null;
   min_affection: null;
+  min_beauty: null;
+  min_happiness: number | null;
+  min_level: number | null;
   needs_overworld_rain: boolean;
   party_species: null;
   party_type: null;
   relative_physical_stats: null;
   time_of_day: string;
   trade_species: null;
+  trigger: EvolutionTrigger;
   turn_upside_down: boolean;
 }
 
-interface Species {
-  name: string;
-  url: string;
-}
-
 interface EvolutionNode {
+  evolution_details: EvolutionDetail[];
+  evolves_to: EvolutionNode[]; // Recursive structure for further evolutions
   is_baby: boolean;
-  species: Species;
-  evolution_details: EvolutionDetail[] | null;
-  evolves_to: EvolutionNode[]; // Recursive type for further evolutions
+  species: {
+    name: string;
+    url: string;
+  };
 }
 
-export interface PokemonEvolution {
-  id: number;
+export interface PokemonEvolutionChain {
   baby_trigger_item: null; // Can be expanded to a specific type if needed
   chain: EvolutionNode;
+  id: number;
 }
