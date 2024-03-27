@@ -1,18 +1,17 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useGetPokemons } from "@/lib/hooks";
+import { Progress } from "@/components/ui/progress";
 import useGetPokemon from "@/lib/hooks/useGetPokemon";
 import LongArrowRight from "@/components/LongArrowRight";
 import LoadingSpinner from "@/components/LoadingSpinner";
-import { fixWordCasing, getColorByType } from "@/lib/helpers";
-import useGetPokemonEvolution from "@/lib/hooks/useGetPokemonEvolution";
-import { navbarLinks } from "@/lib/constants";
-import { Tooltip, TooltipContent } from "@/components/ui/tooltip";
 import { TooltipTrigger } from "@radix-ui/react-tooltip";
-import { Progress } from "@/components/ui/progress";
+import { fixWordCasing, getColorByType } from "@/lib/helpers";
+import { Tooltip, TooltipContent } from "@/components/ui/tooltip";
+import useGetPokemonEvolution from "@/lib/hooks/useGetPokemonEvolution";
 
 interface PokemonDetailsProps {
   params: {
@@ -21,11 +20,8 @@ interface PokemonDetailsProps {
 }
 
 const PokemonDetails = ({ params }: PokemonDetailsProps) => {
-  // ** States
-  const [offset, setOffset] = useState(0);
-
   // ** Hooks
-  const { data: pokemons } = useGetPokemons(offset);
+  const { data: pokemons } = useGetPokemons(0);
   const { data: pokemon, isLoading } = useGetPokemon(parseInt(params.id));
   const { data: pokemonEvolutions, isLoading: isPokemonEvolutionLoading } =
     useGetPokemonEvolution(parseInt(params.id));
@@ -42,7 +38,7 @@ const PokemonDetails = ({ params }: PokemonDetailsProps) => {
   if (!pokemon) return <div>Not Found</div>;
 
   return (
-    <div className="flex flex-col items-start justify-start space-y-5">
+    <div className="flex flex-col items-start justify-start">
       <div className="flex w-full items-center justify-between">
         {pokemon.id > 1 ? (
           <Tooltip>
@@ -148,13 +144,47 @@ const PokemonDetails = ({ params }: PokemonDetailsProps) => {
               <p className="font-pokemon-hollow text-xl text-primary">
                 Pokemon Description
               </p>
-              <p>blah blah</p>
+              <p>
+                Lorem Ipsum is simply dummy text of the printing and typesetting
+                industry. Lorem Ipsum has been the industry&apos;s standard
+                dummy text ever since the 1500s, when an unknown printer took a
+                galley of type and scrambled it to make a type specimen book. It
+                has survived not only five centuries, but also the leap into
+                electronic typesetting, remaining essentially unchanged. It was
+                popularised in the 1960s with the release of Letraset sheets
+                containing Lorem Ipsum passages, and more recently with desktop
+                publishing software like Aldus PageMaker including versions of
+                Lorem Ipsum.
+              </p>
             </div>
             <div className="flex flex-col items-start justify-start gap-5">
               <p className="font-pokemon-hollow text-xl text-primary">
                 Evolution Line
               </p>
-              <p>blah blah</p>
+              {isPokemonEvolutionLoading ? (
+                <LoadingSpinner />
+              ) : (
+                <div className="flex gap-5">
+                  {!pokemonEvolutions ? (
+                    <p>Not Found</p>
+                  ) : pokemonEvolutions.chain.species.name === pokemon.name ? (
+                    <p>Final Evolution</p>
+                  ) : (
+                    <div className="flex flex-col gap-5">
+                      <Image
+                        width={50}
+                        height={50}
+                        alt={pokemonEvolutions.chain.species.name}
+                        className="h-auto w-auto object-contain"
+                        src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemonEvolutions.chain.species.url.split("/").slice(-2)[0]}.png`}
+                      />
+                      <p className="text-primary">
+                        {fixWordCasing(pokemonEvolutions.chain.species.name)}
+                      </p>
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -167,7 +197,9 @@ export default PokemonDetails;
 
 const TypePill = ({ type }: { type: string }) => {
   return (
-    <div className={`rounded-full px-3 py-1 ${getColorByType(type)}`}>
+    <div
+      className={`rounded-full px-3 py-1 ${getColorByType(type)} text-white`}
+    >
       {fixWordCasing(type)}
     </div>
   );
