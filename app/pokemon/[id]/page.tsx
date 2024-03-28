@@ -44,9 +44,8 @@ const PokemonDetails = ({ params }: PokemonDetailsProps) => {
             <TooltipTrigger>
               <Link href={`/pokemon/${pokemon.id - 1}`}>
                 <Button
-                  size="lg"
                   variant="secondary"
-                  className="hover:bg-secondary-dark rounded-full border border-primary transition duration-300 ease-out"
+                  className="hover:bg-secondary-dark rounded-full border border-primary transition duration-300 ease-out hover:scale-110 active:scale-95"
                 >
                   <Icon
                     fontSize={24}
@@ -56,10 +55,8 @@ const PokemonDetails = ({ params }: PokemonDetailsProps) => {
                 </Button>
               </Link>
             </TooltipTrigger>
-            <TooltipContent className="bg-secondary dark:bg-primary">
-              <p className="text-primary dark:text-secondary">
-                Previous Pokémon
-              </p>
+            <TooltipContent className="bg-primary-dark">
+              <p className="text-secondary">Previous Pokémon</p>
             </TooltipContent>
           </Tooltip>
         ) : (
@@ -72,9 +69,8 @@ const PokemonDetails = ({ params }: PokemonDetailsProps) => {
           <TooltipTrigger>
             <Link href={`/pokemon/${pokemon.id + 1}`}>
               <Button
-                size="lg"
                 variant="secondary"
-                className="hover:bg-secondary-dark rounded-full border border-primary transition duration-300 ease-out"
+                className="hover:bg-secondary-dark rounded-full border border-primary transition duration-300 ease-out hover:scale-110 active:scale-95"
               >
                 <Icon
                   fontSize={24}
@@ -84,8 +80,8 @@ const PokemonDetails = ({ params }: PokemonDetailsProps) => {
               </Button>
             </Link>
           </TooltipTrigger>
-          <TooltipContent>
-            <p className=" text-black dark:text-white">Next Pokémon</p>
+          <TooltipContent className="bg-primary-dark">
+            <p className="text-secondary">Next Pokémon</p>
           </TooltipContent>
         </Tooltip>
       </div>
