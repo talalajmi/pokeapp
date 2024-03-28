@@ -17,6 +17,7 @@ import LoadingSpinner from "@/components/LoadingSpinner";
 import Image from "next/image";
 import Pagination from "@/components/Pagination";
 import { GetPokemonsResponse } from "@/lib/types";
+import { Card } from "@/components/ui/card";
 
 const Pokedex = () => {
   const [offset, setOffset] = useState(0);
@@ -76,7 +77,7 @@ const Pokedex = () => {
         </Button>
       </div>
       <div className="flex w-full flex-col justify-start gap-5 md:flex-row">
-        <div className="flex-1 flex-col gap-5 space-y-5">
+        <Card className="h-fit flex-1 flex-col gap-5 space-y-5 p-5">
           <div className="flex flex-col gap-5">
             <Select>
               <SelectTrigger>
@@ -107,9 +108,9 @@ const Pokedex = () => {
               Reset
             </Button>
           </div>
-        </div>
+        </Card>
         <div className="w-full flex-[3] flex-col items-start space-y-5 lg:flex-[5]">
-          <div className="flex w-full flex-col items-start justify-between gap-5 md:flex-row">
+          <Card className=" flex w-full flex-col items-start justify-between gap-5 p-5 md:flex-row">
             <Select>
               <SelectTrigger className="w-full md:w-[350px]">
                 <SelectValue placeholder="Sort by Number" />
@@ -127,7 +128,7 @@ const Pokedex = () => {
                 <Input placeholder="To" />
               </div>
             </div>
-          </div>
+          </Card>
           {isLoading ? (
             <LoadingSpinner />
           ) : !pokemons ? (

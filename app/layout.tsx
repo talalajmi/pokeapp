@@ -24,7 +24,7 @@ export default function RootLayout({
       <head>
         <link rel="icon" href="/images/poke-ball.png" />
       </head>
-      <body className={`${inter.className} dark:bg-black`}>
+      <body className={`${inter.className}`}>
         <Themeprovider>
           <ReactQueryProvider>
             <TooltipProvider>

@@ -28,11 +28,13 @@ const NavContent = () => {
               href={link.route}
               className={`${
                 isActive
-                  ? "w-fit border-b-2 border-primary font-pokemon-solid text-primary"
+                  ? "w-fit border-b-2 border-primary font-pokemon-solid text-primary dark:border-secondary"
                   : "font-pokemon-hollow text-black dark:text-white dark:hover:text-primary "
               }tracking-widest text-xl transition duration-300 ease-in-out`}
             >
-              <p className={`${isActive ? "font-bold text-primary" : ""}`}>
+              <p
+                className={`${isActive ? "text-primary dark:text-secondary" : ""}`}
+              >
                 {link.label}
               </p>
             </Link>
@@ -49,7 +51,7 @@ const MobileNav = () => {
       <SheetTrigger asChild>
         <Icon
           fontSize={28}
-          className="text-primary"
+          className="text-primary dark:text-secondary"
           icon="material-symbols:menu"
         />
       </SheetTrigger>

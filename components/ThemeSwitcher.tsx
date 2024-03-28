@@ -40,14 +40,14 @@ const ThemeSwitcher = () => {
             <Icon
               width={24}
               height={24}
-              className="text-primary"
+              className="text-primary dark:text-secondary"
               icon="material-symbols:dark-mode"
             />
           ) : (
             <Icon
               width={24}
               height={24}
-              className="text-primary"
+              className="text-primary dark:text-secondary"
               icon="material-symbols:light-mode"
             />
           )}
@@ -57,16 +57,16 @@ const ThemeSwitcher = () => {
             <MenubarItem
               key={index}
               onSelect={() => handleThemeChange(theme)}
-              className="focus:bg-light-800 dark:focus:bg-dark-400 flex cursor-pointer items-center gap-4 rounded px-2.5 py-2 hover:bg-blue-500/10 hover:dark:bg-blue-500/20"
+              className="focus:bg-light-800 dark:focus:bg-dark-400 flex cursor-pointer items-center gap-4 rounded px-2.5 py-2 hover:bg-blue-500/10 dark:hover:bg-yellow-500/20"
             >
               <Icon
                 icon={theme.icon}
                 width={24}
                 height={24}
-                className={`${mode === theme.value && "text-primary"}`}
+                className={`${mode === theme.value && "text-primary dark:text-secondary"}`}
               />
               <p
-                className={`body-semibold text-light-500 ${mode === theme.value ? "text-primary" : "text-black dark:text-white"}`}
+                className={`body-semibold text-light-500 ${mode === theme.value ? "text-primary dark:text-secondary" : "text-black dark:text-white"}`}
               >
                 {theme.label}
               </p>

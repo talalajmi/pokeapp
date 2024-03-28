@@ -26,7 +26,7 @@ export default function Home() {
   };
 
   return (
-    <main className="flex min-h-screen flex-col items-center bg-white dark:bg-black">
+    <main className="flex min-h-screen flex-col items-center">
       <section className="w-full">
         <div className="flex flex-col gap-4 md:gap-8">
           <div className="max-w-[700px] space-y-2">
