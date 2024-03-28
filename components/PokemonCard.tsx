@@ -1,6 +1,6 @@
 import { fixWordCasing, getPokemonImage } from "@/lib/helpers";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 import { Card, CardContent } from "./ui/card";
 import Image from "next/image";
 import { Icon } from "@iconify/react";
@@ -13,6 +13,14 @@ interface PokemonCardProps {
 }
 
 const PokemonCard = ({ pokemon }: PokemonCardProps) => {
+  const [imgSrc, setImgSrc] = useState(
+    getPokemonImage(parseInt(pokemon.url.split("/")[6])),
+  );
+
+  const handleImageError = () => {
+    setImgSrc("/images/poke-ball.png"); // replace with your fallback image path
+  };
+
   return (
     <Link href={`/pokemon/${pokemon.url.split("/")[6]}`}>
       <Card className="group relative transition duration-300 ease-in-out hover:border-primary hover:bg-blue-500/20 dark:hover:border-yellow-400 dark:hover:bg-yellow-400/20">
@@ -23,8 +31,9 @@ const PokemonCard = ({ pokemon }: PokemonCardProps) => {
           <Image
             width={150}
             height={150}
+            src={imgSrc}
+            onError={handleImageError}
             alt={`${pokemon.name + 1}`}
-            src={getPokemonImage(parseInt(pokemon.url.split("/")[6]))}
             className="h-auto w-auto object-contain transition duration-300 ease-in-out group-hover:scale-110 group-active:scale-95"
           />
           <div className="flex w-full flex-col items-center justify-between gap-3 lg:flex-row">
