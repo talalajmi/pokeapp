@@ -40,7 +40,7 @@ const PokemonSpeciesAndEvolution = ({
             // ** If the evolution chain is loaded, we can display the evolution chain
             evolutionChain ? (
               <div className="space-y-5">
-                <div className="font-pokemon-solid text-lg text-primary">
+                <div className="font-pokemon-solid text-lg text-primary dark:text-secondary">
                   Evolution Chain:
                 </div>
                 {evolutionChain.chain.evolves_to.map((evolution, index) => (
@@ -62,7 +62,7 @@ const PokemonSpeciesAndEvolution = ({
                         <LongArrowRight
                           width={150}
                           height={150}
-                          className="h-auto w-auto rotate-90 fill-primary md:rotate-0"
+                          className="h-auto w-auto rotate-90 fill-primary dark:fill-secondary md:rotate-0"
                         />
                         <PokemonCard
                           pokemon={{

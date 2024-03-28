@@ -2,6 +2,7 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Navbar from "@/components/Navbar";
+import ScrollToTop from "@/components/ScrollToTop";
 import { Themeprovider } from "@/context/ThemeProvider";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import ReactQueryProvider from "@/components/ReactQueryProvider";
@@ -30,6 +31,7 @@ export default function RootLayout({
             <TooltipProvider>
               <Navbar />
               <main className="px-8 py-32">{children}</main>
+              <ScrollToTop />
             </TooltipProvider>
           </ReactQueryProvider>
         </Themeprovider>
