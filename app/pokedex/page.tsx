@@ -60,22 +60,22 @@ const Pokedex = () => {
   return (
     <div className="mt-5 flex w-full flex-col items-center space-y-5">
       <h1 className="text-3xl text-primary sm:text-4xl">Pokédex</h1>
-      <div className="group relative flex w-full items-center gap-4 rounded-lg border border-primary/50 p-4 transition duration-300 ease-in-out hover:border-primary">
+      <Card className="group relative flex w-full items-center gap-4 rounded-lg p-4 transition duration-300 ease-in-out ">
         <div>
           <Icon
+            fontSize={24}
             icon="bx:bx-search"
             className="text-gray-400 transition duration-300 ease-in-out group-hover:text-black dark:group-hover:text-white"
-            fontSize={24}
           />
         </div>
         <Input
           placeholder="Search for a Pokémon by either name, number or type"
-          className="border-none text-gray-400 ease-in-out placeholder:transition placeholder:duration-300 focus:text-black group-hover:placeholder:translate-x-1"
+          className="border-none bg-transparent text-gray-400 shadow-none ease-in-out placeholder:transition placeholder:duration-300 focus:text-black group-hover:placeholder:translate-x-1"
         />
         <Button className="bg-yellow-400 text-primary transition duration-300 ease-in-out hover:scale-110 hover:bg-yellow-500 active:scale-95">
           Search
         </Button>
-      </div>
+      </Card>
       <div className="flex w-full flex-col justify-start gap-5 md:flex-row">
         <Card className="h-fit flex-1 flex-col gap-5 space-y-5 p-5">
           <div className="flex flex-col gap-5">
@@ -101,10 +101,10 @@ const Pokedex = () => {
             </Select>
           </div>
           <div className="md-flex-row flex flex-col gap-5">
-            <Button className="w-full bg-primary text-secondary transition duration-300 ease-in-out hover:scale-110 hover:bg-yellow-500 active:scale-95 dark:bg-secondary dark:text-primary">
+            <Button className="hover:bg-primary-dark w-full bg-primary text-secondary transition duration-300 ease-in-out hover:scale-110 active:scale-95 dark:bg-secondary dark:text-primary dark:hover:bg-yellow-500">
               Apply
             </Button>
-            <Button className="w-full border border-primary bg-transparent text-primary transition duration-300 ease-in-out hover:scale-110 hover:bg-gray-100 active:scale-95">
+            <Button className="hover:bg-secondary-dark w-full border border-primary bg-secondary text-primary transition duration-300 ease-in-out hover:scale-110 active:scale-95 dark:border-secondary dark:bg-primary dark:text-secondary">
               Reset
             </Button>
           </div>

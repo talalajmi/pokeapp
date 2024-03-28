@@ -31,7 +31,7 @@ const Navbar = () => {
                     ? "border-b-2 border-primary font-pokemon-solid font-bold tracking-widest text-primary transition duration-300 ease-in-out  dark:text-secondary "
                     : "font-pokemon-hollow font-normal tracking-widest text-black transition duration-300 ease-in-out hover:text-primary dark:text-white dark:hover:text-secondary "
                 }
-                `}
+                text-xl`}
               >
                 {link.label}
               </p>

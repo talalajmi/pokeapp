@@ -77,7 +77,7 @@ export default function Home() {
             <Button
               onClick={fetchPreviousPage}
               disabled={data?.previous === null}
-              className="group rounded-full  bg-yellow-400 transition duration-300 ease-in-out hover:scale-105 hover:bg-yellow-500 active:scale-95"
+              className="group rounded-full border border-primary bg-yellow-400 transition duration-300 ease-in-out hover:scale-105 hover:bg-yellow-500 active:scale-95"
             >
               <Icon
                 fontSize={20}
@@ -88,7 +88,7 @@ export default function Home() {
             <Button
               disabled={data?.next === null}
               onClick={fetchNextPage}
-              className="group rounded-full  bg-yellow-400 transition duration-300 ease-in-out hover:scale-105 hover:bg-yellow-500 active:scale-95"
+              className="group rounded-full border border-primary bg-yellow-400 transition duration-300 ease-in-out hover:scale-105 hover:bg-yellow-500 active:scale-95"
             >
               <Icon
                 fontSize={20}
