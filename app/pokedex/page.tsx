@@ -81,12 +81,12 @@ const Pokedex = () => {
           <div className="flex flex-col gap-5">
             <Select>
               <SelectTrigger>
-                <SelectValue placeholder="Theme" />
+                <SelectValue placeholder="Type" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="light">Light</SelectItem>
-                <SelectItem value="dark">Dark</SelectItem>
-                <SelectItem value="system">System</SelectItem>
+                <SelectItem value="fire">Fire</SelectItem>
+                <SelectItem value="ground">Ground</SelectItem>
+                <SelectItem value="water">Water</SelectItem>
               </SelectContent>
             </Select>
             <Select>
@@ -101,7 +101,7 @@ const Pokedex = () => {
             </Select>
           </div>
           <div className="md-flex-row flex flex-col gap-5">
-            <Button className="w-full bg-yellow-400 text-primary transition duration-300 ease-in-out hover:scale-110 hover:bg-yellow-500 active:scale-95">
+            <Button className="w-full bg-primary text-secondary transition duration-300 ease-in-out hover:scale-110 hover:bg-yellow-500 active:scale-95 dark:bg-secondary dark:text-primary">
               Apply
             </Button>
             <Button className="w-full border border-primary bg-transparent text-primary transition duration-300 ease-in-out hover:scale-110 hover:bg-gray-100 active:scale-95">
