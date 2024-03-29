@@ -30,10 +30,10 @@ const NavContent = () => {
                 isActive
                   ? "w-fit border-b-2 border-primary font-pokemon-solid text-primary dark:border-secondary"
                   : "font-pokemon-hollow text-black dark:text-white dark:hover:text-primary "
-              }tracking-widest text-xl transition duration-300 ease-in-out`}
+              }tracking-widest text-2xl transition duration-300 ease-in-out`}
             >
               <p
-                className={`${isActive ? "text-primary dark:text-secondary" : ""}`}
+                className={`${isActive ? "text-primary dark:text-secondary" : "font-pokemon-hollow"}`}
               >
                 {link.label}
               </p>
@@ -51,15 +51,15 @@ const MobileNav = () => {
       <SheetTrigger asChild>
         <Icon
           fontSize={28}
-          className="text-primary dark:text-secondary"
           icon="material-symbols:menu"
+          className="text-primary dark:text-secondary"
         />
       </SheetTrigger>
-      <SheetContent side="right" className="border-none dark:bg-black">
+      <SheetContent side="right">
         <Link href="/">
           <Image src="/pokemon.svg" width={150} height={150} alt="pokeapp" />
         </Link>
-        <hr className="mt-5 bg-blue-500/20" />
+        <hr className="dark:bg-secondary-dark mt-5 h-0.5 bg-primary" />
         <SheetClose asChild>
           <NavContent />
         </SheetClose>

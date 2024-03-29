@@ -36,6 +36,16 @@ const PokemonDetails = ({ params }: PokemonDetailsProps) => {
 
   if (!pokemon) return <div>Not Found</div>;
 
+  const listenToLatestCry = () => {
+    const cry = new Audio(pokemon.cries.latest);
+    cry.play();
+  };
+
+  const listenToLegacyyCry = () => {
+    const cry = new Audio(pokemon.cries.legacy);
+    cry.play();
+  };
+
   return (
     <div className="flex flex-col items-start justify-start gap-5">
       <div className="flex w-full items-center justify-between">
@@ -85,98 +95,86 @@ const PokemonDetails = ({ params }: PokemonDetailsProps) => {
           </TooltipContent>
         </Tooltip>
       </div>
-      <Card>
-        <CardContent>
-          <div className="flex w-full flex-col items-center justify-center gap-5">
+      <Card className="w-full">
+        <CardContent className="p-5">
+          <div className="grid h-full w-full grid-cols-1 gap-5 xl:grid-cols-2">
             <Image
-              width={200}
-              height={200}
+              width={350}
+              height={350}
               alt={pokemon.name}
-              className="h-auto w-auto object-contain "
               src={pokemon.sprites.other["official-artwork"].front_default}
+              className="justify-self-center rounded-full border-2 border-primary bg-secondary p-5"
             />
-            <p className="mb-5 text-start text-2xl text-primary dark:text-secondary">
-              {fixWordCasing(pokemon.name)}
-            </p>
-            <div className="flex w-full flex-col-reverse items-start justify-start gap-10 lg:flex-row">
-              <div className="flex w-full flex-1 flex-col gap-5">
-                <div className="flex gap-3">
-                  <p>Height:</p>
-                  <p>{pokemon.height} m</p>
-                </div>
-                <div className="flex gap-3">
-                  <p>Weight:</p>
-                  <p>{pokemon.weight} kg</p>
-                </div>
-                {
-                  <div>
-                    <p>Abilities:</p>
-                    <ul className="flex space-x-5">
-                      {pokemon.abilities
-                        .map(
-                          (ability) =>
-                            `${fixWordCasing(ability.ability.name)}${
-                              ability.is_hidden ? " (Hidden)" : ""
-                            }`,
-                        )
-                        .join(", ")}
-                    </ul>
-                  </div>
-                }
-                {
-                  <div className="space-y-3">
-                    <p>Types:</p>
-                    <ul className="flex space-x-5">
-                      {pokemon.types.map((item) => (
-                        <TypePill key={item.type.name} type={item.type.name} />
-                      ))}
-                    </ul>
-                  </div>
-                }
-                {
-                  <div>
-                    <p>{fixWordCasing(pokemon.name)} Stats:</p>
-                    <ul className="w-full">
-                      {pokemon.stats.map((stat) => (
-                        <div
-                          key={stat.stat.name}
-                          className="flex items-center gap-5 space-y-3"
-                        >
-                          <div className="flex w-full gap-1">
-                            <p>{fixWordCasing(stat.stat.name)}:</p>
-                            <p>{stat.base_stat}</p>
-                          </div>
-                          <Progress value={stat.base_stat} />
-                        </div>
-                      ))}
-                    </ul>
-                  </div>
-                }
+            <div className="flex flex-col gap-4">
+              <h1 className="text-3xl text-primary dark:text-secondary">
+                {fixWordCasing(pokemon.name)}
+              </h1>
+              <div className="flex gap-2">
+                {pokemon.types.map((type) => (
+                  <TypePill key={type.type.name} type={type.type.name} />
+                ))}
               </div>
-              <div className="flex flex-[2] flex-col items-start gap-10">
-                <div className="flex flex-col items-start justify-start gap-5">
-                  <p className="text-xl text-primary dark:text-secondary">
-                    Pokemon Description
-                  </p>
-                  <p>
-                    Lorem Ipsum is simply dummy text of the printing and
-                    typesetting industry. Lorem Ipsum has been the
-                    industry&apos;s standard dummy text ever since the 1500s,
-                    when an unknown printer took a galley of type and scrambled
-                    it to make a type specimen book. It has survived not only
-                    five centuries, but also the leap into electronic
-                    typesetting, remaining essentially unchanged. It was
-                    popularised in the 1960s with the release of Letraset sheets
-                    containing Lorem Ipsum passages, and more recently with
-                    desktop publishing software like Aldus PageMaker including
-                    versions of Lorem Ipsum.
-                  </p>
+              <div className="mt-2 flex items-center gap-2">
+                <p>Height:</p>
+                <p>{pokemon.height}</p>
+              </div>
+              <div className="flex items-center gap-2">
+                <p>Weight:</p>
+                <p>{pokemon.weight}</p>
+              </div>
+              <div className="flex items-center gap-2">
+                <p>Abilities:</p>
+                <div className="flex gap-2">
+                  {pokemon.abilities.map((ability) => (
+                    <div key={ability.ability.name}>
+                      {fixWordCasing(ability.ability.name)}
+                    </div>
+                  ))}
                 </div>
-                <div className="w-full">
-                  <PokemonSpeciesAndEvolution pokemon={pokemon} />
+              </div>
+              <div className="flex flex-wrap items-center gap-2">
+                <p>Moves:</p>
+                <div className="flex flex-wrap gap-2">
+                  {pokemon.moves.slice(0, 5).map((move) => (
+                    <div key={move.move.name}>
+                      {fixWordCasing(move.move.name)}
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div className="flex flex-col">
+                <p>{fixWordCasing(pokemon.name)} Cries:</p>
+                <div className="flex flex-col gap-4 md:flex-row">
+                  <Button
+                    onClick={listenToLatestCry}
+                    className="hover:bg-secondary-dark mt-5 w-full rounded-full border-2 border-primary bg-secondary text-primary transition duration-300 ease-in-out hover:scale-105 active:scale-95"
+                  >
+                    Cry 1
+                  </Button>
+                  <Button
+                    onClick={listenToLegacyyCry}
+                    className="hover:bg-secondary-dark mt-5 w-full rounded-full border-2 border-primary bg-secondary text-primary transition duration-300 ease-in-out hover:scale-105 active:scale-95"
+                  >
+                    Cry 2
+                  </Button>
                 </div>
               </div>
             </div>
+            <div className="flex flex-col gap-4">
+              <p>Base Experience: {pokemon.base_experience}</p>
+              <p>{fixWordCasing(pokemon.name)} Stats</p>
+              {pokemon.stats.map((stat) => (
+                <div key={stat.stat.name} className="flex items-center gap-2">
+                  <p>{fixWordCasing(stat.stat.name)}:</p>
+                  <Progress
+                    max={255}
+                    className="bg-primary-dark dark:bg-secondary-dark outline-non h-2 w-1/2"
+                    value={stat.base_stat}
+                  />
+                </div>
+              ))}
+            </div>
+            <PokemonSpeciesAndEvolution pokemon={pokemon} />
           </div>
         </CardContent>
       </Card>
