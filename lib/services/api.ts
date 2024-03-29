@@ -10,6 +10,7 @@ const pokemonEndpoints = {
   getPokemons: (offset: number) =>
     `${baseUrl}pokemon?limit=20&offset=${offset}`,
   getPokemon: (id: number) => `${baseUrl}pokemon/${id}`,
+  getSpecies: (id: number) => `${baseUrl}pokemon-species/${id}`,
   getPokemonEvolution: (id: number) => `${baseUrl}evolution-chain/${id}`,
 };
 

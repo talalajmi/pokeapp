@@ -35,7 +35,7 @@ const ScrollToTop = () => {
       <Button
         variant="secondary"
         onClick={scrollToTop}
-        className={`hover:bg-secondary-dark transform rounded-full border border-primary px-2 py-5 transition-transform duration-300 ease-in-out ${isVisible ? "scale-100" : "scale-0"}`}
+        className={`hover:bg-secondary-dark transform rounded-full border border-primary px-2 py-5 transition-all duration-300 ease-in-out ${isVisible ? "scale-100" : "scale-0"}`}
       >
         <Icon
           fontSize={24}

@@ -4,7 +4,12 @@ import PokemonCard from "./PokemonCard";
 import LongArrowRight from "./LongArrowRight";
 import usePokeApi from "@/lib/hooks/usePokeApi";
 import { useQuery } from "@tanstack/react-query";
-import { Pokemon, PokemonEvolutionChain, PokemonSpecies } from "@/lib/types";
+import {
+  Pokemon,
+  PokemonEvolutionChain,
+  GetPokemonSpeciesResponse,
+} from "@/lib/types";
+import { fixWordCasing } from "@/lib/helpers";
 
 interface PokemonSpeciesAndEvolutionProps {
   pokemon: Pokemon;
@@ -14,7 +19,7 @@ const PokemonSpeciesAndEvolution = ({
   pokemon,
 }: PokemonSpeciesAndEvolutionProps) => {
   // ** Hooks
-  const { data: species, isLoading } = usePokeApi<PokemonSpecies>(
+  const { data: species, isLoading } = usePokeApi<GetPokemonSpeciesResponse>(
     pokemon.species.url,
   );
 
@@ -41,39 +46,46 @@ const PokemonSpeciesAndEvolution = ({
             evolutionChain ? (
               <div className="space-y-5">
                 <div className="font-pokemon-solid text-lg text-primary dark:text-secondary">
-                  Evolution Chain:
+                  {fixWordCasing(pokemon.name)} Evolution Chain:
                 </div>
-                {evolutionChain.chain.evolves_to.map((evolution, index) => (
-                  <div
-                    key={index}
-                    className="flex flex-col items-center justify-start gap-5 md:flex-row"
-                  >
-                    <PokemonCard
-                      pokemon={{
-                        name: evolution.species.name,
-                        url: evolution.species.url,
-                      }}
-                    />
-                    {evolution.evolves_to.map((evolution) => (
-                      <div
-                        key={evolution.species.name}
-                        className="flex flex-col items-center justify-center gap-5 md:flex-row"
-                      >
-                        <LongArrowRight
-                          width={150}
-                          height={150}
-                          className="h-auto w-auto rotate-90 fill-primary dark:fill-secondary md:rotate-0"
-                        />
-                        <PokemonCard
-                          pokemon={{
-                            name: evolution.species.name,
-                            url: evolution.species.url,
-                          }}
-                        />
-                      </div>
-                    ))}
+                {evolutionChain.chain.evolves_to.length !== 0 ? (
+                  evolutionChain.chain.evolves_to.map((evolution, index) => (
+                    <div
+                      key={index}
+                      className="flex flex-col items-center justify-start gap-5 md:flex-row"
+                    >
+                      <PokemonCard
+                        pokemon={{
+                          name: evolution.species.name,
+                          url: evolution.species.url,
+                        }}
+                      />
+                      {evolution.evolves_to.map((evolution) => (
+                        <div
+                          key={evolution.species.name}
+                          className="flex flex-col items-center justify-center gap-5 md:flex-row"
+                        >
+                          <LongArrowRight
+                            width={150}
+                            height={150}
+                            className="h-auto w-auto rotate-90 fill-primary dark:fill-secondary md:rotate-0"
+                          />
+                          <PokemonCard
+                            pokemon={{
+                              name: evolution.species.name,
+                              url: evolution.species.url,
+                            }}
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  ))
+                ) : (
+                  <div>
+                    No evolution chain available for{" "}
+                    {fixWordCasing(pokemon.name)}
                   </div>
-                ))}
+                )}
               </div>
             ) : isLoading ? (
               <div>Loading Evolution Chain...</div>

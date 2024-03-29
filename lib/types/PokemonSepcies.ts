@@ -35,7 +35,7 @@ interface Variety {
   pokemon: NamedAPIResource;
 }
 
-export interface PokemonSpecies {
+export interface GetPokemonSpeciesResponse {
   base_happiness: number;
   capture_rate: number;
   color: NamedAPIResource;
