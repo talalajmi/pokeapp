@@ -33,7 +33,7 @@ const PokemonDetails = ({ params }: PokemonDetailsProps) => {
   const [showFullDescription, setShowFullDescription] = useState(false);
 
   // ** Hooks
-  const { data: pokemons } = useGetPokemons(0);
+  const { data: pokemons } = useGetPokemons();
   const { data: pokemon, isLoading } = useGetPokemon(params.id);
   const { data: pokemonSpecies, isLoading: isLoadingPokemonSpecies } =
     useGetSpecies(pokemon?.species.url);
