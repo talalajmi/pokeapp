@@ -26,7 +26,6 @@ import { Button } from "@/components/ui/button";
 import PokemonCard from "@/components/PokemonCard";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, Controller } from "react-hook-form";
-import useGetAbilities from "@/lib/hooks/useGetAbilities";
 import PokemonCardLoadingSkeleton from "@/components/PokemonCardLoadingSkeleton";
 import usePokeApi from "@/lib/hooks/usePokeApi";
 import pokemonEndpoints from "@/lib/services/api";
@@ -54,10 +53,10 @@ interface Pokemon {
 const Pokedex = () => {
   // ** States
   const [currentPage, setCurrentPage] = useState(1);
+  const [isFiltered, setIsFiltered] = useState(false);
   const [filteredPokemons, setFilteredPokemons] = useState<Pokemon[]>([]);
-  const [isLoadingFilteredPokemons, setIsLoadingFilteredPokemons] = useState<
-    Pokemon[]
-  >([]);
+  const [isLoadingFilteredPokemons, setIsLoadingFilteredPokemons] =
+    useState(false);
 
   const [getPokemonsUrl, setGetPokemonsUrl] = useState(
     pokemonEndpoints.getPokemons,
@@ -83,6 +82,9 @@ const Pokedex = () => {
 
   // ** Functions
   const filterPokemons = async (data: FormValues) => {
+    console.log("running");
+    setIsFiltered(true);
+    setIsLoadingFilteredPokemons(true);
     if (data.type && data.ability) {
       try {
         const pokemonsByTypeReponse: AxiosResponse<GetTypeResponse> =
@@ -99,8 +101,10 @@ const Pokedex = () => {
                 .some((a) => a.name === p.name),
             ),
         );
+        setIsLoadingFilteredPokemons(false);
       } catch (error) {
         console.error(error);
+        setIsLoadingFilteredPokemons(false);
       }
     } else if (data.type) {
       try {
@@ -109,8 +113,10 @@ const Pokedex = () => {
         setFilteredPokemons(
           pokemonsByTypeReponse.data.pokemon.map((p) => p.pokemon),
         );
+        setIsLoadingFilteredPokemons(false);
       } catch (error) {
         console.error(error);
+        setIsLoadingFilteredPokemons(false);
       }
     } else if (data.ability) {
       try {
@@ -119,16 +125,23 @@ const Pokedex = () => {
         setFilteredPokemons(
           pokemonsByAbilityReponse.data.pokemon.map((p) => p.pokemon),
         );
+        setIsLoadingFilteredPokemons(false);
       } catch (error) {
         console.error(error);
+        setIsLoadingFilteredPokemons(false);
       }
     }
 
+    setIsLoadingFilteredPokemons(false);
     return;
   };
 
+  console.log(isFiltered);
+
   const handeResetFilters = () => {
-    reset(defaultValues);
+    console.log("resetting");
+    reset();
+    setIsFiltered(false);
     setFilteredPokemons([]);
   };
 
@@ -157,7 +170,7 @@ const Pokedex = () => {
           </div>
           <div className="flex items-center gap-5">
             <Button
-              className="hover:bg-secondary-dark w-full rounded-full bg-secondary transition duration-300 ease-in-out"
+              className="w-full rounded-full bg-secondary transition duration-300 ease-in-out hover:bg-secondary-dark"
               disabled={pokemons.previous === null}
               onClick={() =>
                 pokemons.previous && setGetPokemonsUrl(pokemons.previous)
@@ -171,7 +184,7 @@ const Pokedex = () => {
             </Button>
 
             <Button
-              className="hover:bg-secondary-dark w-full rounded-full bg-secondary transition duration-300 ease-in-out"
+              className="w-full rounded-full bg-secondary transition duration-300 ease-in-out hover:bg-secondary-dark"
               disabled={pokemons.next === null}
               onClick={() => pokemons.next && setGetPokemonsUrl(pokemons.next)}
             >
@@ -244,7 +257,7 @@ const Pokedex = () => {
             <Button
               onClick={handlePreviousPage}
               disabled={currentPage === 1}
-              className="hover:bg-secondary-dark w-full rounded-full bg-secondary transition duration-300 ease-in-out"
+              className="w-full rounded-full bg-secondary transition duration-300 ease-in-out hover:bg-secondary-dark"
             >
               <Icon
                 fontSize={24}
@@ -255,7 +268,7 @@ const Pokedex = () => {
             <Button
               onClick={handleNextPage}
               disabled={currentPage === totalPages}
-              className="hover:bg-secondary-dark w-full rounded-full bg-secondary transition duration-300 ease-in-out"
+              className="w-full rounded-full bg-secondary transition duration-300 ease-in-out hover:bg-secondary-dark"
             >
               <Icon
                 fontSize={24}
@@ -285,14 +298,19 @@ const Pokedex = () => {
             placeholder="Search for a Pokémon by either name, number or type"
             className="border-none bg-transparent text-gray-400 shadow-none ease-in-out placeholder:transition placeholder:duration-300 focus:text-black group-hover:placeholder:translate-x-1"
           />
-          <Button className="border border-primary bg-yellow-400 text-primary transition duration-300 ease-in-out hover:scale-110 hover:bg-yellow-500 active:scale-95">
+          <Button className="border border-primary bg-yellow-400 text-primary transition duration-300 ease-in-out  hover:bg-yellow-500 active:scale-95">
             Search
           </Button>
         </div>
       </Card>
       <div className="flex w-full flex-col justify-start gap-5 xl:relative xl:flex-row">
         <Card className="top-32 h-fit flex-1 p-5 xl:sticky">
-          <form onSubmit={handleSubmit(filterPokemons)}>
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              handleSubmit(filterPokemons);
+            }}
+          >
             <div className="flex-col gap-5 space-y-5">
               <div className="flex flex-col gap-5">
                 <Controller
@@ -398,13 +416,18 @@ const Pokedex = () => {
               <div className="md-flex-row flex flex-col gap-5">
                 <Button
                   type="submit"
-                  className="hover:bg-primary-dark w-full border border-primary bg-primary text-secondary transition duration-300 ease-in-out active:scale-95 dark:bg-secondary dark:text-primary dark:hover:bg-yellow-500 xl:hover:scale-110"
+                  className="xl: w-full border border-primary bg-primary text-secondary transition duration-300 ease-in-out hover:bg-primary-dark active:scale-95 dark:bg-secondary dark:text-primary dark:hover:bg-yellow-500"
                 >
                   Apply
                 </Button>
                 <Button
-                  onClick={handeResetFilters}
-                  className="hover:bg-secondary-dark w-full border border-primary bg-secondary text-primary transition duration-300 ease-in-out hover:scale-110 active:scale-95 dark:bg-primary dark:text-secondary"
+                  onClick={() => {
+                    console.log("resetting");
+                    setIsFiltered(false);
+                    setFilteredPokemons([]);
+                    reset();
+                  }}
+                  className="xl: w-full border border-primary bg-secondary text-primary transition duration-300 ease-in-out hover:bg-secondary-dark active:scale-95 dark:bg-primary dark:text-secondary"
                 >
                   Reset
                 </Button>
@@ -413,12 +436,12 @@ const Pokedex = () => {
           </form>
         </Card>
         <div className="w-full flex-[3] flex-col items-start space-y-5 lg:flex-[5]">
-          {isLoading || !pokemons ? (
+          {isLoading || !pokemons || isLoadingFilteredPokemons ? (
             <PokemCardsLoadingSkeleton />
-          ) : filteredPokemons.length !== 0 ? (
+          ) : isFiltered && filteredPokemons.length !== 0 ? (
             renderFilteredPokemons(filteredPokemons)
-          ) : filteredPokemons.length === 0 && !pokemons ? (
-            <div className="flex h-96 w-full flex-col items-center justify-center gap-5">
+          ) : isFiltered && filteredPokemons.length === 0 ? (
+            <Card className="flex h-96 w-full flex-col items-center justify-center gap-5">
               <Image
                 width={100}
                 height={100}
@@ -429,9 +452,22 @@ const Pokedex = () => {
               <p className="text-center text-2xl text-primary dark:text-secondary">
                 No Pokémons found for the selected filters
               </p>
-            </div>
-          ) : (
+            </Card>
+          ) : !isFiltered && pokemons ? (
             renderPokemons(pokemons)
+          ) : (
+            <Card className="flex h-96 w-full flex-col items-center justify-center gap-5">
+              <Image
+                width={100}
+                height={100}
+                alt="pokeball"
+                src="/images/poke-ball.png"
+                className="h-auto w-auto object-contain"
+              />
+              <p className="text-center text-2xl text-primary dark:text-secondary">
+                No Pokémons found
+              </p>
+            </Card>
           )}
         </div>
       </div>
@@ -461,7 +497,7 @@ const PokemCardsLoadingSkeleton = () => {
           <p>Loading Pokémons...</p>
         </div>
         <div className="flex items-center gap-5">
-          <Button className="hover:bg-secondary-dark w-full rounded-full bg-secondary transition duration-300 ease-in-out">
+          <Button className="w-full rounded-full bg-secondary transition duration-300 ease-in-out hover:bg-secondary-dark">
             <Icon
               fontSize={24}
               icon="akar-icons:arrow-left"
@@ -469,7 +505,7 @@ const PokemCardsLoadingSkeleton = () => {
             />
           </Button>
 
-          <Button className="hover:bg-secondary-dark w-full rounded-full bg-secondary transition duration-300 ease-in-out">
+          <Button className="w-full rounded-full bg-secondary transition duration-300 ease-in-out hover:bg-secondary-dark">
             <Icon
               fontSize={24}
               icon="akar-icons:arrow-right"

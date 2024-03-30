@@ -29,7 +29,7 @@ const Pagination = ({
         <Button
           disabled={currentPage === 1}
           onClick={() => onPageChange(currentPage - 1)}
-          className="rounded-full border border-primary bg-yellow-400 transition duration-300 ease-in-out hover:scale-110 hover:bg-yellow-500 active:scale-95"
+          className="rounded-full border border-primary bg-yellow-400 transition duration-300 ease-in-out  hover:bg-yellow-500 active:scale-95"
         >
           <Icon
             fontSize={24}
@@ -42,7 +42,7 @@ const Pagination = ({
         </div>
         <Button
           onClick={() => onPageChange(currentPage + 1)}
-          className="rounded-full border border-primary bg-yellow-400 transition duration-300 ease-in-out hover:scale-110 hover:bg-yellow-500 active:scale-95"
+          className="rounded-full border border-primary bg-yellow-400 transition duration-300 ease-in-out  hover:bg-yellow-500 active:scale-95"
         >
           <Icon
             fontSize={24}
@@ -57,7 +57,7 @@ const Pagination = ({
         {currentPage > 1 && (
           <Button
             onClick={() => onPageChange(currentPage - 1)}
-            className="rounded-full border border-primary bg-yellow-400 transition duration-300 ease-in-out hover:scale-110 hover:bg-yellow-500 active:scale-95"
+            className="rounded-full border border-primary bg-yellow-400 transition duration-300 ease-in-out  hover:bg-yellow-500 active:scale-95"
           >
             <Icon
               fontSize={24}
@@ -69,7 +69,7 @@ const Pagination = ({
         <Button
           onClick={() => onPageChange(1)}
           disabled={currentPage === 1}
-          className={`rounded-full ${currentPage === 1 ? "bg-primary text-yellow-400" : "border border-primary bg-yellow-400 text-primary"}   transition duration-300 ease-in-out hover:scale-110 hover:bg-yellow-500 active:scale-95`}
+          className={`rounded-full ${currentPage === 1 ? "bg-primary text-yellow-400" : "border border-primary bg-yellow-400 text-primary"}   transition duration-300 ease-in-out  hover:bg-yellow-500 active:scale-95`}
         >
           1
         </Button>
@@ -80,8 +80,8 @@ const Pagination = ({
             onClick={() => onPageChange(page)}
             className={
               page === currentPage
-                ? "rounded-full border border-secondary bg-blue-700 text-yellow-400 transition duration-300 ease-in-out hover:scale-110 hover:bg-blue-600 active:scale-95 active:bg-blue-700"
-                : "rounded-full border border-primary bg-yellow-400 text-primary transition duration-300 ease-in-out hover:scale-110 hover:bg-yellow-500 active:scale-95 active:bg-yellow-600"
+                ? "rounded-full border border-secondary bg-blue-700 text-yellow-400 transition duration-300 ease-in-out  hover:bg-blue-600 active:scale-95 active:bg-blue-700"
+                : "rounded-full border border-primary bg-yellow-400 text-primary transition duration-300 ease-in-out  hover:bg-yellow-500 active:scale-95 active:bg-yellow-600"
             }
           >
             {page}
@@ -91,7 +91,7 @@ const Pagination = ({
         <Button
           onClick={() => onPageChange(totalPages)}
           disabled={currentPage === totalPages}
-          className={`rounded-full border border-primary ${currentPage === totalPages ? "bg-blue-700 text-secondary" : "bg-yellow-400 text-primary"} transition duration-300 ease-in-out hover:scale-110 hover:bg-yellow-500 active:scale-95`}
+          className={`rounded-full border border-primary ${currentPage === totalPages ? "bg-blue-700 text-secondary" : "bg-yellow-400 text-primary"} transition duration-300 ease-in-out  hover:bg-yellow-500 active:scale-95`}
         >
           {totalPages}
         </Button>
@@ -99,7 +99,7 @@ const Pagination = ({
           <Button
             disabled={currentPage === totalPages}
             onClick={() => onPageChange(currentPage + 1)}
-            className="rounded-full border border-primary bg-yellow-400  transition duration-300 ease-in-out hover:scale-110 hover:bg-yellow-500 active:scale-95"
+            className="rounded-full border border-primary bg-yellow-400  transition duration-300 ease-in-out  hover:bg-yellow-500 active:scale-95"
           >
             <Icon
               fontSize={24}

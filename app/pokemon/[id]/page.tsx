@@ -29,8 +29,8 @@ interface PokemonDetailsProps {
 
 const PokemonDetails = ({ params }: PokemonDetailsProps) => {
   const [currentUrlIndex, setCurrentUrlIndex] = useState(0);
-  const [imgSrc, setImgSrc] = useState(getPokemonImageOfficial(params.id));
   const [showFullDescription, setShowFullDescription] = useState(false);
+  const [imgSrc, setImgSrc] = useState(getPokemonImageOfficial(params.id));
 
   // ** Hooks
   const { data: pokemons } = useGetPokemons();
@@ -78,7 +78,7 @@ const PokemonDetails = ({ params }: PokemonDetailsProps) => {
               <Link href={`/pokemon/${pokemon.id - 1}`}>
                 <Button
                   variant="secondary"
-                  className="hover:bg-secondary-dark rounded-full border border-primary transition duration-300 ease-out hover:scale-110 active:scale-95"
+                  className="hover:bg-secondary-dark rounded-full border border-primary transition duration-300 ease-out  active:scale-95"
                 >
                   <Icon
                     fontSize={24}
@@ -103,7 +103,7 @@ const PokemonDetails = ({ params }: PokemonDetailsProps) => {
             <Link href={`/pokemon/${pokemon.id + 1}`}>
               <Button
                 variant="secondary"
-                className="hover:bg-secondary-dark rounded-full border border-primary transition duration-300 ease-out hover:scale-110 active:scale-95"
+                className="hover:bg-secondary-dark rounded-full border border-primary transition duration-300 ease-out  active:scale-95"
               >
                 <Icon
                   fontSize={24}
