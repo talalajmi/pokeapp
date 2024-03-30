@@ -10,10 +10,10 @@ const PokemonCardLoadingSkeleton = () => {
       </div>
       <CardContent className="flex aspect-square flex-col items-center justify-around gap-5">
         <Skeleton className="h-44 w-44 rounded-full bg-gray-200 dark:bg-gray-500" />
-        <div className="flex w-full flex-col items-center justify-between gap-3 lg:flex-row">
+        <div className="flex w-full flex-col items-center justify-between gap-3 xl:flex-row">
           <Skeleton className="h-4 w-[6rem] bg-gray-200 dark:bg-gray-500" />
           <div className="flex items-center gap-2">
-            <Skeleton className="h-4 w-[6rem] bg-gray-200 dark:bg-gray-500" />
+            <Skeleton className="h-4 w-[8rem] bg-gray-200 dark:bg-gray-500 xl:w-[6rem]" />
           </div>
         </div>
       </CardContent>

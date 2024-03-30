@@ -127,7 +127,6 @@ const Pokedex = () => {
           {pokemons.results.map((pokemon) => (
             <PokemonCard key={pokemon.name} pokemon={pokemon} />
           ))}
-          P
         </div>
         <div className="flex flex-col justify-start gap-5 lg:flex-row lg:justify-between">
           <div className="group flex items-center justify-between gap-5 rounded-full border-[3px] border-black bg-red-500 px-2 py-1 text-white">

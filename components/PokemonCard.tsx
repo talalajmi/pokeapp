@@ -59,7 +59,7 @@ const PokemonCard = ({ pokemon }: PokemonCardProps) => {
                 alt={`${pokemon.name + 1}`}
                 className="h-auto w-auto object-contain transition duration-300 ease-in-out group-hover:scale-110 group-active:scale-95"
               />
-              <div className="flex w-full flex-col items-center justify-between gap-3 lg:flex-row">
+              <div className="flex w-full flex-col items-center justify-between gap-3 xl:flex-row">
                 <p className=" transition duration-300 ease-in-out dark:text-gray-400 dark:group-hover:text-white">
                   {fixWordCasing(pokemon.name)}
                 </p>
