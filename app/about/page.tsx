@@ -1,5 +1,5 @@
 import { Card, CardContent } from "@/components/ui/card";
-import { getPokemonImage } from "@/lib/helpers";
+import { getPokemonImageDreamWorld } from "@/lib/helpers";
 import Image from "next/image";
 import React from "react";
 
@@ -13,7 +13,7 @@ const AboutPage = () => {
             height={150}
             alt="Pikachu"
             className="mx-auto"
-            src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/25.svg"
+            src={getPokemonImageDreamWorld(25)}
           />
           <h1 className="w-full text-center text-4xl text-primary dark:text-secondary md:text-start">
             About

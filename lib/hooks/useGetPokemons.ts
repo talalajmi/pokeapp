@@ -3,17 +3,15 @@ import pokemonEndpoints from "../services/api";
 import { useQuery } from "@tanstack/react-query";
 import { GetPokemonsResponse, Pokemon } from "../types";
 
-const GetPokemons = async (
-  offset: number,
-): Promise<GetPokemonsResponse | undefined> => {
-  const response = await axios.get(pokemonEndpoints.getPokemons(offset));
+const GetPokemons = async (): Promise<GetPokemonsResponse | undefined> => {
+  const response = await axios.get(pokemonEndpoints.getPokemons);
   return response.data as GetPokemonsResponse;
 };
 
-const useGetPokemons = (offset: number) => {
+const useGetPokemons = () => {
   return useQuery({
-    queryKey: ["GetPokemons", offset],
-    queryFn: () => GetPokemons(offset),
+    queryKey: ["GetPokemons"],
+    queryFn: GetPokemons,
   });
 };
 

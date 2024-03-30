@@ -6,9 +6,8 @@ const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 // ** The pokemonEndpoints object stores all the endpoints of the API
 const pokemonEndpoints = {
   getTypes: `${baseUrl}type`,
-  getAbilities: `${baseUrl}ability`,
-  getPokemons: (offset: number) =>
-    `${baseUrl}pokemon?limit=20&offset=${offset}`,
+  getAbilities: `${baseUrl}ability?limit=400`,
+  getPokemons: `${baseUrl}pokemon?limit=20&offset=0`,
   getPokemon: (id: number) => `${baseUrl}pokemon/${id}`,
   getSpecies: (id: number) => `${baseUrl}pokemon-species/${id}`,
   getPokemonEvolution: (id: number) => `${baseUrl}evolution-chain/${id}`,

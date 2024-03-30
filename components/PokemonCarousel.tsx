@@ -12,7 +12,7 @@ import {
 } from "./ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
 import Image from "next/image";
-import { getPokemonImage } from "@/lib/helpers";
+import { getPokemonImageOfficial } from "@/lib/helpers";
 
 const PokemonCarousel = () => {
   // ** States
@@ -40,7 +40,7 @@ const PokemonCarousel = () => {
                     width={150}
                     height={150}
                     alt={`${index + 1}`}
-                    src={getPokemonImage(index + 1)}
+                    src={getPokemonImageOfficial(index + 1)}
                     className="h-auto w-auto object-contain"
                   />
                 </CardContent>

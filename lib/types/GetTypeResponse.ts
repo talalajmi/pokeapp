@@ -41,6 +41,6 @@ export interface GetTypeResponse {
   moves: Move[];
   name: string;
   names: PokemonTypeName[];
-  past_damage_relations: any[]; // Could be detailed further based on API schema
+  past_damage_relations: any[];
   pokemon: PokemonEntry[];
 }

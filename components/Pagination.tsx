@@ -37,6 +37,9 @@ const Pagination = ({
             className="text-primary transition duration-300 ease-in-out"
           />
         </Button>
+        <div className="flex items-center gap-2 font-pokemon-hollow text-2xl text-primary dark:text-secondary">
+          {currentPage} / {totalPages}
+        </div>
         <Button
           onClick={() => onPageChange(currentPage + 1)}
           className="rounded-full border border-primary bg-yellow-400 transition duration-300 ease-in-out hover:scale-110 hover:bg-yellow-500 active:scale-95"
@@ -88,21 +91,23 @@ const Pagination = ({
         <Button
           onClick={() => onPageChange(totalPages)}
           disabled={currentPage === totalPages}
-          className="rounded-full border border-primary bg-yellow-400 text-primary transition duration-300 ease-in-out hover:scale-110 hover:bg-yellow-500 active:scale-95"
+          className={`rounded-full border border-primary ${currentPage === totalPages ? "bg-blue-700 text-secondary" : "bg-yellow-400 text-primary"} transition duration-300 ease-in-out hover:scale-110 hover:bg-yellow-500 active:scale-95`}
         >
           {totalPages}
         </Button>
-        <Button
-          disabled={currentPage === totalPages}
-          onClick={() => onPageChange(currentPage + 1)}
-          className="rounded-full border border-primary bg-yellow-400  transition duration-300 ease-in-out hover:scale-110 hover:bg-yellow-500 active:scale-95"
-        >
-          <Icon
-            fontSize={24}
-            icon="akar-icons:arrow-right"
-            className="text-primary transition duration-300 ease-in-out"
-          />
-        </Button>
+        {currentPage < totalPages && (
+          <Button
+            disabled={currentPage === totalPages}
+            onClick={() => onPageChange(currentPage + 1)}
+            className="rounded-full border border-primary bg-yellow-400  transition duration-300 ease-in-out hover:scale-110 hover:bg-yellow-500 active:scale-95"
+          >
+            <Icon
+              fontSize={24}
+              icon="akar-icons:arrow-right"
+              className="text-primary transition duration-300 ease-in-out"
+            />
+          </Button>
+        )}
       </div>
     </Fragment>
   );

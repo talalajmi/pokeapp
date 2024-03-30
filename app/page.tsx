@@ -4,26 +4,15 @@ import Image from "next/image";
 import { useState } from "react";
 import { Icon } from "@iconify/react";
 import { Button } from "@/components/ui/button";
-import { getPokemonImage } from "@/lib/helpers";
+import { getPokemonImageOfficial } from "@/lib/helpers";
 import PokemonCard from "@/components/PokemonCard";
 import useGetPokemons from "@/lib/hooks/useGetPokemons";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import PokemonCarousel from "@/components/PokemonCarousel";
 
 export default function Home() {
-  // ** States
-  const [offset, setOffset] = useState(0);
-
   // ** Hooks
-  const { data, isLoading } = useGetPokemons(offset);
-
-  const fetchNextPage = () => {
-    setOffset(offset + 20);
-  };
-
-  const fetchPreviousPage = () => {
-    setOffset(offset - 20);
-  };
+  const { data, isLoading } = useGetPokemons();
 
   return (
     <main className="flex min-h-screen flex-col items-center gap-10">
@@ -62,7 +51,7 @@ export default function Home() {
               width="200"
               height="200"
               alt="Pokémon"
-              src={getPokemonImage(25)}
+              src={getPokemonImageOfficial(25)}
               className="h-auto w-auto object-contain"
             />
           </div>
@@ -75,7 +64,6 @@ export default function Home() {
           </p>
           <div className="flex items-center justify-between gap-3">
             <Button
-              onClick={fetchPreviousPage}
               disabled={data?.previous === null}
               className="group rounded-full border border-primary bg-yellow-400 transition duration-300 ease-in-out hover:scale-105 hover:bg-yellow-500 active:scale-95"
             >
@@ -87,7 +75,6 @@ export default function Home() {
             </Button>
             <Button
               disabled={data?.next === null}
-              onClick={fetchNextPage}
               className="group rounded-full border border-primary bg-yellow-400 transition duration-300 ease-in-out hover:scale-105 hover:bg-yellow-500 active:scale-95"
             >
               <Icon
@@ -121,7 +108,6 @@ export default function Home() {
       <section className="w-full">
         <div className="flex items-center justify-between gap-5">
           <Button
-            onClick={fetchPreviousPage}
             disabled={data?.previous === null}
             className="hover:bg-secondary-dark w-full rounded-full border border-primary bg-secondary transition duration-300 ease-in-out hover:scale-105 active:scale-95"
           >
@@ -132,10 +118,9 @@ export default function Home() {
             />
           </Button>
           <p className="w-full text-center font-pokemon-hollow text-2xl text-primary dark:text-secondary">
-            {`Page ${Math.ceil((offset || 0) / 20) + 1} / ${Math.ceil((data?.count || 0) / 20)}`}
+            {`Page ${Math.ceil((20 || 0) / 20) + 1} / ${Math.ceil((data?.count || 0) / 20)}`}
           </p>
           <Button
-            onClick={fetchNextPage}
             disabled={data?.next === null}
             className="hover:bg-secondary-dark w-full rounded-full border border-primary bg-secondary transition duration-300 ease-in-out hover:scale-105 active:scale-95"
           >
@@ -189,7 +174,7 @@ export default function Home() {
               width="200"
               height="200"
               alt="Pokémon"
-              src={getPokemonImage(25)}
+              src={getPokemonImageOfficial(25)}
               className="h-auto w-auto object-contain"
             />
           </div>

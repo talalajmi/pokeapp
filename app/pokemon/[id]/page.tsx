@@ -6,33 +6,40 @@ import Image from "next/image";
 import { useGetPokemons } from "@/lib/hooks";
 import { Progress } from "@/components/ui/progress";
 import useGetPokemon from "@/lib/hooks/useGetPokemon";
-import LongArrowRight from "@/components/LongArrowRight";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import { TooltipTrigger } from "@radix-ui/react-tooltip";
-import { fixWordCasing, getColorByType } from "@/lib/helpers";
+import {
+  fixWordCasing,
+  getPokemonImageDreamWorld,
+  getPokemonImageOfficial,
+} from "@/lib/helpers";
 import { Tooltip, TooltipContent } from "@/components/ui/tooltip";
 import PokemonSpeciesAndEvolution from "@/components/PokemonSpeciesAndEvolution";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Icon } from "@iconify/react";
 import useGetSpecies from "@/lib/hooks/useGetSpecies";
-import { type } from "os";
 import { Separator } from "@/components/ui/separator";
 
 interface PokemonDetailsProps {
   params: {
-    id: string;
+    id: number;
   };
 }
 
 const PokemonDetails = ({ params }: PokemonDetailsProps) => {
+  const [currentUrlIndex, setCurrentUrlIndex] = useState(0);
+  const [imgSrc, setImgSrc] = useState(getPokemonImageOfficial(params.id));
   const [showFullDescription, setShowFullDescription] = useState(false);
 
   // ** Hooks
   const { data: pokemons } = useGetPokemons(0);
-  const { data: pokemon, isLoading } = useGetPokemon(parseInt(params.id));
+  const { data: pokemon, isLoading } = useGetPokemon(params.id);
   const { data: pokemonSpecies, isLoading: isLoadingPokemonSpecies } =
     useGetSpecies(pokemon?.species.url);
+
+  // ** Constants
+  const fallbackUrls = [getPokemonImageDreamWorld(params.id)];
 
   if (isLoading)
     return (
@@ -43,6 +50,15 @@ const PokemonDetails = ({ params }: PokemonDetailsProps) => {
 
   if (!pokemon) return <div>Not Found</div>;
 
+  const handleImageError = () => {
+    if (currentUrlIndex < fallbackUrls.length) {
+      setImgSrc(fallbackUrls[currentUrlIndex]);
+      setCurrentUrlIndex(currentUrlIndex + 1);
+    } else {
+      setImgSrc("/images/poke-ball.png");
+    }
+  };
+
   const listenToLatestCry = () => {
     const cry = new Audio(pokemon.cries.latest);
     cry.play();
@@ -51,10 +67,6 @@ const PokemonDetails = ({ params }: PokemonDetailsProps) => {
   const listenToLegacyyCry = () => {
     const cry = new Audio(pokemon.cries.legacy);
     cry.play();
-  };
-
-  const getPokemonSpecies = () => {
-    return pokemon.species.url;
   };
 
   return (
@@ -110,12 +122,13 @@ const PokemonDetails = ({ params }: PokemonDetailsProps) => {
         <CardContent className="flex flex-col gap-10 p-5">
           <div className="grid h-full w-full grid-cols-1 gap-10 xl:grid-cols-2">
             <div className="flex flex-col items-center justify-center gap-4">
-              <div className="rounded-full border-2 border-primary bg-secondary p-4">
+              <div className="rounded-full border-2 border-primary bg-secondary p-10">
                 <Image
                   width={300}
                   height={300}
+                  src={imgSrc}
                   alt={pokemon.name}
-                  src={pokemon.sprites.other["official-artwork"].front_default}
+                  onError={handleImageError}
                 />
               </div>
               <h1 className="text-center text-3xl text-primary dark:text-secondary lg:text-start">
@@ -264,9 +277,30 @@ const PokemonDetails = ({ params }: PokemonDetailsProps) => {
 export default PokemonDetails;
 
 const TypePill = ({ type }: { type: string }) => {
+  const color = {
+    normal: "bg-gray-400",
+    fighting: "bg-red-500",
+    flying: "bg-blue-500",
+    poison: "bg-purple-500",
+    ground: "bg-yellow-500",
+    rock: "bg-yellow-800",
+    bug: "bg-green-500",
+    ghost: "bg-indigo-500",
+    steel: "bg-gray-500",
+    fire: "bg-red-600",
+    water: "bg-blue-600",
+    grass: "bg-green-600",
+    electric: "bg-yellow-600",
+    psychic: "bg-pink-500",
+    ice: "bg-blue-300",
+    dragon: "bg-blue-800",
+    dark: "bg-gray-800",
+    fairy: "bg-pink-300",
+  };
+
   return (
     <div
-      className={`rounded-full px-3 py-1 ${getColorByType(type)} text-white`}
+      className={`rounded-full px-3 py-1 ${color[type as keyof typeof color]} text-white`}
     >
       {fixWordCasing(type)}
     </div>

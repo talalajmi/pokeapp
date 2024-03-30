@@ -13,6 +13,9 @@ export const metadata: Metadata = {
   title: "Pokemon App",
   description:
     "This is a Pokemon App that is built with Next.js TailwindCSS and Shadcn UI. This app is a simple app that fetches data from the Pokemon API and displays it in a beautiful way.",
+  icons: {
+    icon: "/images/poke-ball.png",
+  },
 };
 
 export default function RootLayout({
@@ -22,15 +25,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <head>
-        <link rel="icon" href="/images/poke-ball.png" />
-      </head>
       <body className={`${inter.className}`}>
         <Themeprovider>
           <ReactQueryProvider>
             <TooltipProvider>
               <Navbar />
-              <main className="px-16 py-32">{children}</main>
+              <main className="px-8 py-32 md:px-16">{children}</main>
               <ScrollToTop />
             </TooltipProvider>
           </ReactQueryProvider>
