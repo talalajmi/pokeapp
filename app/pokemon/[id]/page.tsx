@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useGetPokemons } from "@/lib/hooks";
@@ -17,6 +17,7 @@ import { Button } from "@/components/ui/button";
 import { Icon } from "@iconify/react";
 import useGetSpecies from "@/lib/hooks/useGetSpecies";
 import { type } from "os";
+import { Separator } from "@/components/ui/separator";
 
 interface PokemonDetailsProps {
   params: {
@@ -25,6 +26,8 @@ interface PokemonDetailsProps {
 }
 
 const PokemonDetails = ({ params }: PokemonDetailsProps) => {
+  const [showFullDescription, setShowFullDescription] = useState(false);
+
   // ** Hooks
   const { data: pokemons } = useGetPokemons(0);
   const { data: pokemon, isLoading } = useGetPokemon(parseInt(params.id));
@@ -106,13 +109,12 @@ const PokemonDetails = ({ params }: PokemonDetailsProps) => {
       <Card className="w-full">
         <CardContent className="flex flex-col gap-10 p-5">
           <div className="grid h-full w-full grid-cols-1 gap-10 xl:grid-cols-2">
-            <div className="flex flex-col items-center gap-4">
+            <div className="flex flex-col items-center justify-center gap-4">
               <div className="rounded-full border-2 border-primary bg-secondary p-4">
                 <Image
-                  width={250}
-                  height={250}
+                  width={300}
+                  height={300}
                   alt={pokemon.name}
-                  className="h-auto w-auto"
                   src={pokemon.sprites.other["official-artwork"].front_default}
                 />
               </div>
@@ -133,7 +135,7 @@ const PokemonDetails = ({ params }: PokemonDetailsProps) => {
               </div>
               <div className="flex flex-col gap-5">
                 <p className="text-2xl text-primary dark:text-secondary">
-                  {fixWordCasing(pokemon.name)} basic information and stats:
+                  {fixWordCasing(pokemon.name)} Basic Info:
                 </p>
                 <div className="flex items-center gap-2">
                   <p>Height:</p>
@@ -202,23 +204,46 @@ const PokemonDetails = ({ params }: PokemonDetailsProps) => {
             </div>
             <PokemonSpeciesAndEvolution pokemon={pokemon} />
           </div>
+          <Separator className="dark:bg-yellow-400/10" />
           <div>
             {pokemonSpecies ? (
               <div className="flex">
                 {pokemonSpecies.flavor_text_entries.length > 0 && (
                   <div className="flex flex-col gap-4">
                     <h1 className="text-start text-2xl text-primary dark:text-secondary">
-                      {fixWordCasing(pokemonSpecies.name)} Description
+                      Information about {fixWordCasing(pokemon.name)}
                     </h1>
                     <div className="flex flex-col gap-2">
-                      <p className="text-justify">
-                        {Array.from(
-                          new Set(
-                            pokemonSpecies.flavor_text_entries
-                              .filter((entry) => entry.language.name === "en")
-                              .map((entry) => entry.flavor_text),
-                          ),
-                        ).join(" ")}
+                      <p className="text-justify leading-relaxed">
+                        {showFullDescription
+                          ? Array.from(
+                              new Set(
+                                pokemonSpecies.flavor_text_entries
+                                  .filter(
+                                    (entry) => entry.language.name === "en",
+                                  )
+                                  .map((entry) => entry.flavor_text),
+                              ),
+                            ).join(" ")
+                          : Array.from(
+                              new Set(
+                                pokemonSpecies.flavor_text_entries
+                                  .filter(
+                                    (entry) => entry.language.name === "en",
+                                  )
+                                  .map((entry) => entry.flavor_text),
+                              ),
+                            )
+                              .join(" ")
+                              .substring(0, 1000) + "..."}
+                        <span
+                          onClick={() =>
+                            setShowFullDescription(!showFullDescription)
+                          }
+                          className="ml-2 cursor-pointer rounded-md p-1 text-primary transition duration-300 ease-in-out hover:bg-blue-400/20 dark:text-secondary dark:hover:bg-yellow-400/10"
+                        >
+                          {showFullDescription ? " Show Less" : " Show More"}
+                        </span>
                       </p>
                     </div>
                   </div>
@@ -239,32 +264,9 @@ const PokemonDetails = ({ params }: PokemonDetailsProps) => {
 export default PokemonDetails;
 
 const TypePill = ({ type }: { type: string }) => {
-  const color = {
-    normal: "bg-gray-400",
-    fighting: "bg-red-500",
-    flying: "bg-blue-500",
-    poison: "bg-purple-500",
-    ground: "bg-yellow-500",
-    rock: "bg-yellow-800",
-    bug: "bg-green-500",
-    ghost: "bg-indigo-500",
-    steel: "bg-gray-500",
-    fire: "bg-red-600",
-    water: "bg-blue-600",
-    grass: "bg-green-600",
-    electric: "bg-yellow-600",
-    psychic: "bg-pink-500",
-    ice: "bg-blue-300",
-    dragon: "bg-blue-800",
-    dark: "bg-gray-800",
-    fairy: "bg-pink-300",
-  };
-
   return (
     <div
-      className={`rounded-full px-3 py-1 ${
-        color[type as keyof typeof color] || "bg-gray-500"
-      } text-white`}
+      className={`rounded-full px-3 py-1 ${getColorByType(type)} text-white`}
     >
       {fixWordCasing(type)}
     </div>

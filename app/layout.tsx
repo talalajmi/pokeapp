@@ -30,7 +30,7 @@ export default function RootLayout({
           <ReactQueryProvider>
             <TooltipProvider>
               <Navbar />
-              <main className="px-8 py-32">{children}</main>
+              <main className="px-16 py-32">{children}</main>
               <ScrollToTop />
             </TooltipProvider>
           </ReactQueryProvider>

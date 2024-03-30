@@ -1,6 +1,7 @@
 export const navbarLinks = [
   { label: "Home", route: "/" },
   { label: "Pokédex", route: "/pokedex" },
+  { label: "About", route: "/about" },
 ];
 
 export const themes = [

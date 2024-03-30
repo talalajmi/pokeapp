@@ -12,7 +12,7 @@ const Navbar = () => {
   const pathname = usePathname();
 
   return (
-    <nav className="fixed z-50 flex w-full items-center justify-between gap-5 border-b border-blue-500/20 bg-white/95 px-8 py-6 backdrop-blur-sm dark:bg-card">
+    <nav className="fixed z-50 flex w-full items-center justify-between gap-5 border-b border-blue-500/20 bg-white/95 px-16 py-6 backdrop-blur-sm dark:bg-card">
       <Link href="/">
         <Image src="/pokemon.svg" width={150} height={150} alt="pokeapp" />
       </Link>

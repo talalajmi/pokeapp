@@ -1,34 +1,35 @@
 "use client";
 
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+  GetAbilityResponse,
+  GetPokemonsResponse,
+  GetTypeResponse,
+} from "@/lib/types";
+import { z } from "zod";
 import Image from "next/image";
+import {
+  Select,
+  SelectItem,
+  SelectValue,
+  SelectContent,
+  SelectTrigger,
+} from "@/components/ui/select";
 import { Icon } from "@iconify/react";
 import React, { useState } from "react";
 import { Card } from "@/components/ui/card";
+import axios, { AxiosResponse } from "axios";
 import { useGetPokemons } from "@/lib/hooks";
 import { Input } from "@/components/ui/input";
 import { fixWordCasing } from "@/lib/helpers";
 import { Button } from "@/components/ui/button";
 import Pagination from "@/components/Pagination";
-import {
-  GetAbilityResponse,
-  GetPokemonsResponse,
-  GetTypeResponse,
-} from "@/lib/types";
 import useGetTypes from "@/lib/hooks/useGetTypes";
 import PokemonCard from "@/components/PokemonCard";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm, Controller } from "react-hook-form";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import useGetAbilities from "@/lib/hooks/useGetAbilities";
-import { useForm, Controller } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
-import axios, { AxiosResponse } from "axios";
+import PokemonCardLoadingSkeleton from "@/components/PokemonCardLoadingSkeleton";
 
 interface FormValues {
   type: string | undefined;
@@ -122,9 +123,11 @@ const Pokedex = () => {
     return (
       <div className="flex flex-col gap-5">
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
+          <PokemonCardLoadingSkeleton />
           {pokemons.results.map((pokemon) => (
             <PokemonCard key={pokemon.name} pokemon={pokemon} />
           ))}
+          P
         </div>
         <div className="flex flex-col justify-start gap-5 lg:flex-row lg:justify-between">
           <div className="group flex items-center justify-between gap-5 rounded-full border-[3px] border-black bg-red-500 px-2 py-1 text-white">

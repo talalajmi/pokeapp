@@ -26,11 +26,11 @@ export default function Home() {
   };
 
   return (
-    <main className="flex min-h-screen flex-col items-center">
-      <section className="w-full">
+    <main className="flex min-h-screen flex-col items-center gap-10">
+      <section>
         <div className="flex flex-col gap-4 md:gap-8">
           <div className="max-w-[700px] space-y-2">
-            <h1 className="font-pokemon-solid text-3xl tracking-widest text-blue-600 sm:text-5xl">
+            <h1 className="font-pokemon-solid text-3xl text-primary sm:text-5xl">
               Welcome to the World of Pokémon
             </h1>
             <p className=" text-black dark:text-gray-400 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
@@ -46,7 +46,7 @@ export default function Home() {
       <section className="w-full py-6 md:py-12">
         <div className="grid items-center gap-4 md:gap-8 lg:grid-cols-2 lg:gap-16">
           <div className="space-y-4">
-            <h2 className="font-pokemon-solid text-3xl tracking-widest text-primary sm:text-4xl">
+            <h2 className="font-pokemon-solid text-3xl text-primary sm:text-4xl">
               Gotta catch &apos;em all!
             </h2>
             <p className=" text-black dark:text-gray-400 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
@@ -70,7 +70,7 @@ export default function Home() {
       </section>
       <section className="w-full space-y-4">
         <div className="flex justify-between">
-          <p className="font-pokemon-solid text-3xl tracking-widest text-primary">
+          <p className="font-pokemon-solid text-3xl text-primary">
             All Pokémons
           </p>
           <div className="flex items-center justify-between gap-3">
@@ -116,6 +116,83 @@ export default function Home() {
               No data available
             </div>
           )}
+        </div>
+      </section>
+      <section className="w-full">
+        <div className="flex items-center justify-between gap-5">
+          <Button
+            onClick={fetchPreviousPage}
+            disabled={data?.previous === null}
+            className="hover:bg-secondary-dark w-full rounded-full border border-primary bg-secondary transition duration-300 ease-in-out hover:scale-105 active:scale-95"
+          >
+            <Icon
+              fontSize={20}
+              className="text-primary"
+              icon="akar-icons:arrow-left"
+            />
+          </Button>
+          <p className="w-full text-center font-pokemon-hollow text-2xl text-primary dark:text-secondary">
+            {`Page ${Math.ceil((offset || 0) / 20) + 1} / ${Math.ceil((data?.count || 0) / 20)}`}
+          </p>
+          <Button
+            onClick={fetchNextPage}
+            disabled={data?.next === null}
+            className="hover:bg-secondary-dark w-full rounded-full border border-primary bg-secondary transition duration-300 ease-in-out hover:scale-105 active:scale-95"
+          >
+            <Icon
+              fontSize={20}
+              className="text-primary"
+              icon="akar-icons:arrow-right"
+            />
+          </Button>
+        </div>
+      </section>
+      <section>
+        <div className="flex flex-row gap-4">
+          <div className="flex flex-col gap-4">
+            <h2 className="font-pokemon-solid text-3xl text-primary dark:text-secondary">
+              About Pokémon
+            </h2>
+            <p className=" text-black dark:text-gray-400 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+              Pokémon is a media franchise created by Satoshi Tajiri and Ken
+              Sugimori and is owned by Nintendo, Game Freak, and Creatures. The
+              franchise was created by Satoshi Tajiri in 1995 and is centered on
+              fictional creatures called &quot;Pokémon&quot;. In Pokémon,
+              humans, known as Pokémon Trainers, catch and train Pokémon to
+              battle each other for sport. The franchise began with the release
+              of the Pokémon Red and Green video games
+            </p>
+
+            <p className=" text-black dark:text-gray-400 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+              The franchise has since expanded to include an animated series, a
+              trading card game, an animated film series, and merchandise. The
+              Pokémon franchise is the second highest-grossing media franchise
+              of all time, behind only the Mario franchise. The franchise is
+              also the highest-grossing media franchise of all time, with an
+              estimated $100 billion in total revenue.
+            </p>
+
+            <p className=" text-black dark:text-gray-400 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+              The Pokémon franchise has had a significant impact on popular
+              culture, with Pokémon becoming one of the most recognizable and
+              iconic franchises in the world. The franchise has also been
+              credited with helping to popularize the handheld video game
+              console, with the release of the Pokémon Red and Blue video games
+              helping to boost sales The Pokémon franchise has also been
+              credited with helping to popularize the handheld video game
+              console, with the release of the Pokémon Red and Blue video games
+              helping to boost sales of the
+            </p>
+          </div>
+          <div className="mx-auto">
+            <Image
+              width="200"
+              height="200"
+              alt="Pokémon"
+              src={getPokemonImage(25)}
+              className="h-auto w-auto object-contain"
+            />
+          </div>
         </div>
       </section>
     </main>
