@@ -65,7 +65,7 @@ export default function Home() {
           <div className="flex items-center justify-between gap-3">
             <Button
               disabled={data?.previous === null}
-              className="group rounded-full border border-primary bg-yellow-400 transition duration-300 ease-in-out hover:scale-105 hover:bg-yellow-500 active:scale-95"
+              className="group rounded-full border border-primary bg-yellow-400 transition duration-300 ease-in-out hover:bg-yellow-500 active:scale-95"
             >
               <Icon
                 fontSize={20}
@@ -75,7 +75,7 @@ export default function Home() {
             </Button>
             <Button
               disabled={data?.next === null}
-              className="group rounded-full border border-primary bg-yellow-400 transition duration-300 ease-in-out hover:scale-105 hover:bg-yellow-500 active:scale-95"
+              className="group rounded-full border border-primary bg-yellow-400 transition duration-300 ease-in-out hover:bg-yellow-500 active:scale-95"
             >
               <Icon
                 fontSize={20}
@@ -109,7 +109,7 @@ export default function Home() {
         <div className="flex items-center justify-between gap-5">
           <Button
             disabled={data?.previous === null}
-            className="hover:bg-secondary-dark w-full rounded-full border border-primary bg-secondary transition duration-300 ease-in-out hover:scale-105 active:scale-95"
+            className="w-full rounded-full border border-primary bg-secondary transition duration-300 ease-in-out hover:bg-secondary-dark active:scale-95"
           >
             <Icon
               fontSize={20}
@@ -122,7 +122,7 @@ export default function Home() {
           </p>
           <Button
             disabled={data?.next === null}
-            className="hover:bg-secondary-dark w-full rounded-full border border-primary bg-secondary transition duration-300 ease-in-out hover:scale-105 active:scale-95"
+            className="w-full rounded-full border border-primary bg-secondary transition duration-300 ease-in-out hover:bg-secondary-dark active:scale-95"
           >
             <Icon
               fontSize={20}

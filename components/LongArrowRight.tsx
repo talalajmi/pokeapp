@@ -25,10 +25,9 @@ const LongArrowRight = ({
           : `${className} rotate-0 transform`
       }
       xmlns="http://www.w3.org/2000/svg"
-      enable-background="new 0 0 256 256"
+      enablebackground-="new 0 0 256 256"
     >
       <metadata>
-        {" "}
         Svg Vector Icons : http://www.onlinewebfonts.com/icon{" "}
       </metadata>
       <g>

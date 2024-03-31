@@ -52,7 +52,7 @@ const ThemeSwitcher = () => {
             />
           )}
         </MenubarTrigger>
-        <MenubarContent className="dark:border-dark-400 absolute right-[-3rem] mt-3 min-w-[120px] rounded border bg-background py-2">
+        <MenubarContent className="dark:border-dark-400 absolute right-[-3rem] mt-3 min-w-[120px] rounded border py-2 dark:bg-background">
           {themes.map((theme, index) => (
             <MenubarItem
               key={index}

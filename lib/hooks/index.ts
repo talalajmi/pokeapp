@@ -1,4 +1,5 @@
 import useGetPokemon from "./useGetPokemon";
 import useGetPokemons from "./useGetPokemons";
+import useGetPokemonEvolutionChain from "./useGetPokemonEvolutionChain";
 
-export { useGetPokemon, useGetPokemons };
+export { useGetPokemon, useGetPokemonEvolutionChain, useGetPokemons };
