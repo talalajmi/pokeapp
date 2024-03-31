@@ -61,7 +61,7 @@ const AboutPage = () => {
               <h1 className="w-full text-center text-4xl text-primary dark:text-secondary">
                 About
               </h1>
-              <p className="text-justify text-lg">
+              <p className="text-lg">
                 This Pokedex application is a comprehensive guide for all
                 Pokemon enthusiasts. Built with the powerful Next.js framework
                 and styled with the utility-first CSS library, TailwindCSS, it
@@ -139,7 +139,7 @@ const AboutPage = () => {
             <h1 className="w-full text-center text-3xl text-primary dark:text-secondary">
               Contact
             </h1>
-            <p className="text-justify text-lg">
+            <p className="text-lg">
               If you have any questions or feedback, feel free to reach out to
               me via the following platforms:
             </p>
