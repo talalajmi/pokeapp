@@ -4,15 +4,110 @@ import Image from "next/image";
 import { useState } from "react";
 import { Icon } from "@iconify/react";
 import { Button } from "@/components/ui/button";
-import { getPokemonImageOfficial } from "@/lib/helpers";
+import usePokeApi from "@/lib/hooks/usePokeApi";
+import pokemonEndpoints from "@/lib/services/api";
 import PokemonCard from "@/components/PokemonCard";
-import useGetPokemons from "@/lib/hooks/useGetPokemons";
-import LoadingSpinner from "@/components/LoadingSpinner";
+import { getPokemonImageOfficial } from "@/lib/helpers";
 import PokemonCarousel from "@/components/PokemonCarousel";
+import PokemonCardLoadingSkeleton from "@/components/PokemonCardLoadingSkeleton";
+import { GetPokemonsResponse } from "@/lib/types";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function Home() {
+  const [getPokemonsUrl, setGetPokemonsUrl] = useState(
+    pokemonEndpoints.getPokemons,
+  );
+
   // ** Hooks
-  const { data, isLoading } = useGetPokemons();
+  const { data: pokemons, isLoading } =
+    usePokeApi<GetPokemonsResponse>(getPokemonsUrl);
+
+  const renderPokemons = (pokemons: GetPokemonsResponse) => {
+    return (
+      <div className="space-y-5">
+        <div className="flex flex-col justify-center gap-2">
+          <div className="flex items-center justify-between">
+            <p className="font-pokemon-solid text-3xl text-primary">
+              All Pokémons
+            </p>
+            <div className="flex items-center justify-between gap-3">
+              <Button
+                disabled={pokemons.previous === null}
+                onClick={() =>
+                  pokemons.previous && setGetPokemonsUrl(pokemons.previous)
+                }
+                className="group rounded-full border border-primary bg-yellow-400 transition duration-300 ease-in-out hover:bg-yellow-500 active:scale-95"
+              >
+                <Icon
+                  fontSize={20}
+                  icon="akar-icons:arrow-left"
+                  className="text-primary transition duration-300 ease-in-out "
+                />
+              </Button>
+              <Button
+                disabled={pokemons?.next === null}
+                onClick={() =>
+                  pokemons.next && setGetPokemonsUrl(pokemons.next)
+                }
+                className="group rounded-full border border-primary bg-yellow-400 transition duration-300 ease-in-out hover:bg-yellow-500 active:scale-95"
+              >
+                <Icon
+                  fontSize={20}
+                  icon="akar-icons:arrow-right"
+                  className="text-primary transition duration-300 ease-in-out "
+                />
+              </Button>
+            </div>
+          </div>
+          <p className=" dark:text-gray-400">
+            There are a total of {pokemons?.count} Pokémon in the database. Here
+            are some of them:
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 ">
+          {pokemons.results.map((pokemon) => (
+            <PokemonCard key={pokemon.name} pokemon={pokemon} />
+          ))}
+        </div>
+        <section className="w-full">
+          <div className="flex items-center justify-between gap-5">
+            <Button
+              disabled={pokemons.previous === null}
+              onClick={() =>
+                pokemons.previous && setGetPokemonsUrl(pokemons.previous)
+              }
+              className="w-full rounded-full border border-primary bg-secondary transition duration-300 ease-in-out hover:bg-secondary-dark active:scale-95"
+            >
+              <Icon
+                fontSize={20}
+                className="text-primary"
+                icon="akar-icons:arrow-left"
+              />
+            </Button>
+            <p className="w-full text-center font-pokemon-hollow text-2xl text-primary dark:text-secondary">
+              {`Page ${
+                pokemons.previous
+                  ? Number(pokemons.previous.match(/offset=(\d+)/)![1]) / 20 + 1
+                  : 1
+              } of ${Math.ceil(pokemons.count / 20)}`}
+            </p>
+            <Button
+              disabled={pokemons.next === null}
+              onClick={() => pokemons.next && setGetPokemonsUrl(pokemons.next)}
+              className="w-full rounded-full border border-primary bg-secondary transition duration-300 ease-in-out hover:bg-secondary-dark active:scale-95"
+            >
+              <Icon
+                fontSize={20}
+                className="text-primary"
+                icon="akar-icons:arrow-right"
+              />
+            </Button>
+          </div>
+        </section>
+      </div>
+    );
+  };
 
   return (
     <main className="flex min-h-screen flex-col items-center gap-10">
@@ -58,80 +153,62 @@ export default function Home() {
         </div>
       </section>
       <section className="w-full space-y-4">
-        <div className="flex justify-between">
-          <p className="font-pokemon-solid text-3xl text-primary">
-            All Pokémons
-          </p>
-          <div className="flex items-center justify-between gap-3">
-            <Button
-              disabled={data?.previous === null}
-              className="group rounded-full border border-primary bg-yellow-400 transition duration-300 ease-in-out hover:bg-yellow-500 active:scale-95"
-            >
-              <Icon
-                fontSize={20}
-                icon="akar-icons:arrow-left"
-                className="text-primary transition duration-300 ease-in-out "
-              />
-            </Button>
-            <Button
-              disabled={data?.next === null}
-              className="group rounded-full border border-primary bg-yellow-400 transition duration-300 ease-in-out hover:bg-yellow-500 active:scale-95"
-            >
-              <Icon
-                fontSize={20}
-                icon="akar-icons:arrow-right"
-                className="text-primary transition duration-300 ease-in-out "
-              />
-            </Button>
+        {isLoading || !pokemons ? (
+          <div className="flex flex-col gap-4">
+            <div className="flex flex-col justify-center gap-2">
+              <div className="flex items-center justify-between">
+                <p className="font-pokemon-solid text-3xl text-primary">
+                  All Pokémons
+                </p>
+                <div className="flex items-center justify-between gap-3">
+                  <Button className="group rounded-full border border-primary bg-yellow-400 transition duration-300 ease-in-out hover:bg-yellow-500 active:scale-95">
+                    <Icon
+                      fontSize={20}
+                      icon="akar-icons:arrow-left"
+                      className="text-primary transition duration-300 ease-in-out "
+                    />
+                  </Button>
+                  <Button className="group rounded-full border border-primary bg-yellow-400 transition duration-300 ease-in-out hover:bg-yellow-500 active:scale-95">
+                    <Icon
+                      fontSize={20}
+                      icon="akar-icons:arrow-right"
+                      className="text-primary transition duration-300 ease-in-out "
+                    />
+                  </Button>
+                </div>
+              </div>
+              <Skeleton className="h-6 w-96 bg-gray-200" />
+            </div>
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 ">
+              {Array.from({ length: 20 }).map((_, index) => (
+                <PokemonCardLoadingSkeleton key={index} />
+              ))}
+            </div>
+            <section className="w-full">
+              <div className="flex items-center justify-between gap-5">
+                <Button className="w-full rounded-full border border-primary bg-secondary transition duration-300 ease-in-out hover:bg-secondary-dark active:scale-95">
+                  <Icon
+                    fontSize={20}
+                    className="text-primary"
+                    icon="akar-icons:arrow-left"
+                  />
+                </Button>
+                <Skeleton className="h-6 w-[120rem] bg-gray-200" />
+                <Button className="w-full rounded-full border border-primary bg-secondary transition duration-300 ease-in-out hover:bg-secondary-dark active:scale-95">
+                  <Icon
+                    fontSize={20}
+                    className="text-primary"
+                    icon="akar-icons:arrow-right"
+                  />
+                </Button>
+              </div>
+            </section>
           </div>
-        </div>
-        <p className=" dark:text-gray-400">
-          There are a total of {data?.count} Pokémon in the database. Here are
-          some of them:
-        </p>
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 ">
-          {isLoading ? (
-            <div className="flex h-full w-full items-center justify-center">
-              <LoadingSpinner />
-            </div>
-          ) : data ? (
-            data.results.map((pokemon) => (
-              <PokemonCard key={pokemon.name} pokemon={pokemon} />
-            ))
-          ) : (
-            <div className="flex items-center justify-center">
-              No data available
-            </div>
-          )}
-        </div>
+        ) : (
+          renderPokemons(pokemons)
+        )}
       </section>
-      <section className="w-full">
-        <div className="flex items-center justify-between gap-5">
-          <Button
-            disabled={data?.previous === null}
-            className="w-full rounded-full border border-primary bg-secondary transition duration-300 ease-in-out hover:bg-secondary-dark active:scale-95"
-          >
-            <Icon
-              fontSize={20}
-              className="text-primary"
-              icon="akar-icons:arrow-left"
-            />
-          </Button>
-          <p className="w-full text-center font-pokemon-hollow text-2xl text-primary dark:text-secondary">
-            {`Page ${Math.ceil((20 || 0) / 20) + 1} / ${Math.ceil((data?.count || 0) / 20)}`}
-          </p>
-          <Button
-            disabled={data?.next === null}
-            className="w-full rounded-full border border-primary bg-secondary transition duration-300 ease-in-out hover:bg-secondary-dark active:scale-95"
-          >
-            <Icon
-              fontSize={20}
-              className="text-primary"
-              icon="akar-icons:arrow-right"
-            />
-          </Button>
-        </div>
-      </section>
+
       <section>
         <div className="flex flex-row gap-4">
           <div className="flex flex-col gap-4">
