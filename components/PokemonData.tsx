@@ -250,14 +250,14 @@ export const PokemonData = (props: PokemonDataProps) => {
                             )
                               .join(" ")
                               .substring(0, 1000) + "..."}
-                        <span
+                        <Button
                           onClick={() =>
                             setShowFullDescription(!showFullDescription)
                           }
-                          className="ml-2 cursor-pointer rounded-md p-1 text-primary transition duration-300 ease-in-out hover:bg-blue-400/20 dark:text-secondary dark:hover:bg-yellow-400/10"
+                          className="ml-2 cursor-pointer rounded-md bg-transparent p-1 text-base text-primary shadow-none transition duration-300 ease-in-out hover:bg-blue-400/20 active:scale-95 dark:text-secondary dark:hover:bg-yellow-400/10"
                         >
                           {showFullDescription ? " Show Less" : " Show More"}
-                        </span>
+                        </Button>
                       </p>
                     </div>
                   </div>
