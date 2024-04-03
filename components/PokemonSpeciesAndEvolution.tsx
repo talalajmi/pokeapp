@@ -28,7 +28,7 @@ const PokemonSpeciesAndEvolution = ({
       {isLoadingEvolutionChain || !evolutionChain ? (
         <div className="flex w-full flex-col gap-5">
           <Skeleton className="h-6 w-72 bg-gray-200" />
-          <div className="flex items-center gap-5">
+          <div className="flex flex-col items-center gap-5 md:flex-row">
             <Skeleton className="h-72 w-72 bg-gray-200" />
             <LongArrowRight
               width={150}

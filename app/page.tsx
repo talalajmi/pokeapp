@@ -65,12 +65,26 @@ export default function Home() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 ">
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
           {pokemons.results.map((pokemon) => (
             <PokemonCard key={pokemon.name} pokemon={pokemon} />
           ))}
         </div>
-        <section className="w-full">
+        <section className="flex flex-col gap-5 lg:flex-row lg:justify-between">
+          <div className="group flex items-center justify-between gap-5 rounded-full border-[3px] border-black bg-red-500 px-2 py-1 text-white">
+            <Image
+              width={30}
+              height={30}
+              alt="pokeball"
+              src="/images/poke-ball.png"
+              className="h-auto w-auto object-contain group-hover:animate-spin"
+            />
+            <p>
+              Showing numbers {pokemons.results[0].url.split("/")[6]} to{" "}
+              {pokemons.results[pokemons.results.length - 1].url.split("/")[6]}{" "}
+              of {pokemons.count} Pokémons
+            </p>
+          </div>
           <div className="flex items-center justify-between gap-5">
             <Button
               disabled={pokemons.previous === null}
@@ -85,13 +99,6 @@ export default function Home() {
                 icon="akar-icons:arrow-left"
               />
             </Button>
-            <p className="w-full text-center font-pokemon-hollow text-2xl text-primary dark:text-secondary">
-              {`Page ${
-                pokemons.previous
-                  ? Number(pokemons.previous.match(/offset=(\d+)/)![1]) / 20 + 1
-                  : 1
-              } of ${Math.ceil(pokemons.count / 20)}`}
-            </p>
             <Button
               disabled={pokemons.next === null}
               onClick={() => pokemons.next && setGetPokemonsUrl(pokemons.next)}
@@ -114,7 +121,7 @@ export default function Home() {
       <section>
         <div className="flex flex-col gap-4 md:gap-8">
           <div className="max-w-[700px] space-y-2">
-            <h1 className="font-pokemon-solid text-3xl text-primary sm:text-5xl">
+            <h1 className="font-pokemon-solid text-3xl text-primary dark:text-secondary sm:text-5xl">
               Welcome to the World of Pokémon
             </h1>
             <p className=" text-black dark:text-gray-400 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
@@ -130,7 +137,7 @@ export default function Home() {
       <section className="w-full py-6 md:py-12">
         <div className="grid items-center gap-4 md:gap-8 lg:grid-cols-2 lg:gap-16">
           <div className="space-y-4">
-            <h2 className="font-pokemon-solid text-3xl text-primary sm:text-4xl">
+            <h2 className="font-pokemon-solid text-3xl text-primary dark:text-secondary sm:text-4xl">
               Gotta catch &apos;em all!
             </h2>
             <p className=" text-black dark:text-gray-400 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
@@ -152,7 +159,7 @@ export default function Home() {
           </div>
         </div>
       </section>
-      <section className="w-full space-y-4">
+      {/* <section className="w-full space-y-4">
         {isLoading || !pokemons ? (
           <div className="flex flex-col gap-4">
             <div className="flex flex-col justify-center gap-2">
@@ -177,37 +184,48 @@ export default function Home() {
                   </Button>
                 </div>
               </div>
-              <Skeleton className="h-6 w-96 bg-gray-200" />
+              <Skeleton className="h-5 w-96  dark:bg-gray-500" />
+              <Skeleton className="h-5 w-96  dark:bg-gray-500 lg:hidden" />
             </div>
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 ">
               {Array.from({ length: 20 }).map((_, index) => (
                 <PokemonCardLoadingSkeleton key={index} />
               ))}
             </div>
-            <section className="w-full">
-              <div className="flex items-center justify-between gap-5">
-                <Button className="w-full rounded-full border border-primary bg-secondary transition duration-300 ease-in-out hover:bg-secondary-dark active:scale-95">
+            <div className="flex flex-col justify-start gap-5 lg:justify-between xl:flex-row">
+              <div className="group flex items-center justify-start gap-5 rounded-full border-[3px] border-black bg-red-500 px-2 py-1 text-white">
+                <Image
+                  width={30}
+                  height={30}
+                  alt="pokeball"
+                  src="/images/poke-ball.png"
+                  className="h-auto w-auto object-contain group-hover:animate-spin"
+                />
+                <p>Loading Pokémons...</p>
+              </div>
+              <div className="flex items-center gap-5">
+                <Button className="w-full rounded-full bg-secondary transition duration-300 ease-in-out hover:bg-secondary-dark">
                   <Icon
-                    fontSize={20}
-                    className="text-primary"
+                    fontSize={24}
                     icon="akar-icons:arrow-left"
+                    className="text-primary transition duration-300 ease-in-out"
                   />
                 </Button>
-                <Skeleton className="h-6 w-[120rem] bg-gray-200" />
-                <Button className="w-full rounded-full border border-primary bg-secondary transition duration-300 ease-in-out hover:bg-secondary-dark active:scale-95">
+
+                <Button className="w-full rounded-full bg-secondary transition duration-300 ease-in-out hover:bg-secondary-dark">
                   <Icon
-                    fontSize={20}
-                    className="text-primary"
+                    fontSize={24}
                     icon="akar-icons:arrow-right"
+                    className="text-primary transition duration-300 ease-in-out"
                   />
                 </Button>
               </div>
-            </section>
+            </div>
           </div>
         ) : (
           renderPokemons(pokemons)
         )}
-      </section>
+      </section> */}
 
       <section>
         <div className="flex flex-row gap-4">

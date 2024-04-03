@@ -58,7 +58,7 @@ export const PokemonData = (props: PokemonDataProps) => {
     cry.play();
   };
 
-  const listenToLegacyyCry = () => {
+  const listenToLegacyCry = () => {
     const cry = new Audio(pokemon.cries.legacy);
     cry.play();
   };
@@ -185,7 +185,7 @@ export const PokemonData = (props: PokemonDataProps) => {
                     Latest Cry
                   </Button>
                   <Button
-                    onClick={listenToLegacyyCry}
+                    onClick={listenToLegacyCry}
                     className="mt-5 w-full rounded-full border-2 border-primary bg-secondary text-primary transition duration-300 ease-in-out hover:bg-secondary-dark active:scale-95"
                   >
                     Legacy Cry
@@ -211,7 +211,7 @@ export const PokemonData = (props: PokemonDataProps) => {
             </div>
             <PokemonSpeciesAndEvolution pokemon={pokemon} />
           </div>
-          <Separator className="dark:bg-yellow-400/10" />
+          <Separator className="bg-primary dark:bg-yellow-400/10" />
           <div>
             {isLoadingPokemonSpecies || !pokemonSpecies ? (
               <div className="space-y-3">
@@ -228,7 +228,7 @@ export const PokemonData = (props: PokemonDataProps) => {
                       Information about {fixWordCasing(pokemon.name)}
                     </h1>
                     <div className="flex flex-col gap-2">
-                      <p className="text-justify leading-relaxed">
+                      <p className="leading-relaxed">
                         {showFullDescription
                           ? Array.from(
                               new Set(

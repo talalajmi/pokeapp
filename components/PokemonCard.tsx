@@ -1,11 +1,9 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Icon } from "@iconify/react";
-import { useGetPokemon } from "@/lib/hooks";
 import { Card, CardContent } from "./ui/card";
 import React, { Fragment, useState } from "react";
 import { fixWordCasing, getPokemonImageOfficial } from "@/lib/helpers";
-import PokemonCardLoadingSkeleton from "./PokemonCardLoadingSkeleton";
 
 interface PokemonCardProps {
   pokemon: {
@@ -40,10 +38,10 @@ const PokemonCard = ({ pokemon }: PokemonCardProps) => {
               className="group- h-auto w-auto object-contain transition duration-300 ease-in-out group-hover:scale-105 group-active:scale-95"
             />
             <div className="flex w-full flex-col items-center justify-between gap-3">
-              <p className=" transition duration-300 ease-in-out dark:text-gray-400 dark:group-hover:text-white">
+              <p className="text-sm transition duration-300 ease-in-out dark:text-gray-400 dark:group-hover:text-white sm:text-base">
                 {fixWordCasing(pokemon.name)}
               </p>
-              <div className="flex items-center gap-2 border-primary text-primary transition-transform duration-300 ease-in-out group-hover:translate-x-3 dark:text-yellow-400">
+              <div className="flex items-center gap-2 border-primary text-xs text-primary transition-transform duration-300 ease-in-out group-hover:translate-x-3 dark:text-yellow-400 sm:text-base">
                 View Details
                 <Icon fontSize={18} icon="akar-icons:arrow-right" />
               </div>

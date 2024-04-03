@@ -29,6 +29,7 @@ import { useForm, Controller } from "react-hook-form";
 import PokemonCardLoadingSkeleton from "@/components/PokemonCardLoadingSkeleton";
 import usePokeApi from "@/lib/hooks/usePokeApi";
 import pokemonEndpoints from "@/lib/services/api";
+import { AbilitiesCombobox } from "@/components/AbilitiesCombobox";
 
 interface FormValues {
   type: string | undefined;
@@ -148,7 +149,7 @@ const Pokedex = () => {
   const renderPokemons = (pokemons: GetPokemonsResponse) => {
     return (
       <div className="flex flex-col gap-5">
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
+        <div className="grid grid-cols-2 gap-4 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
           {pokemons.results.map((pokemon) => (
             <PokemonCard key={pokemon.name} pokemon={pokemon} />
           ))}
@@ -170,7 +171,7 @@ const Pokedex = () => {
           </div>
           <div className="flex items-center gap-5">
             <Button
-              className="w-full rounded-full bg-secondary transition duration-300 ease-in-out hover:bg-secondary-dark"
+              className="w-full rounded-full border border-primary bg-secondary transition duration-300 ease-in-out hover:bg-secondary-dark active:scale-95"
               disabled={pokemons.previous === null}
               onClick={() =>
                 pokemons.previous && setGetPokemonsUrl(pokemons.previous)
@@ -184,7 +185,7 @@ const Pokedex = () => {
             </Button>
 
             <Button
-              className="w-full rounded-full bg-secondary transition duration-300 ease-in-out hover:bg-secondary-dark"
+              className="w-full rounded-full border border-primary bg-secondary transition duration-300 ease-in-out hover:bg-secondary-dark active:scale-95"
               disabled={pokemons.next === null}
               onClick={() => pokemons.next && setGetPokemonsUrl(pokemons.next)}
             >
@@ -195,17 +196,6 @@ const Pokedex = () => {
               />
             </Button>
           </div>
-          {/* <Pagination
-            currentPage={pokemons.count / 20 + 1}
-            totalPages={Math.ceil(pokemons.count / 20)}
-            onPageChange={(page) =>
-              setGetPokemonsUrl(
-                `${pokemonEndpoints.getPokemons}?limit=20&offset=${
-                  (page - 1) * 20
-                }`,
-              )
-            }
-          /> */}
         </div>
       </div>
     );
@@ -480,7 +470,7 @@ export default Pokedex;
 const PokemCardsLoadingSkeleton = () => {
   return (
     <div className="flex flex-col gap-5">
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
+      <div className="grid grid-cols-2 gap-4 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
         {Array.from({ length: 20 }).map((_, index) => (
           <PokemonCardLoadingSkeleton key={index} />
         ))}
@@ -497,7 +487,7 @@ const PokemCardsLoadingSkeleton = () => {
           <p>Loading Pokémons...</p>
         </div>
         <div className="flex items-center gap-5">
-          <Button className="w-full rounded-full bg-secondary transition duration-300 ease-in-out hover:bg-secondary-dark">
+          <Button className="w-full rounded-full border border-primary bg-secondary transition duration-300 ease-in-out hover:bg-secondary-dark">
             <Icon
               fontSize={24}
               icon="akar-icons:arrow-left"
@@ -505,7 +495,7 @@ const PokemCardsLoadingSkeleton = () => {
             />
           </Button>
 
-          <Button className="w-full rounded-full bg-secondary transition duration-300 ease-in-out hover:bg-secondary-dark">
+          <Button className="w-full rounded-full border border-primary bg-secondary transition duration-300 ease-in-out hover:bg-secondary-dark">
             <Icon
               fontSize={24}
               icon="akar-icons:arrow-right"
