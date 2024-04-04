@@ -6,19 +6,41 @@ import useGetPokemon from "@/lib/hooks/useGetPokemon";
 import useGetSpecies from "@/lib/hooks/useGetSpecies";
 import { PokemonData } from "@/components/PokemonData";
 import PokemonDetailsLoadingSkeleton from "@/components/PokemonDetailsLoadingSkeleton";
+import { PokemonService } from "@/lib/services";
+import { useQuery } from "@tanstack/react-query";
 
 interface PokemonDetailsProps {
   params: {
-    id: number;
+    id: string;
   };
 }
 
+const fetchData = async (pokemonId: string) => {
+  const pokemonService = new PokemonService();
+  const pokemonData = await pokemonService.getPokemon(pokemonId);
+  if (!pokemonData) return;
+  const pokemonSpecies = await pokemonService.getPokemonSpecies(
+    pokemonData.species.url.split("/")[6],
+  );
+  if (!pokemonSpecies) return;
+  const pokemonEvolution = await pokemonService.getPokemonEvolution(
+    pokemonSpecies.evolution_chain.url.split("/")[6],
+  );
+  if (!pokemonEvolution) return;
+
+  return {
+    pokemonData,
+    pokemonSpecies,
+    pokemonEvolution,
+  };
+};
+
 const PokemonDetails = ({ params }: PokemonDetailsProps) => {
   // ** Hooks
-  const { data: pokemons } = useGetPokemons();
-  const { data: pokemon, isLoading } = useGetPokemon(params.id);
-  const { data: pokemonSpecies, isLoading: isLoadingPokemonSpecies } =
-    useGetSpecies(pokemon?.species.url);
+  const { data: pokemon, isLoading } = useQuery({
+    queryKey: ["pokemon", params.id],
+    queryFn: () => fetchData(params.id),
+  });
 
   return (
     <Fragment>
@@ -26,10 +48,9 @@ const PokemonDetails = ({ params }: PokemonDetailsProps) => {
         <PokemonDetailsLoadingSkeleton />
       ) : (
         <PokemonData
-          pokemon={pokemon}
-          pokemons={pokemons}
-          pokemonSpecies={pokemonSpecies}
-          isLoadingPokemonSpecies={isLoadingPokemonSpecies}
+          isLoading={isLoading}
+          pokemon={pokemon.pokemonData}
+          pokemonSpecies={pokemon.pokemonSpecies}
         />
       )}
     </Fragment>

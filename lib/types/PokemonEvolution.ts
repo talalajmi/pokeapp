@@ -27,9 +27,9 @@ interface EvolutionDetail {
   turn_upside_down: boolean;
 }
 
-interface EvolutionNode {
+export interface EvolutionChain {
   evolution_details: EvolutionDetail[];
-  evolves_to: EvolutionNode[]; // Recursive structure for further evolutions
+  evolves_to: EvolutionChain[]; // Recursive structure for further evolutions
   is_baby: boolean;
   species: {
     name: string;
@@ -39,6 +39,6 @@ interface EvolutionNode {
 
 export interface PokemonEvolutionChain {
   baby_trigger_item: null; // Can be expanded to a specific type if needed
-  chain: EvolutionNode;
+  chain: EvolutionChain;
   id: number;
 }

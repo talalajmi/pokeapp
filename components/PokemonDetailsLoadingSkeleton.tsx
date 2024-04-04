@@ -19,7 +19,7 @@ const PokemonDetailsLoadingSkeleton = () => {
             className="text-primary-dark"
           />
         </Button>
-        <Skeleton className="h-10 w-56 bg-gray-200 dark:bg-gray-500" />
+        <Skeleton className="h-9 w-56 bg-gray-200 dark:bg-gray-500" />
         <Button className="rounded-full border border-primary bg-secondary transition duration-300 ease-out hover:bg-secondary-dark  active:scale-95">
           <Icon
             fontSize={24}

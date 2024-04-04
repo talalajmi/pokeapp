@@ -35,7 +35,7 @@ const PokemonCard = ({ pokemon }: PokemonCardProps) => {
               src={imgSrc}
               onError={handleImageError}
               alt={`${pokemon.name + 1}`}
-              className="group- h-auto w-auto object-contain transition duration-300 ease-in-out group-hover:scale-105 group-active:scale-95"
+              className="group- h-full w-full object-contain transition duration-300 ease-in-out group-hover:scale-105 group-active:scale-95"
             />
             <div className="flex w-full flex-col items-center justify-between gap-3">
               <p className="text-sm transition duration-300 ease-in-out dark:text-gray-400 dark:group-hover:text-white sm:text-base">

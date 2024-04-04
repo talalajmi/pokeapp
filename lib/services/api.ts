@@ -14,6 +14,7 @@ const pokemonEndpoints = {
   getPokemonsByAbility: (id: number) => `${baseUrl}ability/${id}`,
   getSearchPokemon: (query?: string) => `${baseUrl}pokemon/${query}`,
   getPokemonEvolution: (id: number) => `${baseUrl}evolution-chain/${id}`,
+  getPokemonLocations: (id: number) => `${baseUrl}pokemon/${id}/encounters`,
 };
 
 export default pokemonEndpoints;

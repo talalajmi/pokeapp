@@ -11,17 +11,12 @@ import { Progress } from "./ui/progress";
 import { Skeleton } from "./ui/skeleton";
 import { Separator } from "./ui/separator";
 import { Card, CardContent } from "./ui/card";
-import PokemonSpeciesAndEvolution from "./PokemonSpeciesAndEvolution";
 
 // ** Icon Imports
 import { Icon } from "@iconify/react";
 
 // ** Library Imports
-import {
-  Tooltip,
-  TooltipTrigger,
-  TooltipContent,
-} from "@radix-ui/react-tooltip";
+import { Tooltip, TooltipTrigger, TooltipContent } from "./ui/tooltip";
 
 // ** Custom Hooks and Types
 import {
@@ -34,22 +29,26 @@ import {
   GetPokemonsResponse,
   GetPokemonSpeciesResponse,
 } from "@/lib/types";
+import PokemonEvolution from "./PokemonEvolution";
+import { useGetPokemons } from "@/lib/hooks";
 
 interface PokemonDataProps {
   pokemon: Pokemon;
-  isLoadingPokemonSpecies: boolean;
-  pokemons: GetPokemonsResponse | undefined;
-  pokemonSpecies: GetPokemonSpeciesResponse | undefined;
+  isLoading: boolean;
+  pokemonSpecies: GetPokemonSpeciesResponse;
 }
 
 export const PokemonData = (props: PokemonDataProps) => {
   // ** Props
-  const { pokemon, pokemons, isLoadingPokemonSpecies, pokemonSpecies } = props;
+  const { pokemon, isLoading, pokemonSpecies } = props;
 
   // ** States
   const [currentUrlIndex, setCurrentUrlIndex] = useState(0);
   const [showFullDescription, setShowFullDescription] = useState(false);
   const [imgSrc, setImgSrc] = useState(getPokemonImageOfficial(pokemon.id));
+
+  // ** Hooks
+  const { data: pokemons } = useGetPokemons();
 
   // ** Constants
   const fallbackUrls = [getPokemonImageDreamWorld(pokemon.id)];
@@ -124,114 +123,125 @@ export const PokemonData = (props: PokemonDataProps) => {
       </div>
       <Card className="w-full">
         <CardContent className="flex flex-col gap-10 p-5">
-          <div className="grid h-full w-full grid-cols-1 gap-10 xl:grid-cols-2">
-            <div className="flex flex-col items-center justify-center gap-4">
-              <div className="rounded-full border-2 border-primary bg-secondary p-10">
-                <Image
-                  width={300}
-                  height={300}
-                  src={imgSrc}
-                  alt={pokemon.name}
-                  onError={handleImageError}
-                />
-              </div>
-              <h1 className="text-center text-3xl text-primary dark:text-secondary lg:text-start">
-                {fixWordCasing(pokemon.name)}
-              </h1>
-            </div>
-            <div className="flex flex-col gap-10">
-              <div className="flex flex-col gap-5">
-                <p className="text-2xl text-primary dark:text-secondary">
-                  {fixWordCasing(pokemon.name)} Type:
-                </p>
-                <div className="flex gap-2">
-                  {pokemon.types.map((type) => (
-                    <TypePill key={type.type.name} type={type.type.name} />
-                  ))}
-                </div>
-              </div>
-              <div className="flex flex-col gap-5">
-                <p className="text-2xl text-primary dark:text-secondary">
-                  {fixWordCasing(pokemon.name)} Basic Info:
-                </p>
-                <div className="flex items-center gap-2">
-                  <p>Height:</p>
-                  <p>{pokemon.height} m</p>
-                </div>
-                <div className="flex items-center gap-2">
-                  <p>Weight:</p>
-                  <p>{pokemon.weight} kg</p>
-                </div>
-                <div className="flex flex-wrap items-center gap-2">
-                  <p>Abilities:</p>
-                  <div className="flex gap-2">
-                    {pokemon.abilities.map((ability) => (
-                      <div key={ability.ability.name}>
-                        {fixWordCasing(ability.ability.name)}
-                      </div>
-                    ))}
-                  </div>
-                </div>
-                <div className="flex flex-wrap items-center gap-2">
-                  <p>Moves:</p>
-                  <div className="flex flex-wrap gap-2">
-                    {pokemon.moves.slice(0, 5).map((move) => (
-                      <div key={move.move.name}>
-                        {fixWordCasing(move.move.name)}
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-              <div className="flex flex-col">
-                <p className="text-2xl text-primary dark:text-secondary">
-                  {fixWordCasing(pokemon.name)} Cries:{" "}
-                  <span className="text-sm text-primary dark:text-secondary">
-                    (Does not work on mobile)
-                  </span>
-                </p>
-                <div className="flex flex-col gap-4 md:flex-row">
-                  <Button
-                    onClick={listenToLatestCry}
-                    className="mt-5 w-full rounded-full border-2 border-primary bg-secondary text-primary transition duration-200 ease-in-out hover:bg-secondary-dark active:scale-95"
-                  >
-                    Latest Cry
-                  </Button>
-                  <Button
-                    onClick={listenToLegacyCry}
-                    className="mt-5 w-full rounded-full border-2 border-primary bg-secondary text-primary transition duration-200 ease-in-out hover:bg-secondary-dark active:scale-95"
-                  >
-                    Legacy Cry
-                  </Button>
-                </div>
-              </div>
-            </div>
-            <div className="flex flex-col gap-4">
-              <p className="text-2xl text-primary dark:text-secondary">
-                {fixWordCasing(pokemon.name)} Stats:
-              </p>
-              <p>Base Experience: {pokemon.base_experience}</p>
-              {pokemon.stats.map((stat) => (
-                <div
-                  key={stat.stat.name}
-                  className="flex flex-col items-start gap-2"
-                >
-                  <div className="flex gap-2">
-                    <p>{fixWordCasing(stat.stat.name)}:</p>
-                    <p>{stat.base_stat}</p>
-                  </div>
-                  <Progress
-                    max={255}
-                    value={stat.base_stat}
-                    className="bg-secondary"
+          <div className="flex flex-col items-center justify-start gap-10">
+            <div className="flex w-full flex-col gap-5 xl:flex-row">
+              <div className="flex w-full flex-col items-center justify-center gap-4">
+                <div className="rounded-full border-2 border-primary bg-secondary p-10">
+                  <Image
+                    width={300}
+                    height={300}
+                    src={imgSrc}
+                    alt={pokemon.name}
+                    onError={handleImageError}
                   />
                 </div>
-              ))}
+                <h1 className="text-center text-3xl text-primary dark:text-secondary lg:text-start">
+                  {fixWordCasing(pokemon.name)}
+                </h1>
+              </div>
+              <div className="flex w-full flex-col gap-10">
+                <div className="flex flex-col gap-5">
+                  <p className="text-2xl text-primary dark:text-secondary">
+                    {fixWordCasing(pokemon.name)} Type:
+                  </p>
+                  <div className="flex gap-2">
+                    {pokemon.types.map((type) => (
+                      <TypePill key={type.type.name} type={type.type.name} />
+                    ))}
+                  </div>
+                </div>
+                <div className="flex flex-col gap-5">
+                  <p className="text-2xl text-primary dark:text-secondary">
+                    {fixWordCasing(pokemon.name)} Basic Info:
+                  </p>
+                  <div className="flex items-center gap-2">
+                    <p>Height:</p>
+                    <p>{pokemon.height} m</p>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <p>Weight:</p>
+                    <p>{pokemon.weight} kg</p>
+                  </div>
+                  <div className="flex flex-wrap items-center gap-2">
+                    <p>Abilities:</p>
+                    <div className="flex gap-2">
+                      {pokemon.abilities.map((ability) => (
+                        <div key={ability.ability.name}>
+                          {fixWordCasing(ability.ability.name)}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                  <div className="flex flex-wrap items-center gap-2">
+                    <p>Moves:</p>
+                    <div className="flex flex-wrap gap-2">
+                      {pokemon.moves.slice(0, 5).map((move) => (
+                        <div key={move.move.name}>
+                          {fixWordCasing(move.move.name)}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+                <div className="flex flex-col">
+                  <p className="text-2xl text-primary dark:text-secondary">
+                    {fixWordCasing(pokemon.name)} Cries:{" "}
+                    <span className="text-sm text-primary dark:text-secondary">
+                      (Does not work on mobile)
+                    </span>
+                  </p>
+                  <div className="flex flex-col gap-4 md:flex-row">
+                    <Button
+                      onClick={listenToLatestCry}
+                      className="mt-5 w-full rounded-full border-2 border-primary bg-secondary text-primary transition duration-200 ease-in-out hover:bg-secondary-dark active:scale-95"
+                    >
+                      Latest Cry
+                    </Button>
+                    <Button
+                      onClick={listenToLegacyCry}
+                      className="mt-5 w-full rounded-full border-2 border-primary bg-secondary text-primary transition duration-200 ease-in-out hover:bg-secondary-dark active:scale-95"
+                    >
+                      Legacy Cry
+                    </Button>
+                  </div>
+                </div>
+              </div>
             </div>
-            <PokemonSpeciesAndEvolution pokemon={pokemon} />
+            <Separator className="bg-gray-200 dark:bg-yellow-400/10" />
+            <div className="flex w-full flex-col gap-10 xl:flex-row">
+              <div className="flex w-full flex-col gap-4">
+                <p className="text-2xl text-primary dark:text-secondary">
+                  {fixWordCasing(pokemon.name)} Stats:
+                </p>
+                <p>Base Experience: {pokemon.base_experience}</p>
+                {pokemon.stats.map((stat) => (
+                  <div
+                    key={stat.stat.name}
+                    className="flex flex-col items-start gap-2"
+                  >
+                    <div className="flex gap-2">
+                      <p>{fixWordCasing(stat.stat.name)}:</p>
+                      <p>{stat.base_stat}</p>
+                    </div>
+                    <Progress
+                      max={255}
+                      value={stat.base_stat}
+                      className="bg-secondary"
+                    />
+                  </div>
+                ))}
+              </div>
+              <div className="w-full ">
+                <PokemonEvolution
+                  evolutionId={parseInt(
+                    pokemonSpecies.evolution_chain.url.split("/")[6],
+                  )}
+                />
+              </div>
+            </div>
           </div>
           <div>
-            {isLoadingPokemonSpecies || !pokemonSpecies ? (
+            {isLoading ? (
               <div className="space-y-3">
                 <Skeleton className="h-6 w-[30rem] bg-gray-200" />
                 <Skeleton className="h-6 w-full bg-gray-200" />

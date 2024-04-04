@@ -1,4 +1,4 @@
 import pokemonEndpoints from "./api";
-import PokemoService from "./PokemonService";
+import PokemonService from "./PokemonService";
 
-export { pokemonEndpoints, PokemoService };
+export { pokemonEndpoints, PokemonService };

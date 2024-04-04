@@ -33,7 +33,7 @@ const PokemonSpeciesAndEvolution = ({
             <LongArrowRight
               width={150}
               height={150}
-              className="h-auto w-auto rotate-90 fill-gray-200 dark:fill-gray-500 md:rotate-0"
+              className="h-auto w-auto rotate-90 fill-gray-200 dark:fill-gray-500 md:rotate-0 "
             />
             <Skeleton className="h-72 w-72 bg-gray-200 dark:bg-gray-500" />
           </div>
