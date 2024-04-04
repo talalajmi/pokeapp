@@ -3,9 +3,9 @@
 import React, { Fragment } from "react";
 import { useGetPokemons } from "@/lib/hooks";
 import useGetPokemon from "@/lib/hooks/useGetPokemon";
+import useGetSpecies from "@/lib/hooks/useGetSpecies";
 import { PokemonData } from "@/components/PokemonData";
 import PokemonDetailsLoadingSkeleton from "@/components/PokemonDetailsLoadingSkeleton";
-import useGetSpecies from "@/lib/hooks/useGetSpecies";
 
 interface PokemonDetailsProps {
   params: {

@@ -9,10 +9,11 @@ const PokeApi = async <T>(endpoint: string): Promise<T> => {
   return response.data;
 };
 
-const usePokeApi = <T>(endpoint: string) => {
+const usePokeApi = <T>(endpoint: string, enableFlag?: boolean) => {
   return useQuery<T>({
     queryKey: ["PokeApi", endpoint],
     queryFn: () => PokeApi<T>(endpoint),
+    enabled: enableFlag,
   });
 };
 

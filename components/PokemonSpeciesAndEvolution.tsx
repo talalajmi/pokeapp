@@ -27,27 +27,33 @@ const PokemonSpeciesAndEvolution = ({
     <div>
       {isLoadingEvolutionChain || !evolutionChain ? (
         <div className="flex w-full flex-col gap-5">
-          <Skeleton className="h-6 w-72 bg-gray-200" />
+          <Skeleton className="h-6 w-72 bg-gray-200 dark:bg-gray-500" />
           <div className="flex flex-col items-center gap-5 md:flex-row">
-            <Skeleton className="h-72 w-72 bg-gray-200" />
+            <Skeleton className="h-72 w-72 bg-gray-200 dark:bg-gray-500" />
             <LongArrowRight
               width={150}
               height={150}
-              className="h-auto w-auto rotate-90 fill-primary dark:fill-secondary md:rotate-0"
+              className="h-auto w-auto rotate-90 fill-gray-200 dark:fill-gray-500 md:rotate-0"
             />
-            <Skeleton className="h-72 w-72 bg-gray-200" />
+            <Skeleton className="h-72 w-72 bg-gray-200 dark:bg-gray-500" />
           </div>
         </div>
       ) : (
-        <div className="space-y-5">
-          <div className="font-pokemon-solid text-lg text-primary dark:text-secondary">
+        <div className="flex h-full flex-col gap-5">
+          <div className="font-pokemon-solid text-2xl text-primary dark:text-secondary">
             {fixWordCasing(pokemon.name)} Evolution Chain:
           </div>
+          <p>
+            {fixWordCasing(pokemon.name)} evolves into{" "}
+            {evolutionChain.chain.evolves_to
+              .map((evolution) => fixWordCasing(evolution.species.name))
+              .join(", ")}
+          </p>
           {evolutionChain.chain.evolves_to.length !== 0 ? (
             evolutionChain.chain.evolves_to.map((evolution, index) => (
               <div
                 key={index}
-                className="flex flex-col items-center justify-start gap-5 md:flex-row"
+                className="flex h-full flex-col items-center justify-start gap-5 md:flex-row"
               >
                 <PokemonCard
                   pokemon={{

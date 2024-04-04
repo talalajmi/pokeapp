@@ -1,50 +1,38 @@
 "use client";
 
+// ** React Imports
+import React, { useState } from "react";
+import Image from "next/image";
+
+// ** Library Imports
+import axios, { AxiosResponse } from "axios";
+
+// ** Icon Imports
+import { Icon } from "@iconify/react";
+
+// ** Component Imports
+import { Card } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import PokemonCard from "@/components/PokemonCard";
+import PokemonCardLoadingSkeleton from "@/components/PokemonCardLoadingSkeleton";
+import { SearchPokemons } from "@/components/SearchPokemons";
+import PokemonFilters from "@/components/PokemonFilters";
+
+// ** Custom Hooks and Types
 import {
-  GetAbilitiesResponse,
   GetAbilityResponse,
   GetPokemonsResponse,
   GetTypeResponse,
-  GetTypesResponse,
 } from "@/lib/types";
-import { z } from "zod";
-import Image from "next/image";
-import {
-  Select,
-  SelectItem,
-  SelectValue,
-  SelectContent,
-  SelectTrigger,
-} from "@/components/ui/select";
-import { Icon } from "@iconify/react";
-import React, { useState } from "react";
-import { Card } from "@/components/ui/card";
-import axios, { AxiosResponse } from "axios";
-import { Input } from "@/components/ui/input";
-import { fixWordCasing } from "@/lib/helpers";
-import { Button } from "@/components/ui/button";
-import PokemonCard from "@/components/PokemonCard";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm, Controller } from "react-hook-form";
-import PokemonCardLoadingSkeleton from "@/components/PokemonCardLoadingSkeleton";
 import usePokeApi from "@/lib/hooks/usePokeApi";
+
+// ** Endpoint Imports
 import pokemonEndpoints from "@/lib/services/api";
-import { AbilitiesCombobox } from "@/components/AbilitiesCombobox";
 
 interface FormValues {
   type: string | undefined;
   ability: string | undefined;
 }
-
-const pokemonfilterSchema = z.object({
-  type: z.string().optional(),
-  ability: z.string().optional(),
-});
-
-const defaultValues: FormValues = {
-  type: undefined,
-  ability: undefined,
-};
 
 interface Pokemon {
   name: string;
@@ -55,6 +43,7 @@ const Pokedex = () => {
   // ** States
   const [currentPage, setCurrentPage] = useState(1);
   const [isFiltered, setIsFiltered] = useState(false);
+  const [isSearched, setIsSearched] = useState(false);
   const [filteredPokemons, setFilteredPokemons] = useState<Pokemon[]>([]);
   const [isLoadingFilteredPokemons, setIsLoadingFilteredPokemons] =
     useState(false);
@@ -64,19 +53,8 @@ const Pokedex = () => {
   );
 
   // ** Hooks
-  const { data: types, isLoading: isLoadingTypes } =
-    usePokeApi<GetTypesResponse>(pokemonEndpoints.getTypes);
-  const { data: abilities, isLoading: isLoadingAbilities } =
-    usePokeApi<GetAbilitiesResponse>(pokemonEndpoints.getAbilities);
   const { data: pokemons, isLoading } =
     usePokeApi<GetPokemonsResponse>(getPokemonsUrl);
-
-  // ** React Hook Form
-  const { handleSubmit, control, reset } = useForm<FormValues>({
-    defaultValues,
-    mode: "onSubmit",
-    resolver: zodResolver(pokemonfilterSchema),
-  });
 
   // ** Contants
   const itemsPerPage = 20;
@@ -135,15 +113,6 @@ const Pokedex = () => {
 
     setIsLoadingFilteredPokemons(false);
     return;
-  };
-
-  console.log(isFiltered);
-
-  const handeResetFilters = () => {
-    console.log("resetting");
-    reset();
-    setIsFiltered(false);
-    setFilteredPokemons([]);
   };
 
   const renderPokemons = (pokemons: GetPokemonsResponse) => {
@@ -277,154 +246,9 @@ const Pokedex = () => {
       <h1 className="text-3xl text-primary dark:text-secondary sm:text-4xl">
         Pokédex
       </h1>
-      <Card className="w-full p-5">
-        <div className="group relative flex items-center gap-4 rounded-lg transition duration-300 ease-in-out ">
-          <Icon
-            fontSize={30}
-            icon="bx:bx-search"
-            className="text-gray-400 transition duration-300 ease-in-out group-hover:text-black dark:group-hover:text-white"
-          />
-          <Input
-            placeholder="Search for a Pokémon by either name, number or type"
-            className="border-none bg-transparent text-gray-400 shadow-none ease-in-out placeholder:transition placeholder:duration-300 focus:text-black group-hover:placeholder:translate-x-1"
-          />
-          <Button className="border border-primary bg-yellow-400 text-primary transition duration-300 ease-in-out  hover:bg-yellow-500 active:scale-95">
-            Search
-          </Button>
-        </div>
-      </Card>
+      <SearchPokemons setIsSearched={setIsSearched} isSearched={isSearched} />
       <div className="flex w-full flex-col justify-start gap-5 xl:relative xl:flex-row">
-        <Card className="top-32 h-fit flex-1 p-5 xl:sticky">
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              handleSubmit(filterPokemons);
-            }}
-          >
-            <div className="flex-col gap-5 space-y-5">
-              <div className="flex flex-col gap-5">
-                <Controller
-                  name="type"
-                  control={control}
-                  render={({ field: { onChange, value } }) => (
-                    <Select defaultValue={value} onValueChange={onChange}>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Type" />
-                      </SelectTrigger>
-                      <SelectContent className="dark:bg-background">
-                        {types ? (
-                          types.results.length !== 0 ? (
-                            types.results
-                              .sort((a, b) => a.name.localeCompare(b.name))
-                              .map((type) => (
-                                <SelectItem
-                                  key={type.name}
-                                  value={type.name}
-                                  className="dark:hover:bg-card"
-                                >
-                                  {fixWordCasing(type.name)}
-                                </SelectItem>
-                              ))
-                          ) : (
-                            <SelectItem
-                              value="no-data"
-                              className="dark:hover:bg-card"
-                            >
-                              No data available
-                            </SelectItem>
-                          )
-                        ) : isLoadingTypes ? (
-                          <SelectItem
-                            value="loading"
-                            className="dark:hover:bg-card"
-                          >
-                            Loading...
-                          </SelectItem>
-                        ) : (
-                          <SelectItem
-                            value="error"
-                            className="dark:hover:bg-card"
-                          >
-                            Error fetching data
-                          </SelectItem>
-                        )}
-                      </SelectContent>
-                    </Select>
-                  )}
-                />
-
-                <Controller
-                  name="ability"
-                  control={control}
-                  render={({ field: { onChange, value } }) => (
-                    <Select value={value} onValueChange={onChange}>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Ability" />
-                      </SelectTrigger>
-                      <SelectContent className="dark:bg-background">
-                        {abilities ? (
-                          abilities.results.length !== 0 ? (
-                            abilities.results
-                              .sort((a, b) => a.name.localeCompare(b.name))
-                              .map((type) => (
-                                <SelectItem
-                                  key={type.name}
-                                  value={type.name}
-                                  className="dark:hover:bg-card"
-                                >
-                                  {fixWordCasing(type.name)}
-                                </SelectItem>
-                              ))
-                          ) : (
-                            <SelectItem
-                              value="no-data"
-                              className="dark:hover:bg-card"
-                            >
-                              No data available
-                            </SelectItem>
-                          )
-                        ) : isLoadingAbilities ? (
-                          <SelectItem
-                            value="loading"
-                            className="dark:hover:bg-card"
-                          >
-                            Loading...
-                          </SelectItem>
-                        ) : (
-                          <SelectItem
-                            value="error"
-                            className="dark:hover:bg-card"
-                          >
-                            Error fetching data
-                          </SelectItem>
-                        )}
-                      </SelectContent>
-                    </Select>
-                  )}
-                />
-              </div>
-              <div className="md-flex-row flex flex-col gap-5">
-                <Button
-                  type="submit"
-                  className="xl: w-full border border-primary bg-primary text-secondary transition duration-300 ease-in-out hover:bg-primary-dark active:scale-95 dark:bg-secondary dark:text-primary dark:hover:bg-yellow-500"
-                >
-                  Apply
-                </Button>
-                <Button
-                  onClick={() => {
-                    console.log("resetting");
-                    setIsFiltered(false);
-                    setFilteredPokemons([]);
-                    reset();
-                  }}
-                  className="xl: w-full border border-primary bg-secondary text-primary transition duration-300 ease-in-out hover:bg-secondary-dark active:scale-95 dark:bg-primary dark:text-secondary"
-                >
-                  Reset
-                </Button>
-              </div>
-            </div>
-          </form>
-        </Card>
+        <PokemonFilters />
         <div className="w-full flex-[3] flex-col items-start space-y-5 lg:flex-[5]">
           {isLoading || !pokemons || isLoadingFilteredPokemons ? (
             <PokemCardsLoadingSkeleton />

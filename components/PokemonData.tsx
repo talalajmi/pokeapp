@@ -1,29 +1,39 @@
-import {
-  fixWordCasing,
-  getPokemonImageDreamWorld,
-  getPokemonImageOfficial,
-} from "@/lib/helpers";
-import { Separator } from "@radix-ui/react-menubar";
-import { Progress } from "@radix-ui/react-progress";
+// ** React Imports
+import React, { useState } from "react";
+
+// ** Next.js Imports
+import Link from "next/link";
+import Image from "next/image";
+
+// ** Component Imports
+import { Button } from "./ui/button";
+import { Progress } from "./ui/progress";
+import { Skeleton } from "./ui/skeleton";
+import { Separator } from "./ui/separator";
+import { Card, CardContent } from "./ui/card";
+import PokemonSpeciesAndEvolution from "./PokemonSpeciesAndEvolution";
+
+// ** Icon Imports
 import { Icon } from "@iconify/react";
+
+// ** Library Imports
 import {
   Tooltip,
   TooltipTrigger,
   TooltipContent,
 } from "@radix-ui/react-tooltip";
-import Link from "next/link";
-import React, { useState } from "react";
-import LoadingSpinner from "./LoadingSpinner";
-import PokemonSpeciesAndEvolution from "./PokemonSpeciesAndEvolution";
-import { Button } from "./ui/button";
-import { Card, CardContent } from "./ui/card";
+
+// ** Custom Hooks and Types
 import {
-  GetPokemonSpeciesResponse,
-  GetPokemonsResponse,
+  fixWordCasing,
+  getPokemonImageOfficial,
+  getPokemonImageDreamWorld,
+} from "@/lib/helpers";
+import {
   Pokemon,
+  GetPokemonsResponse,
+  GetPokemonSpeciesResponse,
 } from "@/lib/types";
-import Image from "next/image";
-import { Skeleton } from "./ui/skeleton";
 
 interface PokemonDataProps {
   pokemon: Pokemon;
@@ -152,7 +162,7 @@ export const PokemonData = (props: PokemonDataProps) => {
                   <p>Weight:</p>
                   <p>{pokemon.weight} kg</p>
                 </div>
-                <div className="flex items-center gap-2">
+                <div className="flex flex-wrap items-center gap-2">
                   <p>Abilities:</p>
                   <div className="flex gap-2">
                     {pokemon.abilities.map((ability) => (
@@ -175,18 +185,21 @@ export const PokemonData = (props: PokemonDataProps) => {
               </div>
               <div className="flex flex-col">
                 <p className="text-2xl text-primary dark:text-secondary">
-                  {fixWordCasing(pokemon.name)} Cries:
+                  {fixWordCasing(pokemon.name)} Cries:{" "}
+                  <span className="text-sm text-primary dark:text-secondary">
+                    (Does not work on mobile)
+                  </span>
                 </p>
                 <div className="flex flex-col gap-4 md:flex-row">
                   <Button
                     onClick={listenToLatestCry}
-                    className="mt-5 w-full rounded-full border-2 border-primary bg-secondary text-primary transition duration-300 ease-in-out hover:bg-secondary-dark active:scale-95"
+                    className="mt-5 w-full rounded-full border-2 border-primary bg-secondary text-primary transition duration-200 ease-in-out hover:bg-secondary-dark active:scale-95"
                   >
                     Latest Cry
                   </Button>
                   <Button
                     onClick={listenToLegacyCry}
-                    className="mt-5 w-full rounded-full border-2 border-primary bg-secondary text-primary transition duration-300 ease-in-out hover:bg-secondary-dark active:scale-95"
+                    className="mt-5 w-full rounded-full border-2 border-primary bg-secondary text-primary transition duration-200 ease-in-out hover:bg-secondary-dark active:scale-95"
                   >
                     Legacy Cry
                   </Button>
@@ -199,19 +212,24 @@ export const PokemonData = (props: PokemonDataProps) => {
               </p>
               <p>Base Experience: {pokemon.base_experience}</p>
               {pokemon.stats.map((stat) => (
-                <div key={stat.stat.name} className="flex items-center gap-2">
-                  <p>{fixWordCasing(stat.stat.name)}:</p>
+                <div
+                  key={stat.stat.name}
+                  className="flex flex-col items-start gap-2"
+                >
+                  <div className="flex gap-2">
+                    <p>{fixWordCasing(stat.stat.name)}:</p>
+                    <p>{stat.base_stat}</p>
+                  </div>
                   <Progress
                     max={255}
-                    className="outline-non h-2 w-1/2 bg-primary-dark dark:bg-secondary-dark"
                     value={stat.base_stat}
+                    className="bg-secondary"
                   />
                 </div>
               ))}
             </div>
             <PokemonSpeciesAndEvolution pokemon={pokemon} />
           </div>
-          <Separator className="bg-primary dark:bg-yellow-400/10" />
           <div>
             {isLoadingPokemonSpecies || !pokemonSpecies ? (
               <div className="space-y-3">
@@ -224,6 +242,7 @@ export const PokemonData = (props: PokemonDataProps) => {
               <div className="flex">
                 {pokemonSpecies.flavor_text_entries.length > 0 && (
                   <div className="flex flex-col gap-4">
+                    <Separator className="my-5 bg-gray-200 dark:bg-yellow-400/10" />
                     <h1 className="text-start text-2xl text-primary dark:text-secondary">
                       Information about {fixWordCasing(pokemon.name)}
                     </h1>
@@ -249,7 +268,9 @@ export const PokemonData = (props: PokemonDataProps) => {
                               ),
                             )
                               .join(" ")
-                              .substring(0, 1000) + "..."}
+                              .split(" ")
+                              .slice(0, 100)
+                              .join(" ") + "..."}
                         <Button
                           onClick={() =>
                             setShowFullDescription(!showFullDescription)
