@@ -26,7 +26,12 @@ const defaultValues = {
 };
 
 const searchSchema = z.object({
-  query: z.string().min(1, { message: "Query must be at least 1 character" }),
+  query: z
+    .string()
+    .min(1, { message: "Search query must be at least 1 character" })
+    .refine((value) => /^[A-Za-z]+$/.test(value), {
+      message: "Search query can only contain alphabets",
+    }),
 });
 
 interface SearchPokemonsProps {
@@ -54,7 +59,9 @@ export const SearchPokemons = (props: SearchPokemonsProps) => {
   const onSubmit = async (data: z.infer<typeof searchSchema>) => {
     setIsSearched(true);
     setIsLoadingSearchedPokemon(true);
-    const pokemon = await new PokemonService().getPokemon(data.query);
+    const pokemon = await new PokemonService().getPokemon(
+      data.query.toLowerCase(),
+    );
     if (!pokemon) {
       setIsLoadingSearchedPokemon(false);
       return;
@@ -87,7 +94,7 @@ export const SearchPokemons = (props: SearchPokemonsProps) => {
                     />
                     <Input
                       {...field}
-                      placeholder="Search for a Pokémon by either name or number"
+                      placeholder="Search for a Pokémon by name"
                       className="border-none bg-transparent text-gray-400 shadow-none ease-in-out placeholder:transition placeholder:duration-300 focus:text-black focus-visible:ring-0 group-hover:placeholder:translate-x-1 dark:focus:text-white"
                     />
                   </div>
@@ -103,7 +110,7 @@ export const SearchPokemons = (props: SearchPokemonsProps) => {
                     </Button>
                   )}
                 </div>
-                <FormMessage />
+                <FormMessage className="text-red-500" />
               </FormItem>
             )}
           />
