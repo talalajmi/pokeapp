@@ -17,6 +17,9 @@ import { Icon } from "@iconify/react";
 
 // ** Custom Hooks
 import { useGetSearchedPokemon } from "@/lib/hooks";
+import { NamedAPIResource } from "@/lib/types/PokemonSepcies";
+import { PokemonService } from "@/lib/services";
+import { Pokemon } from "@/lib/types";
 
 const defaultValues = {
   query: "",
@@ -29,15 +32,18 @@ const searchSchema = z.object({
 interface SearchPokemonsProps {
   isSearched: boolean;
   setIsSearched: (value: boolean) => void;
+  setSearchedPokemon: (value: Pokemon | null) => void;
+  setIsLoadingSearchedPokemon: (value: boolean) => void;
 }
 
 export const SearchPokemons = (props: SearchPokemonsProps) => {
   // ** Props
-  const { isSearched, setIsSearched } = props;
-
-  const [query, setQuery] = useState<string | undefined>(undefined);
-
-  const { data: pokemon, isLoading } = useGetSearchedPokemon(query);
+  const {
+    isSearched,
+    setIsSearched,
+    setSearchedPokemon,
+    setIsLoadingSearchedPokemon,
+  } = props;
 
   const form = useForm({
     defaultValues,
@@ -45,16 +51,22 @@ export const SearchPokemons = (props: SearchPokemonsProps) => {
     resolver: zodResolver(searchSchema),
   });
 
-  const onSubmit = (data: z.infer<typeof searchSchema>) => {
+  const onSubmit = async (data: z.infer<typeof searchSchema>) => {
     setIsSearched(true);
-    console.log(data.query);
-    setQuery(data.query.toLowerCase());
+    setIsLoadingSearchedPokemon(true);
+    const pokemon = await new PokemonService().getPokemon(data.query);
+    if (!pokemon) {
+      setIsLoadingSearchedPokemon(false);
+      return;
+    }
+    setSearchedPokemon(pokemon);
+    setIsLoadingSearchedPokemon(false);
   };
 
   const resetSearch = () => {
     form.reset(defaultValues);
     setIsSearched(false);
-    setQuery(undefined);
+    setSearchedPokemon(null);
   };
 
   return (

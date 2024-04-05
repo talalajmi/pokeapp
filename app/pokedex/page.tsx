@@ -1,11 +1,8 @@
 "use client";
 
 // ** React Imports
-import React, { useState } from "react";
 import Image from "next/image";
-
-// ** Library Imports
-import axios, { AxiosResponse } from "axios";
+import React, { useState } from "react";
 
 // ** Icon Imports
 import { Icon } from "@iconify/react";
@@ -14,16 +11,16 @@ import { Icon } from "@iconify/react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import PokemonCard from "@/components/PokemonCard";
-import PokemonCardLoadingSkeleton from "@/components/PokemonCardLoadingSkeleton";
-import { SearchPokemons } from "@/components/SearchPokemons";
 import PokemonFilters from "@/components/PokemonFilters";
+import { SearchPokemons } from "@/components/SearchPokemons";
+import PokemonCardLoadingSkeleton from "@/components/PokemonCardLoadingSkeleton";
 
 // ** Custom Hooks and Types
-import { GetPokemonsResponse } from "@/lib/types";
 import usePokeApi from "@/lib/hooks/usePokeApi";
+import { GetPokemonsResponse, Pokemon } from "@/lib/types";
 
 // ** Endpoint Imports
-import pokemonEndpoints from "@/lib/services/api";
+import pokemonEndpoints, { baseUrl } from "@/lib/services/api";
 import { NamedAPIResource } from "@/lib/types/PokemonSepcies";
 
 const Pokedex = () => {
@@ -34,6 +31,9 @@ const Pokedex = () => {
   const [filteredPokemons, setFilteredPokemons] = useState<NamedAPIResource[]>(
     [],
   );
+  const [searchedPokemon, setSearchedPokemon] = useState<Pokemon | null>(null);
+  const [isLoadingSearchedPokemon, setIsLoadingSearchedPokemon] =
+    useState(false);
   const [isLoadingFilteredPokemons, setIsLoadingFilteredPokemons] =
     useState(false);
 
@@ -136,9 +136,9 @@ const Pokedex = () => {
             <div
               key={pokemon.name}
               className={`animate-fade-in-left opacity-${index === 0 ? 1 : 0} delay-${index * 50}`}
-              // style={{
-              //   animationDelay: `${index * 50}ms`,
-              // }}
+              style={{
+                animationDelay: `${index * 50}ms`,
+              }}
             >
               <PokemonCard pokemon={pokemon} />
             </div>
@@ -199,7 +199,12 @@ const Pokedex = () => {
       <h1 className="text-3xl text-primary dark:text-secondary sm:text-4xl">
         Pokédex
       </h1>
-      <SearchPokemons setIsSearched={setIsSearched} isSearched={isSearched} />
+      <SearchPokemons
+        isSearched={isSearched}
+        setIsSearched={setIsSearched}
+        setSearchedPokemon={setSearchedPokemon}
+        setIsLoadingSearchedPokemon={setIsLoadingSearchedPokemon}
+      />
       <div className="flex w-full flex-col justify-start gap-5 xl:relative xl:flex-row">
         <PokemonFilters
           setIsFiltered={setIsFiltered}
@@ -207,7 +212,10 @@ const Pokedex = () => {
           setIsLoadingFilteredPokemons={setIsLoadingFilteredPokemons}
         />
         <div className="w-full flex-[3] flex-col items-start space-y-5 lg:flex-[5]">
-          {isLoading || !pokemons || isLoadingFilteredPokemons ? (
+          {isLoading ||
+          !pokemons ||
+          isLoadingFilteredPokemons ||
+          isLoadingSearchedPokemon ? (
             <PokemCardsLoadingSkeleton />
           ) : isFiltered && filteredPokemons.length !== 0 ? (
             renderFilteredPokemons(filteredPokemons)
@@ -224,6 +232,32 @@ const Pokedex = () => {
                 No Pokémons found for the selected filters
               </p>
             </Card>
+          ) : isSearched ? (
+            searchedPokemon ? (
+              <div className=" grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
+                <div className="animate-fade-in-left">
+                  <PokemonCard
+                    pokemon={{
+                      name: searchedPokemon.name,
+                      url: `${baseUrl}pokemon/${searchedPokemon.id.toString()}`,
+                    }}
+                  />
+                </div>
+              </div>
+            ) : (
+              <Card className="flex h-96 w-full flex-col items-center justify-center gap-5">
+                <Image
+                  width={100}
+                  height={100}
+                  alt="pokeball"
+                  src="/images/poke-ball.png"
+                  className="h-auto w-auto object-contain"
+                />
+                <p className="text-center text-2xl text-primary dark:text-secondary">
+                  No Pokémons found
+                </p>
+              </Card>
+            )
           ) : !isFiltered && pokemons ? (
             renderPokemons(pokemons)
           ) : (

@@ -11,10 +11,10 @@ import {
 import pokemonEndpoints from "./api";
 
 export default class PokemonService {
-  getPokemon = async (pokemonId: string): Promise<Pokemon | undefined> => {
+  getPokemon = async (pokemonName: string): Promise<Pokemon | undefined> => {
     try {
       const response = await axios.get(
-        pokemonEndpoints.getPokemon(parseInt(pokemonId)),
+        pokemonEndpoints.getPokemon(pokemonName),
       );
 
       if (response.status === 200) {
