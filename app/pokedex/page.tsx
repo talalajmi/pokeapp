@@ -51,7 +51,7 @@ const Pokedex = () => {
   const renderPokemons = (pokemons: GetPokemonsResponse) => {
     return (
       <div className="flex flex-col gap-5">
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
+        <div className="grid grid-cols-2 gap-4 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
           {pokemons.results.map((pokemon, index) => (
             <div
               key={pokemon.name}
@@ -131,7 +131,7 @@ const Pokedex = () => {
 
     return (
       <div className="flex flex-col gap-5">
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
+        <div className="grid grid-cols-2 gap-4 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
           {currentPokemons.map((pokemon, index) => (
             <div
               key={pokemon.name}
@@ -234,7 +234,7 @@ const Pokedex = () => {
             </Card>
           ) : isSearched ? (
             searchedPokemon ? (
-              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
+              <div className="grid grid-cols-2 gap-4 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
                 <div className="animate-fade-in-left">
                   <PokemonCard
                     pokemon={{

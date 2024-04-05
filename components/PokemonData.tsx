@@ -99,7 +99,7 @@ export const PokemonData = (props: PokemonDataProps) => {
           <div className="w-28" />
         )}
         <p className="font-pokemon-hollow text-2xl tracking-widest text-primary dark:text-secondary md:text-3xl">
-          {`${String(pokemon.id).padStart(String(pokemons?.count).length, "0")} / ${pokemons?.count}`}
+          # {pokemon.id}
         </p>
         <Tooltip>
           <TooltipTrigger>

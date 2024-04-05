@@ -32,7 +32,12 @@ export default function RootLayout({
             <TooltipProvider>
               <Navbar />
               <main className="px-8 py-32 md:px-16">{children}</main>
-              <Toaster />
+              <Toaster
+                position="top-right"
+                toastOptions={{
+                  className: "bg-card dark:bg-card dark:text-white text-black",
+                }}
+              />
               <ScrollToTop />
             </TooltipProvider>
           </ReactQueryProvider>

@@ -20,6 +20,7 @@ import { useGetSearchedPokemon } from "@/lib/hooks";
 import { NamedAPIResource } from "@/lib/types/PokemonSepcies";
 import { PokemonService } from "@/lib/services";
 import { Pokemon } from "@/lib/types";
+import toast from "react-hot-toast";
 
 const defaultValues = {
   query: "",
@@ -63,6 +64,7 @@ export const SearchPokemons = (props: SearchPokemonsProps) => {
       data.query.toLowerCase(),
     );
     if (!pokemon) {
+      toast.error("No Pokémon found with that name");
       setIsLoadingSearchedPokemon(false);
       return;
     }
