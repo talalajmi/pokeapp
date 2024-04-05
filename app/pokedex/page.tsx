@@ -19,32 +19,21 @@ import { SearchPokemons } from "@/components/SearchPokemons";
 import PokemonFilters from "@/components/PokemonFilters";
 
 // ** Custom Hooks and Types
-import {
-  GetAbilityResponse,
-  GetPokemonsResponse,
-  GetTypeResponse,
-} from "@/lib/types";
+import { GetPokemonsResponse } from "@/lib/types";
 import usePokeApi from "@/lib/hooks/usePokeApi";
 
 // ** Endpoint Imports
 import pokemonEndpoints from "@/lib/services/api";
-
-interface FormValues {
-  type: string | undefined;
-  ability: string | undefined;
-}
-
-interface Pokemon {
-  name: string;
-  url: string;
-}
+import { NamedAPIResource } from "@/lib/types/PokemonSepcies";
 
 const Pokedex = () => {
   // ** States
   const [currentPage, setCurrentPage] = useState(1);
-  const [isFiltered, setIsFiltered] = useState(false);
   const [isSearched, setIsSearched] = useState(false);
-  const [filteredPokemons, setFilteredPokemons] = useState<Pokemon[]>([]);
+  const [isFiltered, setIsFiltered] = useState(false);
+  const [filteredPokemons, setFilteredPokemons] = useState<NamedAPIResource[]>(
+    [],
+  );
   const [isLoadingFilteredPokemons, setIsLoadingFilteredPokemons] =
     useState(false);
 
@@ -59,68 +48,20 @@ const Pokedex = () => {
   // ** Contants
   const itemsPerPage = 20;
 
-  // ** Functions
-  const filterPokemons = async (data: FormValues) => {
-    console.log("running");
-    setIsFiltered(true);
-    setIsLoadingFilteredPokemons(true);
-    if (data.type && data.ability) {
-      try {
-        const pokemonsByTypeReponse: AxiosResponse<GetTypeResponse> =
-          await axios.get(`https://pokeapi.co/api/v2/type/${data.type}`);
-        const pokemonsByAbilityReponse: AxiosResponse<GetAbilityResponse> =
-          await axios.get(`https://pokeapi.co/api/v2/ability/${data.ability}`);
-
-        setFilteredPokemons(
-          pokemonsByTypeReponse.data.pokemon
-            .map((p) => p.pokemon)
-            .filter((p) =>
-              pokemonsByAbilityReponse.data.pokemon
-                .map((p) => p.pokemon)
-                .some((a) => a.name === p.name),
-            ),
-        );
-        setIsLoadingFilteredPokemons(false);
-      } catch (error) {
-        console.error(error);
-        setIsLoadingFilteredPokemons(false);
-      }
-    } else if (data.type) {
-      try {
-        const pokemonsByTypeReponse: AxiosResponse<GetTypeResponse> =
-          await axios.get(`https://pokeapi.co/api/v2/type/${data.type}`);
-        setFilteredPokemons(
-          pokemonsByTypeReponse.data.pokemon.map((p) => p.pokemon),
-        );
-        setIsLoadingFilteredPokemons(false);
-      } catch (error) {
-        console.error(error);
-        setIsLoadingFilteredPokemons(false);
-      }
-    } else if (data.ability) {
-      try {
-        const pokemonsByAbilityReponse: AxiosResponse<GetAbilityResponse> =
-          await axios.get(`https://pokeapi.co/api/v2/ability/${data.ability}`);
-        setFilteredPokemons(
-          pokemonsByAbilityReponse.data.pokemon.map((p) => p.pokemon),
-        );
-        setIsLoadingFilteredPokemons(false);
-      } catch (error) {
-        console.error(error);
-        setIsLoadingFilteredPokemons(false);
-      }
-    }
-
-    setIsLoadingFilteredPokemons(false);
-    return;
-  };
-
   const renderPokemons = (pokemons: GetPokemonsResponse) => {
     return (
       <div className="flex flex-col gap-5">
         <div className="grid grid-cols-2 gap-4 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
-          {pokemons.results.map((pokemon) => (
-            <PokemonCard key={pokemon.name} pokemon={pokemon} />
+          {pokemons.results.map((pokemon, index) => (
+            <div
+              key={pokemon.name}
+              className={`animate-fade-in-left opacity-${index === 0 ? 1 : 0}`}
+              style={{
+                animationDelay: `${index * 25}ms`,
+              }}
+            >
+              <PokemonCard pokemon={pokemon} />
+            </div>
           ))}
         </div>
         <div className="flex flex-col justify-start gap-5 lg:justify-between xl:flex-row">
@@ -132,11 +73,7 @@ const Pokedex = () => {
               src="/images/poke-ball.png"
               className="h-auto w-auto object-contain group-hover:animate-spin"
             />
-            <p>
-              Showing numbers {pokemons.results[0].url.split("/")[6]} to{" "}
-              {pokemons.results[pokemons.results.length - 1].url.split("/")[6]}{" "}
-              of {pokemons.count} Pokémons
-            </p>
+            <p>Showing 20 of {pokemons.count} Pokémons</p>
           </div>
           <div className="flex items-center gap-5">
             <Button
@@ -170,9 +107,13 @@ const Pokedex = () => {
     );
   };
 
-  const renderFilteredPokemons = (filteredPokemons: Pokemon[]) => {
+  const renderFilteredPokemons = (filteredPokemons: NamedAPIResource[]) => {
     const totalPages = Math.ceil(filteredPokemons.length / itemsPerPage);
-    const startIndex = (currentPage - 1) * itemsPerPage;
+    let currentPageAdjusted = currentPage;
+    if (currentPage > totalPages) {
+      currentPageAdjusted = totalPages;
+    }
+    const startIndex = (currentPageAdjusted - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
     const currentPokemons = filteredPokemons.slice(startIndex, endIndex);
 
@@ -187,17 +128,26 @@ const Pokedex = () => {
         setCurrentPage(currentPage - 1);
       }
     };
+
     return (
       <div className="flex flex-col gap-5">
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
-          {currentPokemons.map((pokemon) => (
-            <PokemonCard key={pokemon.name} pokemon={pokemon} />
+          {currentPokemons.map((pokemon, index) => (
+            <div
+              key={pokemon.name}
+              className={`animate-fade-in-left opacity-${index === 0 ? 1 : 0} delay-${index * 50}`}
+              // style={{
+              //   animationDelay: `${index * 50}ms`,
+              // }}
+            >
+              <PokemonCard pokemon={pokemon} />
+            </div>
           ))}
         </div>
 
         <div className="flex flex-col justify-start gap-5 lg:flex-row lg:justify-between">
           <div
-            className={`group flex items-center justify-between gap-5 rounded-full border-[3px] border-black bg-red-500 px-2 py-1 text-white ${filteredPokemons.length < 20 && "w-full"}`}
+            className={`group flex items-center justify-between gap-5 rounded-full border-[3px] border-black bg-red-500 px-2 py-1 text-white`}
           >
             <Image
               width={30}
@@ -207,8 +157,11 @@ const Pokedex = () => {
               className="h-auto w-auto object-contain group-hover:animate-spin"
             />
             <p>
-              Showing {itemsPerPage} Pokémons from {startIndex + 1} to{" "}
-              {endIndex} of {filteredPokemons.length} Pokémons
+              Showing{" "}
+              {filteredPokemons.length > itemsPerPage
+                ? itemsPerPage
+                : filteredPokemons.length}{" "}
+              Pokémons of {filteredPokemons.length} Pokémons
             </p>
           </div>
 
@@ -216,7 +169,7 @@ const Pokedex = () => {
             <Button
               onClick={handlePreviousPage}
               disabled={currentPage === 1}
-              className="w-full rounded-full bg-secondary transition duration-300 ease-in-out hover:bg-secondary-dark"
+              className="w-full rounded-full border border-primary bg-secondary transition duration-300 ease-in-out hover:bg-secondary-dark"
             >
               <Icon
                 fontSize={24}
@@ -227,7 +180,7 @@ const Pokedex = () => {
             <Button
               onClick={handleNextPage}
               disabled={currentPage === totalPages}
-              className="w-full rounded-full bg-secondary transition duration-300 ease-in-out hover:bg-secondary-dark"
+              className="w-full rounded-full border border-primary bg-secondary transition duration-300 ease-in-out hover:bg-secondary-dark"
             >
               <Icon
                 fontSize={24}
@@ -248,7 +201,11 @@ const Pokedex = () => {
       </h1>
       <SearchPokemons setIsSearched={setIsSearched} isSearched={isSearched} />
       <div className="flex w-full flex-col justify-start gap-5 xl:relative xl:flex-row">
-        <PokemonFilters />
+        <PokemonFilters
+          setIsFiltered={setIsFiltered}
+          setFilteredPokemons={setFilteredPokemons}
+          setIsLoadingFilteredPokemons={setIsLoadingFilteredPokemons}
+        />
         <div className="w-full flex-[3] flex-col items-start space-y-5 lg:flex-[5]">
           {isLoading || !pokemons || isLoadingFilteredPokemons ? (
             <PokemCardsLoadingSkeleton />

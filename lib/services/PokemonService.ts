@@ -6,6 +6,7 @@ import {
   PokemonEvolutionChain,
   GetPokemonSpeciesResponse,
   PokemonEncounter,
+  GetAbilityResponse,
 } from "../types";
 import pokemonEndpoints from "./api";
 
@@ -26,13 +27,29 @@ export default class PokemonService {
     }
   };
 
-  getPokemonsByAbility = async (
-    abilityId: number,
-  ): Promise<GetAbilitiesResponse | undefined> => {
+  getAbility = async (
+    abilityName: string,
+  ): Promise<GetAbilityResponse | undefined> => {
     try {
       const response = await axios.get(
-        pokemonEndpoints.getPokemonsByAbility(abilityId),
+        pokemonEndpoints.getAbility(abilityName),
       );
+
+      if (response.status === 200) {
+        return response.data as GetAbilityResponse;
+      }
+
+      return undefined;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  getAbilities = async (
+    limit?: number,
+  ): Promise<GetAbilitiesResponse | undefined> => {
+    try {
+      const response = await axios.get(pokemonEndpoints.getAbilities);
 
       if (response.status === 200) {
         return response.data as GetAbilitiesResponse;
@@ -44,13 +61,9 @@ export default class PokemonService {
     }
   };
 
-  getPokemonsByType = async (
-    typeId: number,
-  ): Promise<GetTypeResponse | undefined> => {
+  getType = async (typeName: string): Promise<GetTypeResponse | undefined> => {
     try {
-      const response = await axios.get(
-        pokemonEndpoints.getPokemonsByType(typeId),
-      );
+      const response = await axios.get(pokemonEndpoints.getType(typeName));
 
       if (response.status === 200) {
         return response.data as GetTypeResponse;

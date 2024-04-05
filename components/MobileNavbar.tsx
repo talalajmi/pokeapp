@@ -57,9 +57,15 @@ const MobileNav = () => {
       </SheetTrigger>
       <SheetContent side="right">
         <Link href="/">
-          <Image src="/pokemon.svg" width={150} height={150} alt="pokeapp" />
+          <Image
+            src="/pokemon.svg"
+            width={150}
+            height={150}
+            alt="pokeapp"
+            priority
+          />
         </Link>
-        <hr className="dark:bg-secondary-dark mt-5 h-0.5 bg-primary" />
+        <hr className="mt-5 h-0.5 bg-primary dark:bg-secondary-dark" />
         <SheetClose asChild>
           <NavContent />
         </SheetClose>

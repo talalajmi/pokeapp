@@ -73,3 +73,15 @@
     @apply bg-background text-foreground;
   }
 }
+
+@layer components {
+  .delay-200 {
+    transition-delay: 200ms;
+  }
+  .delay-400 {
+    transition-delay: 400ms;
+  }
+  .delay-600 {
+    transition-delay: 600ms;
+  }
+}
