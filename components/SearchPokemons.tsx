@@ -9,15 +9,10 @@ import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { FormField, FormItem, FormMessage, Form } from "./ui/form";
 
-// ** React Imports
-import { useState } from "react";
-
 // ** Icon Imports
 import { Icon } from "@iconify/react";
 
 // ** Custom Hooks
-import { useGetSearchedPokemon } from "@/lib/hooks";
-import { NamedAPIResource } from "@/lib/types/PokemonSepcies";
 import { PokemonService } from "@/lib/services";
 import { Pokemon } from "@/lib/types";
 import toast from "react-hot-toast";
@@ -106,7 +101,7 @@ export const SearchPokemons = (props: SearchPokemonsProps) => {
                   {isSearched && (
                     <Button
                       onClick={resetSearch}
-                      className="w-full border border-primary bg-red-500 text-white transition duration-300 ease-in-out hover:bg-red-600  active:scale-95 active:bg-red-700 xl:w-fit"
+                      className="w-full border border-secondary bg-primary text-secondary transition duration-300 ease-in-out hover:bg-primary-dark  active:scale-95 xl:w-fit"
                     >
                       Reset
                     </Button>

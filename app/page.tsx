@@ -1,280 +1,287 @@
 "use client";
 
+import React from "react";
 import Image from "next/image";
-import { useState } from "react";
-import { Icon } from "@iconify/react";
 import { Button } from "@/components/ui/button";
-import usePokeApi from "@/lib/hooks/usePokeApi";
-import pokemonEndpoints from "@/lib/services/api";
-import PokemonCard from "@/components/PokemonCard";
 import { getPokemonImageOfficial } from "@/lib/helpers";
+import Link from "next/link";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Icon } from "@iconify/react";
 import PokemonCarousel from "@/components/PokemonCarousel";
-import PokemonCardLoadingSkeleton from "@/components/PokemonCardLoadingSkeleton";
-import { GetPokemonsResponse } from "@/lib/types";
-import { Skeleton } from "@/components/ui/skeleton";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 
-export default function Home() {
-  const [getPokemonsUrl, setGetPokemonsUrl] = useState(
-    pokemonEndpoints.getPokemons,
-  );
+interface Feature {
+  icon: string;
+  title: string;
+  description: string;
+  color?: string;
+}
 
-  // ** Hooks
-  const { data: pokemons, isLoading } =
-    usePokeApi<GetPokemonsResponse>(getPokemonsUrl);
+const features: Feature[] = [
+  {
+    icon: "mdi:pokeball",
+    title: "Pokedex",
+    color: "red",
+    description:
+      "Use the Pokedex to search for your favorite Pokemon. You can also view the details of each Pokemon, including their abilities, types, and stats.",
+  },
+  {
+    icon: "mdi:search",
+    title: "Search",
+    color: "blue",
+    description:
+      "You can search for Pokemon by name, our library of Pokemon is huge and you can find any Pokemon you want.",
+  },
+  {
+    icon: "mdi:filter-outline",
+    title: "Filter",
+    color: "yellow",
+    description:
+      "You can filter Pokemon by type and ability. This will help you to find the Pokemon you are looking for.",
+  },
+  {
+    icon: "mdi:theme-light-dark",
+    title: "Dark Mode",
+    color: "green",
+    description:
+      "Navigate PokeApp in dark mode. You can switch between dark and light mode. Choose the mode that suits you.",
+  },
+];
 
-  const renderPokemons = (pokemons: GetPokemonsResponse) => {
-    return (
-      <div className="space-y-5">
-        <div className="flex flex-col justify-center gap-2">
-          <div className="flex items-center justify-between">
-            <p className="font-pokemon-solid text-3xl text-primary">
-              All Pokémons
-            </p>
-            <div className="flex items-center justify-between gap-3">
-              <Button
-                disabled={pokemons.previous === null}
-                onClick={() =>
-                  pokemons.previous && setGetPokemonsUrl(pokemons.previous)
-                }
-                className="group rounded-full border border-primary bg-yellow-400 transition duration-300 ease-in-out hover:bg-yellow-500 active:scale-95"
-              >
-                <Icon
-                  fontSize={20}
-                  icon="akar-icons:arrow-left"
-                  className="text-primary transition duration-300 ease-in-out "
-                />
-              </Button>
-              <Button
-                disabled={pokemons?.next === null}
-                onClick={() =>
-                  pokemons.next && setGetPokemonsUrl(pokemons.next)
-                }
-                className="group rounded-full border border-primary bg-yellow-400 transition duration-300 ease-in-out hover:bg-yellow-500 active:scale-95"
-              >
-                <Icon
-                  fontSize={20}
-                  icon="akar-icons:arrow-right"
-                  className="text-primary transition duration-300 ease-in-out "
-                />
-              </Button>
-            </div>
-          </div>
-          <p className=" dark:text-gray-400">
-            There are a total of {pokemons?.count} Pokémon in the database. Here
-            are some of them:
-          </p>
+const FeatureCard = ({ feature }: { feature: Feature }) => {
+  return (
+    <Card
+      className={`hover:border-1 group border bg-card p-5 transition duration-300 ease-in-out hover:border-blue-500 hover:bg-blue-500/10 dark:hover:border-yellow-500 dark:hover:bg-yellow-500/10`}
+    >
+      <CardHeader>
+        <div className="flex w-full justify-center">
+          <Icon
+            fontSize={52}
+            icon={feature.icon}
+            className={`text-${feature.color}-700`}
+          />
         </div>
+      </CardHeader>
+      <CardContent className="space-y-5">
+        <h3 className="text-xl text-black dark:text-white">{feature.title}</h3>
+        <p className="text-black dark:text-white">{feature.description}</p>
+      </CardContent>
+    </Card>
+  );
+};
 
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
-          {pokemons.results.map((pokemon) => (
-            <PokemonCard key={pokemon.name} pokemon={pokemon} />
+const Home = () => {
+  return (
+    <div className="flex flex-col justify-center gap-10">
+      <div
+        className="mx-auto flex w-full flex-col-reverse items-center justify-between gap-10
+        md:w-[90%] xl:flex-row"
+      >
+        <div className="flex flex-col gap-10">
+          <h1 className="text-2xl text-primary dark:text-secondary md:text-3xl lg:text-4xl">
+            Explore the World of Pokemon
+          </h1>
+          <p className="max-w-[800px] text-lg text-black dark:text-white">
+            Explore the world of Pokemon with PokeApp. Search for your favorite
+            Pokemon, abilities, and types. You can also view the details of each
+            Pokemon, including their abilities, types, and stats. Get started by
+            clicking the button below.
+          </p>
+          <div className="flex flex-col items-start gap-5 xl:flex-row xl:items-center">
+            <Button className="w-fit border border-primary bg-secondary text-primary transition duration-300 ease-in-out hover:bg-secondary-dark hover:active:scale-95">
+              <Link href="/pokedex">Get Started</Link>
+            </Button>
+            <p className="text-xs text-black dark:text-white">
+              Surf through the world of <br /> Pokemon and catch them all!
+            </p>
+          </div>
+        </div>
+        <div className="w-2/3 rounded-full border-2 border-primary bg-secondary p-10 md:w-1/2 xl:w-1/4">
+          <Image
+            width={300}
+            height={300}
+            alt="pokeapp"
+            src={getPokemonImageOfficial(123)}
+            className="h-full w-full object-contain"
+          />
+        </div>
+      </div>
+      <div className="mx-auto flex w-full flex-col items-center gap-10 md:w-[90%]">
+        <h2 className="text-3xl text-primary dark:text-secondary">Features</h2>
+        <div className="flex flex-col gap-10 xl:flex-row">
+          {features.map((feature, index) => (
+            <FeatureCard key={index} feature={feature} />
           ))}
         </div>
-        <section className="flex flex-col gap-5 lg:flex-row lg:justify-between">
-          <div className="group flex items-center justify-between gap-5 rounded-full border-[3px] border-black bg-red-500 px-2 py-1 text-white">
-            <Image
-              width={30}
-              height={30}
-              alt="pokeball"
-              src="/images/poke-ball.png"
-              className="h-auto w-auto object-contain group-hover:animate-spin"
-            />
-            <p>
-              Showing numbers {pokemons.results[0].url.split("/")[6]} to{" "}
-              {pokemons.results[pokemons.results.length - 1].url.split("/")[6]}{" "}
-              of {pokemons.count} Pokémons
-            </p>
-          </div>
-          <div className="flex items-center justify-between gap-5">
-            <Button
-              disabled={pokemons.previous === null}
-              onClick={() =>
-                pokemons.previous && setGetPokemonsUrl(pokemons.previous)
-              }
-              className="w-full rounded-full border border-primary bg-secondary transition duration-300 ease-in-out hover:bg-secondary-dark active:scale-95"
-            >
-              <Icon
-                fontSize={20}
-                className="text-primary"
-                icon="akar-icons:arrow-left"
-              />
-            </Button>
-            <Button
-              disabled={pokemons.next === null}
-              onClick={() => pokemons.next && setGetPokemonsUrl(pokemons.next)}
-              className="w-full rounded-full border border-primary bg-secondary transition duration-300 ease-in-out hover:bg-secondary-dark active:scale-95"
-            >
-              <Icon
-                fontSize={20}
-                className="text-primary"
-                icon="akar-icons:arrow-right"
-              />
-            </Button>
-          </div>
-        </section>
       </div>
-    );
-  };
-
-  return (
-    <main className="flex min-h-screen flex-col items-center gap-10">
-      <section>
-        <div className="flex flex-col gap-4 md:gap-8">
-          <div className="max-w-[700px] space-y-2">
-            <h1 className="font-pokemon-solid text-3xl text-primary dark:text-secondary sm:text-5xl">
-              Welcome to the World of Pokémon
-            </h1>
-            <p className=" text-black dark:text-gray-400 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-              Explore the Pokémon universe with our comprehensive database.
-              Enter a name or select a type to get started.
-            </p>
-          </div>
+      <div
+        className="mx-auto flex w-full flex-col-reverse items-center justify-between gap-10
+        md:w-[90%] md:flex-row"
+      >
+        <div className="space-y-5">
+          <h2 className="text-3xl text-primary dark:text-secondary">
+            Discover Your Favorite Pokémon in a Whole New Way!
+          </h2>
+          <p className="mb-4 max-w-[800px] text-lg text-black dark:text-white">
+            With PokeApp, you can enjoy the following features:
+          </p>
+          <ul className="max-w-[800px] list-inside list-disc text-lg text-black dark:text-white">
+            <li>Explore detailed profiles of your favorite Pokémon</li>
+            <li>Search quickly and easily with our intuitive interface</li>
+            <li>Enjoy a responsive design that works on any device</li>
+            <li>Toggle between light and dark mode for your viewing comfort</li>
+          </ul>
         </div>
-      </section>
-      <section>
+        <div className="w-2/3 rounded-full border-2 border-primary bg-secondary p-10 md:w-1/2 xl:w-1/4">
+          <Image
+            width={300}
+            height={300}
+            alt="pokeapp"
+            src={getPokemonImageOfficial(987)}
+            className="h-full w-full object-contain"
+          />
+        </div>
+      </div>
+      <div
+        className="mx-auto flex w-full flex-col items-center justify-between gap-10
+        md:w-[90%] md:flex-row"
+      >
+        <div className="w-2/3 rounded-full border-2 border-primary bg-secondary p-10 md:w-1/2 xl:w-1/4">
+          <Image
+            width={300}
+            height={300}
+            alt="pokeapp"
+            src={getPokemonImageOfficial(789)}
+            className="h-full w-full object-contain"
+          />
+        </div>
+
+        <div className="space-y-5">
+          <h2 className="text-3xl text-primary dark:text-secondary">
+            Dive into the Fascinating World of Pokémon!
+          </h2>
+          <p className="mb-4 max-w-[800px] text-lg text-black dark:text-white">
+            Experience the magic of Pokémon like never before:
+          </p>
+          <ul className="max-w-[800px] list-inside list-disc text-lg text-black dark:text-white">
+            <li>Discover over 800 unique species in the Pokémon universe</li>
+            <li>Learn about the diverse habitats and behaviors of Pokémon</li>
+            <li>
+              Understand the intricate relationships between different Pokémon
+              types
+            </li>
+            <li>
+              Explore the evolution chains and see how your favorite Pokémon
+              evolve
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div className="mx-auto flex w-full flex-col items-center gap-10 md:w-[90%]">
+        <span className="text-3xl text-primary dark:text-secondary">
+          Ready to Catch &apos;Em All?
+        </span>
         <PokemonCarousel />
-      </section>
-      <section className="w-full py-6 md:py-12">
-        <div className="grid items-center gap-4 md:gap-8 lg:grid-cols-2 lg:gap-16">
-          <div className="space-y-4">
-            <h2 className="font-pokemon-solid text-3xl text-primary dark:text-secondary sm:text-4xl">
-              Gotta catch &apos;em all!
-            </h2>
-            <p className=" text-black dark:text-gray-400 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-              The world of Pokémon is vast and full of wonders. Our app helps
-              you discover and learn about all the amazing creatures in the
-              Pokémon universe. Whether you&apos;re a seasoned Trainer or just
-              starting your journey, our comprehensive database has everything
-              you need to become a Pokémon Master.
-            </p>
-          </div>
-          <div className="mx-auto">
-            <Image
-              width="200"
-              height="200"
-              alt="Pokémon"
-              src={getPokemonImageOfficial(25)}
-              className="h-auto w-auto object-contain"
-            />
-          </div>
+      </div>
+      <div className="mx-auto flex w-full flex-col items-center gap-10 md:w-[90%]">
+        <h2 className="text-3xl text-primary dark:text-secondary">FAQ</h2>
+
+        <div className="flex w-full flex-col gap-10">
+          <Accordion type="single" collapsible className="w-full space-y-2">
+            <AccordionItem
+              value="item-1"
+              className="rounded-lg bg-card px-5 pt-3"
+            >
+              <AccordionTrigger>
+                How do I search for a Pokémon?
+              </AccordionTrigger>
+              <AccordionContent>
+                You can search for a Pokémon by name using the search bar at the
+                top of the page. Simply type in the name of the Pokémon you are
+                looking for, and the search results will display the
+                Pokémon&apos;s name, image, and type.
+              </AccordionContent>
+            </AccordionItem>
+
+            <AccordionItem
+              value="item-2"
+              className="rounded-lg bg-card px-5 pt-3"
+            >
+              <AccordionTrigger>
+                How do I filter Pokémon by type?
+              </AccordionTrigger>
+              <AccordionContent>
+                To filter Pokémon by type, use the dropdown menu on the Pokedex
+                page. You can select a type from the list of available types,
+                and the search results will display Pokémon of that type.
+              </AccordionContent>
+            </AccordionItem>
+
+            <AccordionItem
+              value="item-3"
+              className="rounded-lg bg-card px-5 pt-3"
+            >
+              <AccordionTrigger>
+                How do I filter Pokémon by ability?
+              </AccordionTrigger>
+              <AccordionContent>
+                To filter Pokémon by ability, use the dropdown menu on the
+                Pokedex page. You can select an ability from the list of
+                available abilities, and the search results will display Pokémon
+                with that ability.
+              </AccordionContent>
+            </AccordionItem>
+
+            <AccordionItem
+              value="item-4"
+              className="rounded-lg bg-card px-5 pt-3"
+            >
+              <AccordionTrigger>
+                How do I view detailed information about a Pokémon?
+              </AccordionTrigger>
+              <AccordionContent>
+                To view detailed information about a Pokémon, click on the
+                Pokémon&apos;s card in the search results. This will take you to
+                the Pokémon&apos;s profile page, where you can see information
+                such as the Pokémon&apos;s abilities, types, and stats.
+              </AccordionContent>
+            </AccordionItem>
+
+            <AccordionItem
+              value="item-5"
+              className="rounded-lg bg-card px-5 pt-3"
+            >
+              <AccordionTrigger>
+                How do I switch between light and dark mode?
+              </AccordionTrigger>
+              <AccordionContent>
+                To switch between light and dark mode, click on the theme
+                switcher icon in the top right corner of the page. This will
+                toggle between light and dark mode, depending on your
+                preference.
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
         </div>
-      </section>
-      {/* <section className="w-full space-y-4">
-        {isLoading || !pokemons ? (
-          <div className="flex flex-col gap-4">
-            <div className="flex flex-col justify-center gap-2">
-              <div className="flex items-center justify-between">
-                <p className="font-pokemon-solid text-3xl text-primary">
-                  All Pokémons
-                </p>
-                <div className="flex items-center justify-between gap-3">
-                  <Button className="group rounded-full border border-primary bg-yellow-400 transition duration-300 ease-in-out hover:bg-yellow-500 active:scale-95">
-                    <Icon
-                      fontSize={20}
-                      icon="akar-icons:arrow-left"
-                      className="text-primary transition duration-300 ease-in-out "
-                    />
-                  </Button>
-                  <Button className="group rounded-full border border-primary bg-yellow-400 transition duration-300 ease-in-out hover:bg-yellow-500 active:scale-95">
-                    <Icon
-                      fontSize={20}
-                      icon="akar-icons:arrow-right"
-                      className="text-primary transition duration-300 ease-in-out "
-                    />
-                  </Button>
-                </div>
-              </div>
-              <Skeleton className="h-5 w-96  dark:bg-gray-500" />
-              <Skeleton className="h-5 w-96  dark:bg-gray-500 lg:hidden" />
-            </div>
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 ">
-              {Array.from({ length: 20 }).map((_, index) => (
-                <PokemonCardLoadingSkeleton key={index} />
-              ))}
-            </div>
-            <div className="flex flex-col justify-start gap-5 lg:justify-between xl:flex-row">
-              <div className="group flex items-center justify-start gap-5 rounded-full border-[3px] border-black bg-red-500 px-2 py-1 text-white">
-                <Image
-                  width={30}
-                  height={30}
-                  alt="pokeball"
-                  src="/images/poke-ball.png"
-                  className="h-auto w-auto object-contain group-hover:animate-spin"
-                />
-                <p>Loading Pokémons...</p>
-              </div>
-              <div className="flex items-center gap-5">
-                <Button className="w-full rounded-full bg-secondary transition duration-300 ease-in-out hover:bg-secondary-dark">
-                  <Icon
-                    fontSize={24}
-                    icon="akar-icons:arrow-left"
-                    className="text-primary transition duration-300 ease-in-out"
-                  />
-                </Button>
-
-                <Button className="w-full rounded-full bg-secondary transition duration-300 ease-in-out hover:bg-secondary-dark">
-                  <Icon
-                    fontSize={24}
-                    icon="akar-icons:arrow-right"
-                    className="text-primary transition duration-300 ease-in-out"
-                  />
-                </Button>
-              </div>
-            </div>
-          </div>
-        ) : (
-          renderPokemons(pokemons)
-        )}
-      </section> */}
-
-      <section>
-        <div className="flex flex-row gap-4">
-          <div className="flex flex-col gap-4">
-            <h2 className="font-pokemon-solid text-3xl text-primary dark:text-secondary">
-              About Pokémon
-            </h2>
-            <p className=" text-black dark:text-gray-400 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-              Pokémon is a media franchise created by Satoshi Tajiri and Ken
-              Sugimori and is owned by Nintendo, Game Freak, and Creatures. The
-              franchise was created by Satoshi Tajiri in 1995 and is centered on
-              fictional creatures called &quot;Pokémon&quot;. In Pokémon,
-              humans, known as Pokémon Trainers, catch and train Pokémon to
-              battle each other for sport. The franchise began with the release
-              of the Pokémon Red and Green video games
-            </p>
-
-            <p className=" text-black dark:text-gray-400 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-              The franchise has since expanded to include an animated series, a
-              trading card game, an animated film series, and merchandise. The
-              Pokémon franchise is the second highest-grossing media franchise
-              of all time, behind only the Mario franchise. The franchise is
-              also the highest-grossing media franchise of all time, with an
-              estimated $100 billion in total revenue.
-            </p>
-
-            <p className=" text-black dark:text-gray-400 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-              The Pokémon franchise has had a significant impact on popular
-              culture, with Pokémon becoming one of the most recognizable and
-              iconic franchises in the world. The franchise has also been
-              credited with helping to popularize the handheld video game
-              console, with the release of the Pokémon Red and Blue video games
-              helping to boost sales The Pokémon franchise has also been
-              credited with helping to popularize the handheld video game
-              console, with the release of the Pokémon Red and Blue video games
-              helping to boost sales of the
-            </p>
-          </div>
-          <div className="mx-auto">
-            <Image
-              width="200"
-              height="200"
-              alt="Pokémon"
-              src={getPokemonImageOfficial(25)}
-              className="h-auto w-auto object-contain"
-            />
-          </div>
-        </div>
-      </section>
-    </main>
+      </div>
+      <div className="flex flex-col items-center justify-center gap-5 p-10 ">
+        <h2 className="text-3xl font-bold">
+          Ready to start your Pokémon journey?
+        </h2>
+        <p className="text-lg">
+          Start exploring the fascinating world of Pokémon today!
+        </p>
+        <Button className="rounded-full border border-primary bg-secondary px-8 py-3 text-lg font-bold text-primary transition duration-300 ease-in-out hover:bg-secondary-dark active:scale-95">
+          <Link href="/pokedex"> Get Started</Link>
+        </Button>
+      </div>
+    </div>
   );
-}
+};
+
+export default Home;

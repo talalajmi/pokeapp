@@ -127,7 +127,7 @@ const PokemonFilters = (props: PokemonFiltersProps) => {
   };
 
   return (
-    <Card className="top-32 h-fit flex-1 p-5 xl:sticky">
+    <Card className="h-fit flex-1 p-5">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(filterPokemons)}>
           <div className="flex-col gap-5 space-y-5">

@@ -49,7 +49,7 @@ const AboutPage = () => {
     <div className="space-y-5">
       <div className="flex flex-col gap-5 lg:flex-row">
         <Card className="w-full">
-          <CardContent className="p-10">
+          <CardContent className="p-8">
             <div className="flex flex-col items-start justify-start gap-6">
               <Image
                 width={150}
@@ -80,7 +80,7 @@ const AboutPage = () => {
           </CardContent>
         </Card>
         <Card className="w-full">
-          <CardContent className="flex flex-col justify-between gap-10 p-10">
+          <CardContent className="flex flex-col justify-between gap-10 p-8">
             <Image
               width={200}
               height={200}
@@ -127,7 +127,7 @@ const AboutPage = () => {
         </Card>
       </div>
       <Card>
-        <CardContent className="p-10">
+        <CardContent className="p-8">
           <div className="flex flex-col items-start justify-start gap-6">
             <Image
               width={150}
