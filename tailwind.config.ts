@@ -86,12 +86,6 @@ const config = {
         "accordion-up": "accordion-up 0.2s ease-out",
         "fade-in-left": "fade-in-left 0.5s ease-out forwards",
       },
-      animationDelay: {
-        "50": "50ms",
-        "100": "100ms",
-        "150": "150ms",
-        // Add more as needed
-      },
     },
   },
   plugins: [require("tailwindcss-animate")],

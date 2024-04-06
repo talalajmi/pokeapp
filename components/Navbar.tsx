@@ -12,7 +12,7 @@ const Navbar = () => {
   const pathname = usePathname();
 
   return (
-    <nav className="fixed z-50 flex w-full items-center justify-between gap-5 border-b border-blue-500/20 bg-white/95 px-8 py-6 backdrop-blur-sm dark:bg-card md:px-16">
+    <nav className="fixed z-50 flex w-full items-center justify-between gap-5 border-b border-blue-500/20 bg-white/95 px-8 py-6 backdrop-blur-sm dark:bg-card md:px-20">
       <Link href="/">
         <Image
           width={150}

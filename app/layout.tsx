@@ -21,7 +21,7 @@ export default function RootLayout({
           <ReactQueryProvider>
             <TooltipProvider>
               <Navbar />
-              <main className="px-8 py-32 md:px-16">{children}</main>
+              <main className="px-8 py-32 md:px-20">{children}</main>
               <Footer />
               <Toaster
                 position="top-right"

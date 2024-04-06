@@ -70,7 +70,7 @@
     @apply border-border font-pokemon-solid tracking-widest;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground dark:text-[#CBCBE2];
   }
 }
 

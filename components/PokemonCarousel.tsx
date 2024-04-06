@@ -34,13 +34,16 @@ const PokemonCarousel = () => {
           "
           >
             <Link href={`/pokemon/${index + 1}`} className="p-1">
-              <Card className="group border border-primary bg-transparent transition hover:bg-blue-500/10 dark:border-secondary dark:hover:bg-yellow-500/10">
-                <CardContent className="flex aspect-square items-center justify-center">
+              <Card className="group relative transition duration-300 ease-in-out hover:border-primary hover:bg-blue-500/20 dark:hover:border-yellow-400 dark:hover:bg-yellow-400/20">
+                <div className="absolute right-0 top-0 rounded-bl-lg rounded-tr-lg bg-primary p-2 text-white dark:bg-secondary dark:text-primary">
+                  #{index + 1}
+                </div>
+                <CardContent className="flex aspect-square flex-col items-center justify-around gap-5">
                   <Image
                     width={150}
                     height={150}
-                    alt={`${index + 1}`}
                     src={getPokemonImageOfficial(index + 1)}
+                    alt={`${index + 1}`}
                     className="h-auto w-auto object-contain transition duration-300 ease-in-out group-hover:scale-105 group-active:scale-95"
                   />
                 </CardContent>

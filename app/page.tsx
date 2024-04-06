@@ -19,35 +19,30 @@ interface Feature {
   icon: string;
   title: string;
   description: string;
-  color?: string;
 }
 
 const features: Feature[] = [
   {
     icon: "mdi:pokeball",
     title: "Pokedex",
-    color: "red",
     description:
       "Use the Pokedex to search for your favorite Pokemon. You can also view the details of each Pokemon, including their abilities, types, and stats.",
   },
   {
     icon: "mdi:search",
     title: "Search",
-    color: "blue",
     description:
       "You can search for Pokemon by name, our library of Pokemon is huge and you can find any Pokemon you want.",
   },
   {
     icon: "mdi:filter-outline",
     title: "Filter",
-    color: "yellow",
     description:
       "You can filter Pokemon by type and ability. This will help you to find the Pokemon you are looking for.",
   },
   {
     icon: "mdi:theme-light-dark",
     title: "Dark Mode",
-    color: "green",
     description:
       "Navigate PokeApp in dark mode. You can switch between dark and light mode. Choose the mode that suits you.",
   },
@@ -63,13 +58,15 @@ const FeatureCard = ({ feature }: { feature: Feature }) => {
           <Icon
             fontSize={52}
             icon={feature.icon}
-            className={`text-${feature.color}-700`}
+            className={`transition duration-300 ease-in-out group-hover:text-primary group-hover:dark:text-secondary`}
           />
         </div>
       </CardHeader>
       <CardContent className="space-y-5">
-        <h3 className="text-xl text-black dark:text-white">{feature.title}</h3>
-        <p className="text-black dark:text-white">{feature.description}</p>
+        <h3 className="group-hover: text-xl text-black transition duration-300 ease-in-out group-hover:text-primary group-hover:dark:text-secondary">
+          {feature.title}
+        </h3>
+        <p className="t">{feature.description}</p>
       </CardContent>
     </Card>
   );
@@ -77,29 +74,21 @@ const FeatureCard = ({ feature }: { feature: Feature }) => {
 
 const Home = () => {
   return (
-    <div className="flex flex-col justify-center gap-10">
-      <div
-        className="mx-auto flex w-full flex-col-reverse items-center justify-between gap-10
-        md:w-[90%] xl:flex-row"
-      >
+    <div className="flex flex-col justify-center gap-20">
+      <div className="mx-auto flex w-full flex-col-reverse items-center justify-between gap-10 xl:flex-row">
         <div className="flex flex-col gap-10">
           <h1 className="text-2xl text-primary dark:text-secondary md:text-3xl lg:text-4xl">
             Explore the World of Pokemon
           </h1>
-          <p className="max-w-[800px] text-lg text-black dark:text-white">
+          <p className="max-w-[800px] text-lg ">
             Explore the world of Pokemon with PokeApp. Search for your favorite
             Pokemon, abilities, and types. You can also view the details of each
             Pokemon, including their abilities, types, and stats. Get started by
             clicking the button below.
           </p>
-          <div className="flex flex-col items-start gap-5 xl:flex-row xl:items-center">
-            <Button className="w-fit border border-primary bg-secondary text-primary transition duration-300 ease-in-out hover:bg-secondary-dark hover:active:scale-95">
-              <Link href="/pokedex">Get Started</Link>
-            </Button>
-            <p className="text-xs text-black dark:text-white">
-              Surf through the world of <br /> Pokemon and catch them all!
-            </p>
-          </div>
+          <Button className="w-fit rounded-full border border-primary bg-secondary p-6 text-lg text-primary transition duration-300 ease-in-out hover:bg-secondary-dark hover:active:scale-95">
+            <Link href="/pokedex">Get Started</Link>
+          </Button>
         </div>
         <div className="w-2/3 rounded-full border-2 border-primary bg-secondary p-10 md:w-1/2 xl:w-1/4">
           <Image
@@ -111,7 +100,7 @@ const Home = () => {
           />
         </div>
       </div>
-      <div className="mx-auto flex w-full flex-col items-center gap-10 md:w-[90%]">
+      <div className="mx-auto flex w-full flex-col items-center gap-10">
         <h2 className="text-3xl text-primary dark:text-secondary">Features</h2>
         <div className="flex flex-col gap-10 xl:flex-row">
           {features.map((feature, index) => (
@@ -119,18 +108,15 @@ const Home = () => {
           ))}
         </div>
       </div>
-      <div
-        className="mx-auto flex w-full flex-col-reverse items-center justify-between gap-10
-        md:w-[90%] md:flex-row"
-      >
+      <div className="mx-auto flex w-full flex-col-reverse items-center justify-between gap-10 md:flex-row">
         <div className="space-y-5">
           <h2 className="text-3xl text-primary dark:text-secondary">
             Discover Your Favorite Pokémon in a Whole New Way!
           </h2>
-          <p className="mb-4 max-w-[800px] text-lg text-black dark:text-white">
+          <p className="mb-4 max-w-[800px] text-lg ">
             With PokeApp, you can enjoy the following features:
           </p>
-          <ul className="max-w-[800px] list-inside list-disc text-lg text-black dark:text-white">
+          <ul className="max-w-[800px] list-inside list-disc text-lg ">
             <li>Explore detailed profiles of your favorite Pokémon</li>
             <li>Search quickly and easily with our intuitive interface</li>
             <li>Enjoy a responsive design that works on any device</li>
@@ -147,16 +133,13 @@ const Home = () => {
           />
         </div>
       </div>
-      <div
-        className="mx-auto flex w-full flex-col items-center justify-between gap-10
-        md:w-[90%] md:flex-row"
-      >
-        <div className="w-2/3 rounded-full border-2 border-primary bg-secondary p-10 md:w-1/2 xl:w-1/4">
+      <div className="mx-auto flex w-full flex-col items-center justify-between gap-10 md:flex-row">
+        <div className="w-2/3 rounded-full border-2 border-secondary bg-primary-dark p-10 md:w-1/2 xl:w-1/4">
           <Image
             width={300}
             height={300}
             alt="pokeapp"
-            src={getPokemonImageOfficial(789)}
+            src={getPokemonImageOfficial(852)}
             className="h-full w-full object-contain"
           />
         </div>
@@ -165,10 +148,10 @@ const Home = () => {
           <h2 className="text-3xl text-primary dark:text-secondary">
             Dive into the Fascinating World of Pokémon!
           </h2>
-          <p className="mb-4 max-w-[800px] text-lg text-black dark:text-white">
+          <p className="mb-4 max-w-[800px] text-lg ">
             Experience the magic of Pokémon like never before:
           </p>
-          <ul className="max-w-[800px] list-inside list-disc text-lg text-black dark:text-white">
+          <ul className="max-w-[800px] list-inside list-disc text-lg ">
             <li>Discover over 800 unique species in the Pokémon universe</li>
             <li>Learn about the diverse habitats and behaviors of Pokémon</li>
             <li>
@@ -182,25 +165,25 @@ const Home = () => {
           </ul>
         </div>
       </div>
-      <div className="mx-auto flex w-full flex-col items-center gap-10 md:w-[90%]">
+      <div className="mx-auto flex w-full flex-col items-center gap-10">
         <span className="text-3xl text-primary dark:text-secondary">
           Ready to Catch &apos;Em All?
         </span>
         <PokemonCarousel />
       </div>
-      <div className="mx-auto flex w-full flex-col items-center gap-10 md:w-[90%]">
+      <div className="mx-auto flex w-full flex-col items-center gap-10">
         <h2 className="text-3xl text-primary dark:text-secondary">FAQ</h2>
 
         <div className="flex w-full flex-col gap-10">
           <Accordion type="single" collapsible className="w-full space-y-2">
             <AccordionItem
               value="item-1"
-              className="rounded-lg bg-card px-5 pt-3"
+              className="rounded-lg bg-card px-5 pt-3 shadow-sm"
             >
-              <AccordionTrigger>
+              <AccordionTrigger className=" no-underline transition duration-300 ease-in-out hover:text-black hover:dark:text-white">
                 How do I search for a Pokémon?
               </AccordionTrigger>
-              <AccordionContent>
+              <AccordionContent className="">
                 You can search for a Pokémon by name using the search bar at the
                 top of the page. Simply type in the name of the Pokémon you are
                 looking for, and the search results will display the
@@ -210,12 +193,12 @@ const Home = () => {
 
             <AccordionItem
               value="item-2"
-              className="rounded-lg bg-card px-5 pt-3"
+              className="rounded-lg bg-card px-5 pt-3 shadow-sm"
             >
-              <AccordionTrigger>
+              <AccordionTrigger className=" transition duration-300 ease-in-out hover:text-black hover:dark:text-white">
                 How do I filter Pokémon by type?
               </AccordionTrigger>
-              <AccordionContent>
+              <AccordionContent className="">
                 To filter Pokémon by type, use the dropdown menu on the Pokedex
                 page. You can select a type from the list of available types,
                 and the search results will display Pokémon of that type.
@@ -224,12 +207,12 @@ const Home = () => {
 
             <AccordionItem
               value="item-3"
-              className="rounded-lg bg-card px-5 pt-3"
+              className="rounded-lg bg-card px-5 pt-3 shadow-sm"
             >
-              <AccordionTrigger>
+              <AccordionTrigger className=" transition duration-300 ease-in-out hover:text-black hover:dark:text-white">
                 How do I filter Pokémon by ability?
               </AccordionTrigger>
-              <AccordionContent>
+              <AccordionContent className="">
                 To filter Pokémon by ability, use the dropdown menu on the
                 Pokedex page. You can select an ability from the list of
                 available abilities, and the search results will display Pokémon
@@ -239,12 +222,12 @@ const Home = () => {
 
             <AccordionItem
               value="item-4"
-              className="rounded-lg bg-card px-5 pt-3"
+              className="rounded-lg bg-card px-5 pt-3 shadow-sm"
             >
-              <AccordionTrigger>
+              <AccordionTrigger className=" transition duration-300 ease-in-out hover:text-black hover:dark:text-white">
                 How do I view detailed information about a Pokémon?
               </AccordionTrigger>
-              <AccordionContent>
+              <AccordionContent className="">
                 To view detailed information about a Pokémon, click on the
                 Pokémon&apos;s card in the search results. This will take you to
                 the Pokémon&apos;s profile page, where you can see information
@@ -254,12 +237,12 @@ const Home = () => {
 
             <AccordionItem
               value="item-5"
-              className="rounded-lg bg-card px-5 pt-3"
+              className="rounded-lg bg-card px-5 pt-3 shadow-sm"
             >
-              <AccordionTrigger>
+              <AccordionTrigger className=" transition duration-300 ease-in-out hover:text-black hover:dark:text-white">
                 How do I switch between light and dark mode?
               </AccordionTrigger>
-              <AccordionContent>
+              <AccordionContent className="">
                 To switch between light and dark mode, click on the theme
                 switcher icon in the top right corner of the page. This will
                 toggle between light and dark mode, depending on your
@@ -276,7 +259,7 @@ const Home = () => {
         <p className="text-lg">
           Start exploring the fascinating world of Pokémon today!
         </p>
-        <Button className="rounded-full border border-primary bg-secondary px-8 py-3 text-lg font-bold text-primary transition duration-300 ease-in-out hover:bg-secondary-dark active:scale-95">
+        <Button className="rounded-full border border-primary bg-secondary p-7 text-lg font-bold text-primary transition duration-300 ease-in-out hover:bg-secondary-dark active:scale-95">
           <Link href="/pokedex"> Get Started</Link>
         </Button>
       </div>
