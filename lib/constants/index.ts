@@ -1,7 +1,14 @@
+export const routes = {
+  home: "/",
+  pokedex: "/pokedex",
+  about: "/about",
+  pokemon: (pokemonId: string | number) => `/pokemon/${pokemonId}`,
+};
+
 export const navbarLinks = [
-  { label: "Home", route: "/" },
-  { label: "Pokédex", route: "/pokedex" },
-  { label: "About", route: "/about" },
+  { label: "Home", route: routes.home },
+  { label: "Pokédex", route: routes.pokedex },
+  { label: "About", route: routes.about },
 ];
 
 export const themes = [

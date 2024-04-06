@@ -14,6 +14,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { routes } from "@/lib/constants";
 
 interface Feature {
   icon: string;
@@ -63,10 +64,10 @@ const FeatureCard = ({ feature }: { feature: Feature }) => {
         </div>
       </CardHeader>
       <CardContent className="space-y-5">
-        <h3 className="group-hover: text-xl text-black transition duration-300 ease-in-out group-hover:text-primary group-hover:dark:text-secondary">
+        <h3 className="group-hover: text-xl transition duration-300 ease-in-out group-hover:text-primary group-hover:dark:text-secondary">
           {feature.title}
         </h3>
-        <p className="t">{feature.description}</p>
+        <p>{feature.description}</p>
       </CardContent>
     </Card>
   );
@@ -75,7 +76,7 @@ const FeatureCard = ({ feature }: { feature: Feature }) => {
 const Home = () => {
   return (
     <div className="flex flex-col justify-center gap-20">
-      <div className="mx-auto flex w-full flex-col-reverse items-center justify-between gap-10 xl:flex-row">
+      <div className="mx-auto flex w-full flex-col-reverse items-center justify-between gap-10 md:flex-row">
         <div className="flex flex-col gap-10">
           <h1 className="text-2xl text-primary dark:text-secondary md:text-3xl lg:text-4xl">
             Explore the World of Pokemon
@@ -86,9 +87,11 @@ const Home = () => {
             Pokemon, including their abilities, types, and stats. Get started by
             clicking the button below.
           </p>
-          <Button className="w-fit rounded-full border border-primary bg-secondary p-6 text-lg text-primary transition duration-300 ease-in-out hover:bg-secondary-dark hover:active:scale-95">
-            <Link href="/pokedex">Get Started</Link>
-          </Button>
+          <Link href={routes.pokedex}>
+            <Button className="w-fit rounded-full border border-primary bg-secondary p-6 text-lg text-primary transition duration-300 ease-in-out hover:bg-secondary-dark hover:active:scale-95">
+              Get Started
+            </Button>
+          </Link>
         </div>
         <div className="w-2/3 rounded-full border-2 border-primary bg-secondary p-10 md:w-1/2 xl:w-1/4">
           <Image
@@ -252,16 +255,18 @@ const Home = () => {
           </Accordion>
         </div>
       </div>
-      <div className="flex flex-col items-center justify-center gap-5 p-10 ">
+      <div className="flex flex-col items-center justify-center gap-5">
         <h2 className="text-3xl font-bold">
           Ready to start your Pokémon journey?
         </h2>
         <p className="text-lg">
           Start exploring the fascinating world of Pokémon today!
         </p>
-        <Button className="rounded-full border border-primary bg-secondary p-7 text-lg font-bold text-primary transition duration-300 ease-in-out hover:bg-secondary-dark active:scale-95">
-          <Link href="/pokedex"> Get Started</Link>
-        </Button>
+        <Link href={routes.pokedex}>
+          <Button className="rounded-full border border-primary bg-secondary p-7 text-lg font-bold text-primary transition duration-300 ease-in-out hover:bg-secondary-dark active:scale-95">
+            Get Started
+          </Button>
+        </Link>
       </div>
     </div>
   );

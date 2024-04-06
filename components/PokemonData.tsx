@@ -24,13 +24,10 @@ import {
   getPokemonImageOfficial,
   getPokemonImageDreamWorld,
 } from "@/lib/helpers";
-import {
-  Pokemon,
-  GetPokemonsResponse,
-  GetPokemonSpeciesResponse,
-} from "@/lib/types";
-import PokemonEvolution from "./PokemonEvolution";
+import { routes } from "@/lib/constants";
 import { useGetPokemons } from "@/lib/hooks";
+import PokemonEvolution from "./PokemonEvolution";
+import { Pokemon, GetPokemonSpeciesResponse } from "@/lib/types";
 
 interface PokemonDataProps {
   pokemon: Pokemon;
@@ -78,7 +75,7 @@ export const PokemonData = (props: PokemonDataProps) => {
         {pokemon.id > 1 ? (
           <Tooltip>
             <TooltipTrigger>
-              <Link href={`/pokemon/${pokemon.id - 1}`}>
+              <Link href={routes.pokemon(pokemon.id - 1)}>
                 <Button
                   variant="secondary"
                   className="rounded-full border border-primary transition duration-300 ease-out hover:bg-secondary-dark  active:scale-95"
@@ -103,7 +100,7 @@ export const PokemonData = (props: PokemonDataProps) => {
         </p>
         <Tooltip>
           <TooltipTrigger>
-            <Link href={`/pokemon/${pokemon.id + 1}`}>
+            <Link href={routes.pokemon(pokemon.id + 1)}>
               <Button
                 variant="secondary"
                 className="rounded-full border border-primary transition duration-300 ease-out hover:bg-secondary-dark  active:scale-95"

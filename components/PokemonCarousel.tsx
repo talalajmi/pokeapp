@@ -13,6 +13,7 @@ import {
 import Autoplay from "embla-carousel-autoplay";
 import Image from "next/image";
 import { getPokemonImageOfficial } from "@/lib/helpers";
+import { routes } from "@/lib/constants";
 
 const PokemonCarousel = () => {
   // ** States
@@ -33,7 +34,7 @@ const PokemonCarousel = () => {
             basis-1/2 md:basis-1/3 lg:basis-1/4 xl:basis-1/5 2xl:basis-1/6
           "
           >
-            <Link href={`/pokemon/${index + 1}`} className="p-1">
+            <Link href={routes.pokemon(index + 1)} className="p-1">
               <Card className="group relative transition duration-300 ease-in-out hover:border-primary hover:bg-blue-500/20 dark:hover:border-yellow-400 dark:hover:bg-yellow-400/20">
                 <div className="absolute right-0 top-0 rounded-bl-lg rounded-tr-lg bg-primary p-2 text-white dark:bg-secondary dark:text-primary">
                   #{index + 1}
@@ -42,8 +43,8 @@ const PokemonCarousel = () => {
                   <Image
                     width={150}
                     height={150}
-                    src={getPokemonImageOfficial(index + 1)}
                     alt={`${index + 1}`}
+                    src={getPokemonImageOfficial(index + 1)}
                     className="h-auto w-auto object-contain transition duration-300 ease-in-out group-hover:scale-105 group-active:scale-95"
                   />
                 </CardContent>

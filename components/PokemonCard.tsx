@@ -4,6 +4,7 @@ import { Icon } from "@iconify/react";
 import { Card, CardContent } from "./ui/card";
 import React, { Fragment, useState } from "react";
 import { fixWordCasing, getPokemonImageOfficial } from "@/lib/helpers";
+import { routes } from "@/lib/constants";
 
 interface PokemonCardProps {
   pokemon: {
@@ -23,7 +24,7 @@ const PokemonCard = ({ pokemon }: PokemonCardProps) => {
 
   return (
     <Fragment>
-      <Link href={`/pokemon/${pokemon.url.split("/")[6]}`}>
+      <Link href={routes.pokemon(pokemon.url.split("/")[6])}>
         <Card className="group relative transition duration-300 ease-in-out hover:border-primary hover:bg-blue-500/20 dark:hover:border-yellow-400 dark:hover:bg-yellow-400/20">
           <div className="absolute right-0 top-0 rounded-bl-lg rounded-tr-lg bg-primary p-2 text-white dark:bg-secondary dark:text-primary">
             #{parseInt(pokemon.url.split("/")[6])}
