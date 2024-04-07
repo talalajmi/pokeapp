@@ -11,12 +11,11 @@ import { Progress } from "./ui/progress";
 import { Skeleton } from "./ui/skeleton";
 import { Separator } from "./ui/separator";
 import { Card, CardContent } from "./ui/card";
+import PokemonEvolution from "./PokemonEvolution";
+import { Tooltip, TooltipTrigger, TooltipContent } from "./ui/tooltip";
 
 // ** Icon Imports
 import { Icon } from "@iconify/react";
-
-// ** Library Imports
-import { Tooltip, TooltipTrigger, TooltipContent } from "./ui/tooltip";
 
 // ** Custom Hooks and Types
 import {
@@ -24,10 +23,11 @@ import {
   getPokemonImageOfficial,
   getPokemonImageDreamWorld,
 } from "@/lib/helpers";
-import { routes } from "@/lib/constants";
 import { useGetPokemons } from "@/lib/hooks";
-import PokemonEvolution from "./PokemonEvolution";
 import { Pokemon, GetPokemonSpeciesResponse } from "@/lib/types";
+
+// ** Constants
+import { routes } from "@/lib/constants";
 
 interface PokemonDataProps {
   pokemon: Pokemon;

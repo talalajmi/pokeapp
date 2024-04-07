@@ -141,7 +141,7 @@ const PokemonFilters = (props: PokemonFiltersProps) => {
                       <SelectTrigger>
                         <SelectValue placeholder="Type" />
                       </SelectTrigger>
-                      <SelectContent className="dark:bg-background">
+                      <SelectContent className="h-40 dark:bg-background lg:h-full">
                         {types
                           ? types.results
                               .sort((a, b) => a.name.localeCompare(b.name))
@@ -170,14 +170,14 @@ const PokemonFilters = (props: PokemonFiltersProps) => {
                       <SelectTrigger>
                         <SelectValue placeholder="Ability" />
                       </SelectTrigger>
-                      <SelectContent className="dark:bg-background">
+                      <SelectContent className="h-40 dark:bg-background lg:h-full">
                         {abilities
                           ? abilities.results
                               .sort((a, b) => a.name.localeCompare(b.name))
                               .map((ability) => (
                                 <SelectItem
                                   key={ability.name}
-                                  value={ability.name}
+                                  value={ability.url.split("/")[6]}
                                   className="dark:hover:bg-card"
                                 >
                                   {fixWordCasing(ability.name)}
