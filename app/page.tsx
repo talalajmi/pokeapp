@@ -55,7 +55,7 @@ const FeatureCard = ({ feature }: { feature: Feature }) => {
       className={`hover:border-1 group border bg-card p-5 transition duration-300 ease-in-out hover:border-blue-500 hover:bg-blue-500/10 dark:hover:border-yellow-500 dark:hover:bg-yellow-500/10`}
     >
       <CardHeader>
-        <div className="flex w-full justify-center">
+        <div className="flex w-full justify-start">
           <Icon
             fontSize={52}
             icon={feature.icon}
