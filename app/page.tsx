@@ -97,9 +97,7 @@ const Home = () => {
             clicking the button below.
           </p>
           <Link href={routes.pokedex}>
-            <Button className="default-transition btn-press-effect w-fit rounded-full border border-primary bg-secondary p-6 text-lg text-primary shadow-md hover:bg-secondary-dark">
-              Get Started
-            </Button>
+            <Button className="btn-secondary p-6 text-lg">Get Started</Button>
           </Link>
         </div>
         <div className="w-2/3 rounded-full border-2 border-primary bg-secondary p-10 md:w-1/2 xl:w-1/4">
@@ -272,9 +270,7 @@ const Home = () => {
           Start exploring the fascinating world of Pokémon today!
         </p>
         <Link href={routes.pokedex}>
-          <Button className="default-transition rounded-full border border-primary bg-secondary p-7 text-lg font-bold text-primary hover:bg-secondary-dark active:scale-95">
-            Get Started
-          </Button>
+          <Button className="btn-secondary p-6 text-lg">Get Started</Button>
         </Link>
       </div>
     </div>

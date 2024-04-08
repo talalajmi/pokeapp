@@ -12,26 +12,24 @@ import { Card, CardContent } from "./ui/card";
 
 // ** Icon Imports
 import { Icon } from "@iconify/react";
+import Link from "next/link";
+import { routes } from "@/lib/constants";
 
 const PokemonDetailsLoadingSkeleton = () => {
   return (
     <div className="flex flex-col items-start justify-start gap-5">
-      <div className="flex w-full items-center justify-between">
-        <Button className="rounded-full border border-primary bg-secondary transition duration-300 ease-out hover:bg-secondary-dark  active:scale-95">
-          <Icon
-            fontSize={24}
-            icon="akar-icons:arrow-left"
-            className="text-primary-dark"
-          />
-        </Button>
-        <Skeleton className="h-9 w-56 bg-gray-200 dark:bg-gray-500" />
-        <Button className="rounded-full border border-primary bg-secondary transition duration-300 ease-out hover:bg-secondary-dark  active:scale-95">
-          <Icon
-            fontSize={24}
-            icon="akar-icons:arrow-right"
-            className="text-primary-dark"
-          />
-        </Button>
+      <div className="flex w-full flex-col items-center justify-between gap-5 lg:flex-row">
+        <Link href={routes.pokedex} className="w-full">
+          <Button className="btn-secondary w-full gap-3 lg:w-fit">
+            <Icon
+              fontSize={24}
+              icon="akar-icons:arrow-left"
+              className="text-primary"
+            />
+            Back to Pokédex
+          </Button>
+        </Link>
+        <Skeleton className="h-9  w-56 bg-gray-200 dark:bg-gray-500" />
       </div>
       <Card className="w-full">
         <CardContent className="flex flex-col gap-10 p-5">
@@ -112,6 +110,22 @@ const PokemonDetailsLoadingSkeleton = () => {
           </div>
         </CardContent>
       </Card>
+      <div className="flex w-full items-center justify-between">
+        <Button className="rounded-full border border-primary bg-secondary transition duration-300 ease-out hover:bg-secondary-dark  active:scale-95">
+          <Icon
+            fontSize={24}
+            icon="akar-icons:arrow-left"
+            className="text-primary-dark"
+          />
+        </Button>
+        <Button className="rounded-full border border-primary bg-secondary transition duration-300 ease-out hover:bg-secondary-dark  active:scale-95">
+          <Icon
+            fontSize={24}
+            icon="akar-icons:arrow-right"
+            className="text-primary-dark"
+          />
+        </Button>
+      </div>
     </div>
   );
 };

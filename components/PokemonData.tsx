@@ -68,46 +68,20 @@ export const PokemonData = (props: PokemonDataProps) => {
 
   return (
     <div className="flex flex-col items-start justify-start gap-5">
-      <div className="flex w-full items-center justify-between">
-        {pokemon.id > 1 ? (
-          <Tooltip>
-            <TooltipTrigger>
-              <Link href={routes.pokemon(pokemon.id - 1)}>
-                <Button className="btn-secondary">
-                  <Icon
-                    fontSize={24}
-                    icon="akar-icons:arrow-left"
-                    className="text-primary-dark"
-                  />
-                </Button>
-              </Link>
-            </TooltipTrigger>
-            <TooltipContent className="bg-primary-dark">
-              <p className="text-secondary">Previous Pokémon</p>
-            </TooltipContent>
-          </Tooltip>
-        ) : (
-          <div className="w-28" />
-        )}
+      <div className="flex w-full flex-col items-center justify-between gap-5 lg:flex-row">
+        <Link href={routes.pokedex} className="w-full">
+          <Button className="btn-secondary w-full gap-3 lg:w-fit">
+            <Icon
+              fontSize={24}
+              icon="akar-icons:arrow-left"
+              className="text-primary"
+            />
+            Back to Pokédex
+          </Button>
+        </Link>
         <p className="font-pokemon-hollow text-3xl tracking-widest text-primary dark:text-secondary md:text-3xl">
-          # {pokemon.id}
+          #{pokemon.id.toString().padStart(4, "0")}
         </p>
-        <Tooltip>
-          <TooltipTrigger>
-            <Link href={routes.pokemon(pokemon.id + 1)}>
-              <Button className="btn-secondary">
-                <Icon
-                  fontSize={24}
-                  icon="akar-icons:arrow-right"
-                  className="text-primary-dark"
-                />
-              </Button>
-            </Link>
-          </TooltipTrigger>
-          <TooltipContent className="bg-primary-dark">
-            <p className="text-secondary">Next Pokémon</p>
-          </TooltipContent>
-        </Tooltip>
       </div>
       <Card className="w-full">
         <CardContent className="flex flex-col gap-10 p-5">
@@ -286,6 +260,45 @@ export const PokemonData = (props: PokemonDataProps) => {
           </div>
         </CardContent>
       </Card>
+      <div className="flex w-full items-center justify-between">
+        {pokemon.id > 1 ? (
+          <Tooltip>
+            <TooltipTrigger>
+              <Link href={routes.pokemon(pokemon.id - 1)}>
+                <Button className="btn-secondary">
+                  <Icon
+                    fontSize={24}
+                    icon="akar-icons:arrow-left"
+                    className="text-primary-dark"
+                  />
+                </Button>
+              </Link>
+            </TooltipTrigger>
+            <TooltipContent className="bg-primary-dark">
+              <p className="text-secondary">Previous Pokémon</p>
+            </TooltipContent>
+          </Tooltip>
+        ) : (
+          <div className="w-28" />
+        )}
+
+        <Tooltip>
+          <TooltipTrigger>
+            <Link href={routes.pokemon(pokemon.id + 1)}>
+              <Button className="btn-secondary">
+                <Icon
+                  fontSize={24}
+                  icon="akar-icons:arrow-right"
+                  className="text-primary-dark"
+                />
+              </Button>
+            </Link>
+          </TooltipTrigger>
+          <TooltipContent className="bg-primary-dark">
+            <p className="text-secondary">Next Pokémon</p>
+          </TooltipContent>
+        </Tooltip>
+      </div>
     </div>
   );
 };
