@@ -214,7 +214,7 @@ const Pokedex = () => {
           setIsLoadingFilteredPokemons={setIsLoadingFilteredPokemons}
         />
         <div className="w-full flex-[3] flex-col items-start space-y-5 lg:flex-[5]">
-          {!isLoading ||
+          {isLoading ||
           !pokemons ||
           isLoadingFilteredPokemons ||
           isLoadingSearchedPokemon ? (
