@@ -110,26 +110,8 @@
   .flex-between {
     @apply flex items-center justify-between;
   }
-}
 
-@layer components {
   .card {
     @apply default-transition bg-card hover:border-primary hover:bg-blue-500/20 dark:hover:border-yellow-400 dark:hover:bg-yellow-400/20;
-  }
-
-  .input {
-    @apply rounded-lg border border-input bg-input p-2 text-input dark:bg-input dark:text-input;
-  }
-
-  .input:focus {
-    @apply ring ring-ring;
-  }
-
-  .input-error {
-    @apply text-destructive;
-  }
-
-  .input-error:focus {
-    @apply ring-destructive;
   }
 }

@@ -12,11 +12,11 @@ const PokemonCardLoadingSkeleton = () => {
         <Skeleton className="h-7 w-6 rounded-full bg-gray-200 dark:bg-gray-300" />
       </div>
       <CardContent className="flex aspect-square flex-col items-center justify-around gap-5">
-        <Skeleton className=" mt-5 h-24 w-24 rounded-full bg-gray-200 dark:bg-gray-300 sm:mt-0 sm:h-44 sm:w-44 md:mt-1" />
+        <Skeleton className=" mt-5 h-24 w-24 rounded-full bg-gray-300 dark:bg-gray-300 sm:mt-0 sm:h-44 sm:w-44 md:mt-1" />
         <div className="flex w-full flex-col items-center justify-between gap-3">
-          <Skeleton className="h-4 w-[6rem] bg-gray-200 dark:bg-gray-300" />
+          <Skeleton className="h-4 w-[6rem] bg-gray-300 dark:bg-gray-300" />
           <div className="flex items-center gap-2">
-            <Skeleton className="h-4 w-[8rem] bg-gray-200 dark:bg-gray-300 " />
+            <Skeleton className="h-4 w-[8rem] bg-gray-300 dark:bg-gray-300 " />
           </div>
         </div>
       </CardContent>
