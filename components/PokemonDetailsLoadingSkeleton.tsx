@@ -18,9 +18,9 @@ import { routes } from "@/lib/constants";
 const PokemonDetailsLoadingSkeleton = () => {
   return (
     <div className="flex flex-col items-start justify-start gap-5">
-      <div className="flex w-full flex-col items-center justify-between gap-5 lg:flex-row">
+      <div className="flex w-full items-center justify-between gap-5 lg:flex-row">
         <Link href={routes.pokedex} className="w-full">
-          <Button className="btn-secondary w-full gap-3 lg:w-fit">
+          <Button className="btn-secondary gap-3 ">
             <Icon
               fontSize={24}
               icon="akar-icons:arrow-left"
