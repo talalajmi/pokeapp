@@ -1,12 +1,19 @@
 "use client";
 
+// ** React Imports
+import React from "react";
+
+// ** Next.js Imports
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
-import MobileNav from "./MobileNavbar";
-import { navbarLinks } from "@/lib/constants";
 import { usePathname } from "next/navigation";
+
+// ** Component Imports
+import MobileNav from "./MobileNavbar";
 import ThemeSwitcher from "./ThemeSwitcher";
+
+// ** Constants
+import { navbarLinks } from "@/lib/constants";
 
 const Navbar = () => {
   const pathname = usePathname();
@@ -19,7 +26,7 @@ const Navbar = () => {
           height={150}
           alt="pokeapp"
           src="/pokemon.svg"
-          className="cursor-pointer object-contain transition duration-300 ease-in-out active:scale-95"
+          className="default-transition cursor-pointer object-contain active:scale-95"
         />
       </Link>
 
@@ -34,8 +41,8 @@ const Navbar = () => {
                 className={`
                 ${
                   isActive
-                    ? "border-b-2 border-primary font-pokemon-solid font-bold text-primary transition duration-300 ease-in-out  dark:text-secondary "
-                    : "font-pokemon-hollow text-black transition duration-300 ease-in-out hover:text-primary dark:text-white dark:hover:text-secondary "
+                    ? "default-transition border-b-2 border-primary font-pokemon-solid font-bold text-primary  dark:text-secondary "
+                    : "default-transition font-pokemon-hollow text-black hover:text-primary dark:text-white dark:hover:text-secondary "
                 }
                 text-xl`}
               >

@@ -1,4 +1,5 @@
 import { Pokemon } from "./Pokemon";
+import { NamedAPIResource } from "./NamedApiResource";
 import { GetTypeResponse } from "./GetTypeResponse";
 import { GetTypesResponse } from "./GetTypesResponse";
 import { GetAbilityResponse } from "./GetAbilityResponse";
@@ -13,6 +14,7 @@ export type {
   GetTypeResponse,
   GetTypesResponse,
   PokemonEncounter,
+  NamedAPIResource,
   GetAbilityResponse,
   GetPokemonsResponse,
   GetAbilitiesResponse,

@@ -1,13 +1,18 @@
 "use client";
 
-import { Button } from "./ui/button";
-import { Icon } from "@iconify/react";
+// ** React Imports
 import React, { useEffect, useState } from "react";
+
+// ** Component Imports
+import { Button } from "./ui/button";
+
+// ** Icon Imports
+import { Icon } from "@iconify/react";
 
 const ScrollToTop = () => {
   const [isVisible, setIsVisible] = useState(false);
 
-  // Show button when page is scrolled up to given distance
+  // ** Show button when page is scrolled up to given distance
   const toggleVisibility = () => {
     if (window.scrollY > 300) {
       setIsVisible(true);
@@ -16,8 +21,8 @@ const ScrollToTop = () => {
     }
   };
 
-  // Set the top cordinate to 0
-  // make scrolling smooth
+  // ** Set the top cordinate to 0
+  // ** make scrolling smooth
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,

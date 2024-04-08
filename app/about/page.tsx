@@ -1,6 +1,13 @@
+// ** React Imports
 import React from "react";
+
+// ** Next.js Imports
 import Image from "next/image";
+
+// ** Component Imports
 import { Card, CardContent } from "@/components/ui/card";
+
+// ** Helpers
 import { getPokemonImageDreamWorld } from "@/lib/helpers";
 
 const technologies = [

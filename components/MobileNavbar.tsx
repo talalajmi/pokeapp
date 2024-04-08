@@ -1,17 +1,26 @@
 "use client";
 
+// ** React Imports
 import React from "react";
+
+// ** Next.js Imports
+import Image from "next/image";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+
+// ** Component Imports
 import {
   Sheet,
   SheetTrigger,
   SheetContent,
   SheetClose,
 } from "@/components/ui/sheet";
-import Image from "next/image";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { navbarLinks } from "@/lib/constants";
+
+// ** Icon Imports
 import { Icon } from "@iconify/react";
+
+// ** Constants
+import { navbarLinks } from "@/lib/constants";
 
 const NavContent = () => {
   const pathname = usePathname();
@@ -30,7 +39,7 @@ const NavContent = () => {
                 isActive
                   ? "w-fit border-b-2 border-primary font-pokemon-solid text-primary dark:border-secondary"
                   : "font-pokemon-hollow text-black dark:text-white dark:hover:text-primary "
-              }tracking-widest text-2xl transition duration-300 ease-in-out`}
+              }tracking-widest default-transition text-2xl`}
             >
               <p
                 className={`${isActive ? "text-primary dark:text-secondary" : "font-pokemon-hollow"}`}

@@ -5,7 +5,6 @@ import React from "react";
 
 // ** React Query Imports
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 // ** Types
 interface ReactQueryProviderProps {
@@ -30,10 +29,7 @@ const ReactQueryProvider = ({ children }: ReactQueryProviderProps) => {
 
   // ** Return the QueryClientProvider with the queryClient as the client, to be able to use React Query throughout our app
   return (
-    <QueryClientProvider client={queryClient}>
-      {children}
-      {/* <ReactQueryDevtools initialIsOpen={false} /> */}
-    </QueryClientProvider>
+    <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
   );
 };
 

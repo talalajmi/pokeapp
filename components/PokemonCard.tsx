@@ -1,9 +1,20 @@
-import Link from "next/link";
-import Image from "next/image";
-import { Icon } from "@iconify/react";
-import { Card, CardContent } from "./ui/card";
+// ** React Imports
 import React, { Fragment, useState } from "react";
+
+// ** Next.js Imports
+import Image from "next/image";
+import Link from "next/link";
+
+// ** Component Imports
+import { Card, CardContent } from "./ui/card";
+
+// ** Icon Imports
+import { Icon } from "@iconify/react";
+
+// ** Custom Hooks and Types
 import { fixWordCasing, getPokemonImageOfficial } from "@/lib/helpers";
+
+// ** Constants
 import { routes } from "@/lib/constants";
 
 interface PokemonCardProps {
@@ -25,7 +36,7 @@ const PokemonCard = ({ pokemon }: PokemonCardProps) => {
   return (
     <Fragment>
       <Link href={routes.pokemon(pokemon.url.split("/")[6])}>
-        <Card className="group relative transition duration-300 ease-in-out hover:border-primary hover:bg-blue-500/20 dark:hover:border-yellow-400 dark:hover:bg-yellow-400/20">
+        <Card className="default-transition group relative hover:border-primary hover:bg-blue-500/20 dark:hover:border-yellow-400 dark:hover:bg-yellow-400/20">
           <div className="absolute right-0 top-0 rounded-bl-lg rounded-tr-lg bg-primary p-2 text-white dark:bg-secondary dark:text-primary">
             #{parseInt(pokemon.url.split("/")[6])}
           </div>
@@ -36,10 +47,10 @@ const PokemonCard = ({ pokemon }: PokemonCardProps) => {
               src={imgSrc}
               onError={handleImageError}
               alt={`${pokemon.name + 1}`}
-              className="group- h-auto w-auto object-contain transition duration-300 ease-in-out group-hover:scale-105 group-active:scale-95"
+              className="group- default-transition h-auto w-auto object-contain group-hover:scale-105 group-active:scale-95"
             />
             <div className="flex w-full flex-col items-center justify-between gap-3">
-              <p className="text-sm transition duration-300 ease-in-out dark:text-gray-400 dark:group-hover:text-white sm:text-base">
+              <p className="default-transition text-sm dark:text-gray-400 dark:group-hover:text-white sm:text-base">
                 {fixWordCasing(pokemon.name)}
               </p>
               <div className="flex items-center gap-2 border-primary text-xs text-primary transition-transform duration-300 ease-in-out group-hover:translate-x-3 dark:text-yellow-400 sm:text-base">

@@ -1,13 +1,20 @@
 "use client";
 
+// ** React Imports
 import { Fragment } from "react";
-import { fixWordCasing } from "@/lib/helpers";
-import usePokeApi from "@/lib/hooks/usePokeApi";
-import { pokemonEndpoints } from "@/lib/services";
+
+// ** Component Imports
 import PokemonCard from "@/components/PokemonCard";
-import { PokemonEvolutionChain } from "@/lib/types";
 import { Skeleton } from "@/components/ui/skeleton";
 import LongArrowRight from "@/components/LongArrowRight";
+
+// ** Custom Hooks and Types
+import usePokeApi from "@/lib/hooks/usePokeApi";
+import { fixWordCasing } from "@/lib/helpers";
+import { PokemonEvolutionChain } from "@/lib/types";
+
+// ** Services
+import { pokemonEndpoints } from "@/lib/services";
 import { EvolutionChain } from "@/lib/types/PokemonEvolution";
 
 interface PokemonDetailsProps {

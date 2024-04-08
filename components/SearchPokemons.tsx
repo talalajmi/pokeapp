@@ -82,12 +82,12 @@ export const SearchPokemons = (props: SearchPokemonsProps) => {
             control={form.control}
             render={({ field }) => (
               <FormItem className="w-full">
-                <div className="group relative flex flex-col items-center gap-4 rounded-lg transition duration-300 ease-in-out xl:flex-row ">
+                <div className="default-transition group relative flex flex-col items-center gap-4 rounded-lg xl:flex-row ">
                   <div className="flex w-full items-center gap-5">
                     <Icon
                       fontSize={30}
                       icon="bx:bx-search"
-                      className="text-gray-400 transition duration-300 ease-in-out group-hover:text-black dark:group-hover:text-white"
+                      className="default-transition text-gray-400 group-hover:text-black dark:group-hover:text-white"
                     />
                     <Input
                       {...field}
@@ -95,13 +95,13 @@ export const SearchPokemons = (props: SearchPokemonsProps) => {
                       className="border-none bg-transparent text-gray-400 shadow-none ease-in-out placeholder:transition placeholder:duration-300 focus:text-black focus-visible:ring-0 group-hover:placeholder:translate-x-1 dark:focus:text-white"
                     />
                   </div>
-                  <Button className="w-full border border-primary bg-yellow-400 text-primary transition duration-300 ease-in-out hover:bg-yellow-500  active:scale-95 xl:w-fit">
+                  <Button className="default-transition w-full border border-primary bg-yellow-400 text-primary hover:bg-yellow-500  active:scale-95 xl:w-fit">
                     Search
                   </Button>
                   {isSearched && (
                     <Button
                       onClick={resetSearch}
-                      className="w-full border border-secondary bg-primary text-secondary transition duration-300 ease-in-out hover:bg-primary-dark  active:scale-95 xl:w-fit"
+                      className="default-transition w-full border border-secondary bg-primary text-secondary hover:bg-primary-dark  active:scale-95 xl:w-fit"
                     >
                       Reset
                     </Button>

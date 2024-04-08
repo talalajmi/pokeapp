@@ -1,3 +1,7 @@
+// ** React Imports
+import { useForm } from "react-hook-form";
+
+// ** Component Imports
 import {
   Select,
   SelectItem,
@@ -7,15 +11,23 @@ import {
 } from "./ui/select";
 import { Card } from "./ui/card";
 import { Button } from "./ui/button";
-import { fixWordCasing } from "@/lib/helpers";
-import usePokeApi from "@/lib/hooks/usePokeApi";
-import { PokemonService, pokemonEndpoints } from "@/lib/services";
-import { GetAbilitiesResponse, GetTypesResponse, Pokemon } from "@/lib/types";
 import { Form, FormField, FormItem, FormMessage } from "./ui/form";
-import { useForm } from "react-hook-form";
+
+// ** Custom Hooks and Types
+import usePokeApi from "@/lib/hooks/usePokeApi";
+import { fixWordCasing } from "@/lib/helpers";
+import {
+  GetTypesResponse,
+  NamedAPIResource,
+  GetAbilitiesResponse,
+} from "@/lib/types";
+
+// ** Services
+import { PokemonService, pokemonEndpoints } from "@/lib/services";
+
+// ** Third Party Imports
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { NamedAPIResource } from "@/lib/types/PokemonSepcies";
 
 const defaultValues = {
   type: "",
@@ -194,13 +206,13 @@ const PokemonFilters = (props: PokemonFiltersProps) => {
             <div className="md-flex-row flex flex-col gap-5">
               <Button
                 type="submit"
-                className="border border-primary bg-secondary text-primary transition duration-300 ease-in-out hover:bg-secondary-dark active:scale-95"
+                className="default-transition border border-primary bg-secondary text-primary hover:bg-secondary-dark active:scale-95"
               >
                 Apply
               </Button>
               <Button
                 onClick={handleFiltersReset}
-                className="border border-secondary bg-primary text-secondary transition duration-300 ease-in-out hover:bg-primary-dark active:scale-95"
+                className="default-transition border border-secondary bg-primary text-secondary hover:bg-primary-dark active:scale-95"
               >
                 Reset
               </Button>

@@ -55,9 +55,10 @@ const Pokedex = () => {
           {pokemons.results.map((pokemon, index) => (
             <div
               key={pokemon.name}
-              className={`animate-fade-in-left opacity-${index === 0 ? 1 : 0}`}
+              className="animate-fade-in-left"
               style={{
-                animationDelay: `${index * 25}ms`,
+                animationDelay: `${index * 50}ms`,
+                opacity: index === 0 ? 1 : 0,
               }}
             >
               <PokemonCard pokemon={pokemon} />
@@ -65,7 +66,7 @@ const Pokedex = () => {
           ))}
         </div>
         <div className="flex flex-col justify-start gap-5 lg:justify-between xl:flex-row">
-          <div className="group flex items-center justify-between gap-5 rounded-full border-[3px] border-black bg-red-500 px-2 py-1 text-white">
+          <div className="group flex items-center justify-start gap-5 rounded-full border-[3px] border-black bg-red-500 px-2 py-1 text-white">
             <Image
               width={30}
               height={30}
@@ -77,7 +78,7 @@ const Pokedex = () => {
           </div>
           <div className="flex items-center gap-5">
             <Button
-              className="w-full rounded-full border border-primary bg-secondary transition duration-300 ease-in-out hover:bg-secondary-dark active:scale-95"
+              className="default-transition w-full rounded-full border border-primary bg-secondary hover:bg-secondary-dark active:scale-95"
               disabled={pokemons.previous === null}
               onClick={() =>
                 pokemons.previous && setGetPokemonsUrl(pokemons.previous)
@@ -86,19 +87,19 @@ const Pokedex = () => {
               <Icon
                 fontSize={24}
                 icon="akar-icons:arrow-left"
-                className="text-primary transition duration-300 ease-in-out"
+                className="default-transition text-primary"
               />
             </Button>
 
             <Button
-              className="w-full rounded-full border border-primary bg-secondary transition duration-300 ease-in-out hover:bg-secondary-dark active:scale-95"
+              className="default-transition w-full rounded-full border border-primary bg-secondary hover:bg-secondary-dark active:scale-95"
               disabled={pokemons.next === null}
               onClick={() => pokemons.next && setGetPokemonsUrl(pokemons.next)}
             >
               <Icon
                 fontSize={24}
                 icon="akar-icons:arrow-right"
-                className="text-primary transition duration-300 ease-in-out"
+                className="default-transition text-primary"
               />
             </Button>
           </div>
@@ -169,23 +170,23 @@ const Pokedex = () => {
             <Button
               onClick={handlePreviousPage}
               disabled={currentPage === 1}
-              className="w-full rounded-full border border-primary bg-secondary transition duration-300 ease-in-out hover:bg-secondary-dark"
+              className="default-transition w-full rounded-full border border-primary bg-secondary hover:bg-secondary-dark"
             >
               <Icon
                 fontSize={24}
                 icon="akar-icons:arrow-left"
-                className="text-primary transition duration-300 ease-in-out"
+                className="default-transition text-primary"
               />
             </Button>
             <Button
               onClick={handleNextPage}
               disabled={currentPage === totalPages}
-              className="w-full rounded-full border border-primary bg-secondary transition duration-300 ease-in-out hover:bg-secondary-dark"
+              className="default-transition w-full rounded-full border border-primary bg-secondary hover:bg-secondary-dark"
             >
               <Icon
                 fontSize={24}
                 icon="akar-icons:arrow-right"
-                className="text-primary transition duration-300 ease-in-out"
+                className="default-transition text-primary"
               />
             </Button>
           </div>
@@ -302,19 +303,19 @@ const PokemCardsLoadingSkeleton = () => {
           <p>Loading Pokémons...</p>
         </div>
         <div className="flex items-center gap-5">
-          <Button className="w-full rounded-full border border-primary bg-secondary transition duration-300 ease-in-out hover:bg-secondary-dark">
+          <Button className="default-transition w-full rounded-full border border-primary bg-secondary hover:bg-secondary-dark">
             <Icon
               fontSize={24}
               icon="akar-icons:arrow-left"
-              className="text-primary transition duration-300 ease-in-out"
+              className="default-transition text-primary"
             />
           </Button>
 
-          <Button className="w-full rounded-full border border-primary bg-secondary transition duration-300 ease-in-out hover:bg-secondary-dark">
+          <Button className="default-transition w-full rounded-full border border-primary bg-secondary hover:bg-secondary-dark">
             <Icon
               fontSize={24}
               icon="akar-icons:arrow-right"
-              className="text-primary transition duration-300 ease-in-out"
+              className="default-transition text-primary"
             />
           </Button>
         </div>

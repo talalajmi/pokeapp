@@ -1,8 +1,9 @@
 "use client";
 
+// ** React Imports
 import React from "react";
 
-import { useTheme } from "@/context/ThemeProvider";
+// ** Component Imports
 import {
   Menubar,
   MenubarItem,
@@ -10,8 +11,15 @@ import {
   MenubarTrigger,
   MenubarContent,
 } from "@/components/ui/menubar";
-import { themes } from "@/lib/constants";
+
+// ** Icon Imports
 import { Icon } from "@iconify/react";
+
+// ** Context Imports
+import { useTheme } from "@/context/ThemeProvider";
+
+// ** Constants
+import { themes } from "@/lib/constants";
 
 interface ThemeType {
   value: string;

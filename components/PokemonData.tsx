@@ -44,9 +44,6 @@ export const PokemonData = (props: PokemonDataProps) => {
   const [showFullDescription, setShowFullDescription] = useState(false);
   const [imgSrc, setImgSrc] = useState(getPokemonImageOfficial(pokemon.id));
 
-  // ** Hooks
-  const { data: pokemons } = useGetPokemons();
-
   // ** Constants
   const fallbackUrls = [getPokemonImageDreamWorld(pokemon.id)];
 
@@ -76,10 +73,7 @@ export const PokemonData = (props: PokemonDataProps) => {
           <Tooltip>
             <TooltipTrigger>
               <Link href={routes.pokemon(pokemon.id - 1)}>
-                <Button
-                  variant="secondary"
-                  className="rounded-full border border-primary transition duration-300 ease-out hover:bg-secondary-dark  active:scale-95"
-                >
+                <Button className="btn-secondary">
                   <Icon
                     fontSize={24}
                     icon="akar-icons:arrow-left"
@@ -95,16 +89,13 @@ export const PokemonData = (props: PokemonDataProps) => {
         ) : (
           <div className="w-28" />
         )}
-        <p className="font-pokemon-hollow text-2xl tracking-widest text-primary dark:text-secondary md:text-3xl">
+        <p className="font-pokemon-hollow text-3xl tracking-widest text-primary dark:text-secondary md:text-3xl">
           # {pokemon.id}
         </p>
         <Tooltip>
           <TooltipTrigger>
             <Link href={routes.pokemon(pokemon.id + 1)}>
-              <Button
-                variant="secondary"
-                className="rounded-full border border-primary transition duration-300 ease-out hover:bg-secondary-dark  active:scale-95"
-              >
+              <Button className="btn-secondary">
                 <Icon
                   fontSize={24}
                   icon="akar-icons:arrow-right"
@@ -180,7 +171,7 @@ export const PokemonData = (props: PokemonDataProps) => {
                     </div>
                   </div>
                 </div>
-                <div className="flex flex-col">
+                <div className="flex flex-col gap-5">
                   <p className="text-2xl text-primary dark:text-secondary">
                     {fixWordCasing(pokemon.name)} Cries:{" "}
                     <span className="text-sm text-primary dark:text-secondary">
@@ -190,13 +181,13 @@ export const PokemonData = (props: PokemonDataProps) => {
                   <div className="flex flex-col gap-4 md:flex-row">
                     <Button
                       onClick={listenToLatestCry}
-                      className="mt-5 w-full rounded-full border-2 border-primary bg-secondary text-primary transition duration-200 ease-in-out hover:bg-secondary-dark active:scale-95"
+                      className="btn-secondary w-full"
                     >
                       Latest Cry
                     </Button>
                     <Button
                       onClick={listenToLegacyCry}
-                      className="mt-5 w-full rounded-full border-2 border-primary bg-secondary text-primary transition duration-200 ease-in-out hover:bg-secondary-dark active:scale-95"
+                      className="btn-secondary w-full"
                     >
                       Legacy Cry
                     </Button>
@@ -282,7 +273,7 @@ export const PokemonData = (props: PokemonDataProps) => {
                           onClick={() =>
                             setShowFullDescription(!showFullDescription)
                           }
-                          className="ml-2 cursor-pointer rounded-md bg-transparent p-1 text-base text-primary shadow-none transition duration-300 ease-in-out hover:bg-blue-400/20 active:scale-95 dark:text-secondary dark:hover:bg-yellow-400/10"
+                          className="default-transition ml-2 cursor-pointer rounded-md bg-transparent p-1 text-base text-primary shadow-none hover:bg-blue-400/20 active:scale-95 dark:text-secondary dark:hover:bg-yellow-400/10"
                         >
                           {showFullDescription ? " Show Less" : " Show More"}
                         </Button>

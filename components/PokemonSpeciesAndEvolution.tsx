@@ -1,11 +1,18 @@
+// ** React Imports
 import React from "react";
+
+// ** Component Imports
 import PokemonCard from "./PokemonCard";
-import LongArrowRight from "./LongArrowRight";
-import usePokeApi from "@/lib/hooks/usePokeApi";
-import { Pokemon, GetPokemonSpeciesResponse } from "@/lib/types";
-import { fixWordCasing } from "@/lib/helpers";
-import { useGetPokemonEvolutionChain } from "@/lib/hooks";
 import { Skeleton } from "./ui/skeleton";
+import LongArrowRight from "./LongArrowRight";
+
+// ** Custom Hooks and Types
+import usePokeApi from "@/lib/hooks/usePokeApi";
+import { useGetPokemonEvolutionChain } from "@/lib/hooks";
+import { Pokemon, GetPokemonSpeciesResponse } from "@/lib/types";
+
+// ** Helpers
+import { fixWordCasing } from "@/lib/helpers";
 
 interface PokemonSpeciesAndEvolutionProps {
   pokemon: Pokemon;

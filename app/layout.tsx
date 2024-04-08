@@ -1,13 +1,20 @@
 import "../app/globals.css";
 
+// ** React Imports
 import React from "react";
+
+// ** Component Imports
 import Navbar from "@/components/Navbar";
-import { Toaster } from "react-hot-toast";
+import Footer from "@/components/Footer";
 import ScrollToTop from "@/components/ScrollToTop";
-import { Themeprovider } from "@/context/ThemeProvider";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import ReactQueryProvider from "@/components/ReactQueryProvider";
-import Footer from "@/components/Footer";
+
+// ** Context Imports
+import { Themeprovider } from "@/context/ThemeProvider";
+
+// ** Third Party Imports
+import { Toaster } from "react-hot-toast";
 
 export default function RootLayout({
   children,

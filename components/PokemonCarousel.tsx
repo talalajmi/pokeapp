@@ -1,7 +1,13 @@
 "use client";
 
-import Link from "next/link";
+// ** React Imports
 import React, { useRef } from "react";
+
+// ** Next.js Imports
+import Image from "next/image";
+import Link from "next/link";
+
+// ** Component Imports
 import { Card, CardContent } from "./ui/card";
 import {
   Carousel,
@@ -10,9 +16,14 @@ import {
   CarouselPrevious,
   CarouselNext,
 } from "./ui/carousel";
+
+// ** Third Party Imports
 import Autoplay from "embla-carousel-autoplay";
-import Image from "next/image";
+
+// ** Custom Hooks and Types
 import { getPokemonImageOfficial } from "@/lib/helpers";
+
+// ** Constants
 import { routes } from "@/lib/constants";
 
 const PokemonCarousel = () => {
@@ -35,7 +46,7 @@ const PokemonCarousel = () => {
           "
           >
             <Link href={routes.pokemon(index + 1)} className="p-1">
-              <Card className="group relative transition duration-300 ease-in-out hover:border-primary hover:bg-blue-500/20 dark:hover:border-yellow-400 dark:hover:bg-yellow-400/20">
+              <Card className="default-transition group relative hover:border-primary hover:bg-blue-500/20 dark:hover:border-yellow-400 dark:hover:bg-yellow-400/20">
                 <div className="absolute right-0 top-0 rounded-bl-lg rounded-tr-lg bg-primary p-2 text-white dark:bg-secondary dark:text-primary">
                   #{index + 1}
                 </div>
@@ -45,7 +56,7 @@ const PokemonCarousel = () => {
                     height={150}
                     alt={`${index + 1}`}
                     src={getPokemonImageOfficial(index + 1)}
-                    className="h-auto w-auto object-contain transition duration-300 ease-in-out group-hover:scale-105 group-active:scale-95"
+                    className="default-transition h-auto w-auto object-contain group-hover:scale-105 group-active:scale-95"
                   />
                 </CardContent>
               </Card>
@@ -53,8 +64,8 @@ const PokemonCarousel = () => {
           </CarouselItem>
         ))}
       </CarouselContent>
-      <CarouselPrevious className="border border-primary bg-secondary text-primary transition duration-300 ease-in-out hover:bg-secondary-dark hover:text-primary active:scale-95" />
-      <CarouselNext className="border border-primary bg-secondary text-primary transition duration-300 ease-in-out hover:bg-secondary-dark hover:text-primary active:scale-95" />
+      <CarouselPrevious className="default-transition border border-primary bg-secondary text-primary hover:bg-secondary-dark hover:text-primary active:scale-95" />
+      <CarouselNext className="default-transition border border-primary bg-secondary text-primary hover:bg-secondary-dark hover:text-primary active:scale-95" />
     </Carousel>
   );
 };

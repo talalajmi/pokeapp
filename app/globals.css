@@ -70,18 +70,28 @@
     @apply border-border font-pokemon-solid tracking-widest;
   }
   body {
-    @apply bg-background text-foreground dark:text-[#CBCBE2];
+    @apply bg-background dark:text-[#CBCBE2];
   }
 }
 
-@layer components {
-  .delay-200 {
-    transition-delay: 200ms;
+@layer utilities {
+  .default-transition {
+    @apply transition duration-300 ease-in-out;
   }
-  .delay-400 {
-    transition-delay: 400ms;
+
+  .btn-press-effect {
+    @apply active:scale-95 active:shadow-none;
   }
-  .delay-600 {
-    transition-delay: 600ms;
+
+  .btn-primary {
+    @apply btn-press-effect default-transition rounded-full border border-secondary bg-primary-dark text-secondary shadow-md;
+  }
+
+  .btn-secondary {
+    @apply btn-press-effect default-transition rounded-full border border-primary bg-secondary text-primary shadow-md;
+  }
+
+  .btn-secondary:hover {
+    @apply hover:bg-secondary-dark;
   }
 }

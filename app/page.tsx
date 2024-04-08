@@ -1,19 +1,30 @@
 "use client";
 
+// ** React Imports
 import React from "react";
-import Image from "next/image";
-import { Button } from "@/components/ui/button";
-import { getPokemonImageOfficial } from "@/lib/helpers";
+
+// ** Next.js Imports
 import Link from "next/link";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { Icon } from "@iconify/react";
-import PokemonCarousel from "@/components/PokemonCarousel";
+import Image from "next/image";
+
+// ** Component Imports
 import {
   Accordion,
-  AccordionContent,
   AccordionItem,
+  AccordionContent,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { Button } from "@/components/ui/button";
+import PokemonCarousel from "@/components/PokemonCarousel";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
+
+// ** Icon Imports
+import { Icon } from "@iconify/react";
+
+// ** Custom Hooks and Types
+import { getPokemonImageOfficial } from "@/lib/helpers";
+
+// ** Constants
 import { routes } from "@/lib/constants";
 
 interface Feature {
@@ -52,19 +63,19 @@ const features: Feature[] = [
 const FeatureCard = ({ feature }: { feature: Feature }) => {
   return (
     <Card
-      className={`hover:border-1 group border bg-card p-5 transition duration-300 ease-in-out hover:border-blue-500 hover:bg-blue-500/10 dark:hover:border-yellow-500 dark:hover:bg-yellow-500/10`}
+      className={`hover:border-1 default-transition group border bg-card p-5 hover:border-blue-500 hover:bg-blue-500/10 dark:hover:border-yellow-500 dark:hover:bg-yellow-500/10`}
     >
       <CardHeader>
         <div className="flex w-full justify-start">
           <Icon
             fontSize={52}
             icon={feature.icon}
-            className={`transition duration-300 ease-in-out group-hover:text-primary group-hover:dark:text-secondary`}
+            className={`default-transition group-hover:text-primary group-hover:dark:text-secondary`}
           />
         </div>
       </CardHeader>
       <CardContent className="space-y-5">
-        <h3 className="group-hover: text-xl transition duration-300 ease-in-out group-hover:text-primary group-hover:dark:text-secondary">
+        <h3 className="group-hover: default-transition text-xl group-hover:text-primary group-hover:dark:text-secondary">
           {feature.title}
         </h3>
         <p>{feature.description}</p>
@@ -88,7 +99,7 @@ const Home = () => {
             clicking the button below.
           </p>
           <Link href={routes.pokedex}>
-            <Button className="w-fit rounded-full border border-primary bg-secondary p-6 text-lg text-primary transition duration-300 ease-in-out hover:bg-secondary-dark hover:active:scale-95">
+            <Button className="default-transition btn-press-effect w-fit rounded-full border border-primary bg-secondary p-6 text-lg text-primary shadow-md hover:bg-secondary-dark">
               Get Started
             </Button>
           </Link>
@@ -183,7 +194,7 @@ const Home = () => {
               value="item-1"
               className="rounded-lg bg-card px-5 pt-3 shadow-sm"
             >
-              <AccordionTrigger className=" no-underline transition duration-300 ease-in-out hover:text-black hover:dark:text-white">
+              <AccordionTrigger className=" default-transition no-underline hover:text-black hover:dark:text-white">
                 How do I search for a Pokémon?
               </AccordionTrigger>
               <AccordionContent className="">
@@ -198,7 +209,7 @@ const Home = () => {
               value="item-2"
               className="rounded-lg bg-card px-5 pt-3 shadow-sm"
             >
-              <AccordionTrigger className=" transition duration-300 ease-in-out hover:text-black hover:dark:text-white">
+              <AccordionTrigger className=" default-transition hover:text-black hover:dark:text-white">
                 How do I filter Pokémon by type?
               </AccordionTrigger>
               <AccordionContent className="">
@@ -212,7 +223,7 @@ const Home = () => {
               value="item-3"
               className="rounded-lg bg-card px-5 pt-3 shadow-sm"
             >
-              <AccordionTrigger className=" transition duration-300 ease-in-out hover:text-black hover:dark:text-white">
+              <AccordionTrigger className=" default-transition hover:text-black hover:dark:text-white">
                 How do I filter Pokémon by ability?
               </AccordionTrigger>
               <AccordionContent className="">
@@ -227,7 +238,7 @@ const Home = () => {
               value="item-4"
               className="rounded-lg bg-card px-5 pt-3 shadow-sm"
             >
-              <AccordionTrigger className=" transition duration-300 ease-in-out hover:text-black hover:dark:text-white">
+              <AccordionTrigger className=" default-transition hover:text-black hover:dark:text-white">
                 How do I view detailed information about a Pokémon?
               </AccordionTrigger>
               <AccordionContent className="">
@@ -242,7 +253,7 @@ const Home = () => {
               value="item-5"
               className="rounded-lg bg-card px-5 pt-3 shadow-sm"
             >
-              <AccordionTrigger className=" transition duration-300 ease-in-out hover:text-black hover:dark:text-white">
+              <AccordionTrigger className=" default-transition hover:text-black hover:dark:text-white">
                 How do I switch between light and dark mode?
               </AccordionTrigger>
               <AccordionContent className="">
@@ -263,7 +274,7 @@ const Home = () => {
           Start exploring the fascinating world of Pokémon today!
         </p>
         <Link href={routes.pokedex}>
-          <Button className="rounded-full border border-primary bg-secondary p-7 text-lg font-bold text-primary transition duration-300 ease-in-out hover:bg-secondary-dark active:scale-95">
+          <Button className="default-transition rounded-full border border-primary bg-secondary p-7 text-lg font-bold text-primary hover:bg-secondary-dark active:scale-95">
             Get Started
           </Button>
         </Link>

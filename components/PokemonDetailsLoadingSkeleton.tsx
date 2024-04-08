@@ -1,12 +1,17 @@
 "use client";
 
+// ** React Imports
 import React from "react";
+
+// ** Component Imports
 import { Button } from "./ui/button";
-import { Icon } from "@iconify/react";
 import { Skeleton } from "./ui/skeleton";
 import { Separator } from "./ui/separator";
 import LongArrowRight from "./LongArrowRight";
 import { Card, CardContent } from "./ui/card";
+
+// ** Icon Imports
+import { Icon } from "@iconify/react";
 
 const PokemonDetailsLoadingSkeleton = () => {
   return (
@@ -64,10 +69,10 @@ const PokemonDetailsLoadingSkeleton = () => {
                 <Skeleton className="h-6 w-40 bg-gray-200 dark:bg-gray-500" />
 
                 <div className="flex flex-col gap-4 md:flex-row">
-                  <Button className="mt-5 w-full rounded-full border-2 border-primary bg-secondary text-primary transition duration-300 ease-in-out hover:bg-secondary-dark active:scale-95">
+                  <Button className="default-transition mt-5 w-full rounded-full border-2 border-primary bg-secondary text-primary hover:bg-secondary-dark active:scale-95">
                     <Skeleton className="h-6 w-40 bg-gray-200 dark:bg-gray-500" />
                   </Button>
-                  <Button className="mt-5 w-full rounded-full border-2 border-primary bg-secondary text-primary transition duration-300 ease-in-out hover:bg-secondary-dark active:scale-95">
+                  <Button className="default-transition mt-5 w-full rounded-full border-2 border-primary bg-secondary text-primary hover:bg-secondary-dark active:scale-95">
                     <Skeleton className="h-6 w-40 bg-gray-200 dark:bg-gray-500" />
                   </Button>
                 </div>
