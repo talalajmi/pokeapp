@@ -40,7 +40,7 @@ const ScrollToTop = () => {
       <Button
         variant="secondary"
         onClick={scrollToTop}
-        className={`transform rounded-full border border-primary px-2 py-5 transition-all duration-300 ease-in-out hover:bg-secondary-dark active:scale-95 ${isVisible ? "scale-100" : "scale-0"}`}
+        className={`btn-secondary transform px-2 py-5 ${isVisible ? "scale-100" : "scale-0"}`}
       >
         <Icon
           fontSize={24}

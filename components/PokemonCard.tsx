@@ -36,7 +36,7 @@ const PokemonCard = ({ pokemon }: PokemonCardProps) => {
   return (
     <Fragment>
       <Link href={routes.pokemon(pokemon.url.split("/")[6])}>
-        <Card className="default-transition group relative hover:border-primary hover:bg-blue-500/20 dark:hover:border-yellow-400 dark:hover:bg-yellow-400/20">
+        <Card className="card group relative">
           <div className="absolute right-0 top-0 rounded-bl-lg rounded-tr-lg bg-primary p-2 text-white dark:bg-secondary dark:text-primary">
             #{parseInt(pokemon.url.split("/")[6])}
           </div>
@@ -47,7 +47,7 @@ const PokemonCard = ({ pokemon }: PokemonCardProps) => {
               src={imgSrc}
               onError={handleImageError}
               alt={`${pokemon.name + 1}`}
-              className="group- default-transition h-auto w-auto object-contain group-hover:scale-105 group-active:scale-95"
+              className="default-transition h-auto w-auto object-contain group-hover:scale-105 group-active:scale-95"
             />
             <div className="flex w-full flex-col items-center justify-between gap-3">
               <p className="default-transition text-sm dark:text-gray-400 dark:group-hover:text-white sm:text-base">

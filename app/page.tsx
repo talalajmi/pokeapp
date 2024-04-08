@@ -62,9 +62,7 @@ const features: Feature[] = [
 
 const FeatureCard = ({ feature }: { feature: Feature }) => {
   return (
-    <Card
-      className={`hover:border-1 default-transition group border bg-card p-5 hover:border-blue-500 hover:bg-blue-500/10 dark:hover:border-yellow-500 dark:hover:bg-yellow-500/10`}
-    >
+    <Card className="card group p-5">
       <CardHeader>
         <div className="flex w-full justify-start">
           <Icon

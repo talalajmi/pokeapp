@@ -78,7 +78,7 @@ const Pokedex = () => {
           </div>
           <div className="flex items-center gap-5">
             <Button
-              className="default-transition w-full rounded-full border border-primary bg-secondary hover:bg-secondary-dark active:scale-95"
+              className="btn-secondary w-full xl:w-fit"
               disabled={pokemons.previous === null}
               onClick={() =>
                 pokemons.previous && setGetPokemonsUrl(pokemons.previous)
@@ -92,7 +92,7 @@ const Pokedex = () => {
             </Button>
 
             <Button
-              className="default-transition w-full rounded-full border border-primary bg-secondary hover:bg-secondary-dark active:scale-95"
+              className="btn-secondary w-full xl:w-fit"
               disabled={pokemons.next === null}
               onClick={() => pokemons.next && setGetPokemonsUrl(pokemons.next)}
             >
@@ -136,9 +136,10 @@ const Pokedex = () => {
           {currentPokemons.map((pokemon, index) => (
             <div
               key={pokemon.name}
-              className={`animate-fade-in-left opacity-${index === 0 ? 1 : 0} delay-${index * 50}`}
+              className="animate-fade-in-left"
               style={{
                 animationDelay: `${index * 50}ms`,
+                opacity: index === 0 ? 1 : 0,
               }}
             >
               <PokemonCard pokemon={pokemon} />
@@ -170,7 +171,7 @@ const Pokedex = () => {
             <Button
               onClick={handlePreviousPage}
               disabled={currentPage === 1}
-              className="default-transition w-full rounded-full border border-primary bg-secondary hover:bg-secondary-dark"
+              className="btn-secondary w-full xl:w-fit"
             >
               <Icon
                 fontSize={24}
@@ -181,7 +182,7 @@ const Pokedex = () => {
             <Button
               onClick={handleNextPage}
               disabled={currentPage === totalPages}
-              className="default-transition w-full rounded-full border border-primary bg-secondary hover:bg-secondary-dark"
+              className="btn-secondary w-full xl:w-fit"
             >
               <Icon
                 fontSize={24}
@@ -235,14 +236,28 @@ const Pokedex = () => {
             </Card>
           ) : isSearched ? (
             searchedPokemon ? (
-              <div className="grid grid-cols-2 gap-4 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
-                <div className="animate-fade-in-left">
-                  <PokemonCard
-                    pokemon={{
-                      name: searchedPokemon.name,
-                      url: `${baseUrl}pokemon/${searchedPokemon.id.toString()}`,
-                    }}
-                  />
+              <div className="flex flex-col gap-5">
+                <div className="grid grid-cols-2 gap-4 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
+                  <div className="animate-fade-in-left">
+                    <PokemonCard
+                      pokemon={{
+                        name: searchedPokemon.name,
+                        url: `${baseUrl}pokemon/${searchedPokemon.id.toString()}`,
+                      }}
+                    />
+                  </div>
+                </div>
+                <div className="flex flex-col justify-start gap-5 lg:justify-between">
+                  <div className="group flex w-fit items-center justify-start gap-5 rounded-full border-[3px] border-black bg-red-500 px-2 py-1 text-white">
+                    <Image
+                      width={30}
+                      height={30}
+                      alt="pokeball"
+                      src="/images/poke-ball.png"
+                      className="h-auto w-auto object-contain group-hover:animate-spin"
+                    />
+                    <p>Showing 1 of 1 Pokémon</p>
+                  </div>
                 </div>
               </div>
             ) : (

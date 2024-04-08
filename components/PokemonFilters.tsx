@@ -139,7 +139,7 @@ const PokemonFilters = (props: PokemonFiltersProps) => {
   };
 
   return (
-    <Card className="h-fit flex-1 p-5">
+    <Card className="h-fit flex-1 p-5 xl:sticky xl:top-32">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(filterPokemons)}>
           <div className="flex-col gap-5 space-y-5">
@@ -153,7 +153,7 @@ const PokemonFilters = (props: PokemonFiltersProps) => {
                       <SelectTrigger>
                         <SelectValue placeholder="Type" />
                       </SelectTrigger>
-                      <SelectContent className="h-40 dark:bg-background lg:h-full">
+                      <SelectContent className="dark:bg-background">
                         {types
                           ? types.results
                               .sort((a, b) => a.name.localeCompare(b.name))
@@ -182,7 +182,7 @@ const PokemonFilters = (props: PokemonFiltersProps) => {
                       <SelectTrigger>
                         <SelectValue placeholder="Ability" />
                       </SelectTrigger>
-                      <SelectContent className="h-40 dark:bg-background lg:h-full">
+                      <SelectContent className="dark:bg-background">
                         {abilities
                           ? abilities.results
                               .sort((a, b) => a.name.localeCompare(b.name))
@@ -204,16 +204,10 @@ const PokemonFilters = (props: PokemonFiltersProps) => {
               />
             </div>
             <div className="md-flex-row flex flex-col gap-5">
-              <Button
-                type="submit"
-                className="default-transition border border-primary bg-secondary text-primary hover:bg-secondary-dark active:scale-95"
-              >
+              <Button type="submit" className="btn-secondary">
                 Apply
               </Button>
-              <Button
-                onClick={handleFiltersReset}
-                className="default-transition border border-secondary bg-primary text-secondary hover:bg-primary-dark active:scale-95"
-              >
+              <Button onClick={handleFiltersReset} className="btn-primary">
                 Reset
               </Button>
             </div>

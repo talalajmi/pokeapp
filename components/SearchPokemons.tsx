@@ -95,13 +95,13 @@ export const SearchPokemons = (props: SearchPokemonsProps) => {
                       className="border-none bg-transparent text-gray-400 shadow-none ease-in-out placeholder:transition placeholder:duration-300 focus:text-black focus-visible:ring-0 group-hover:placeholder:translate-x-1 dark:focus:text-white"
                     />
                   </div>
-                  <Button className="default-transition w-full border border-primary bg-yellow-400 text-primary hover:bg-yellow-500  active:scale-95 xl:w-fit">
+                  <Button className="btn-secondary w-full xl:w-fit">
                     Search
                   </Button>
                   {isSearched && (
                     <Button
                       onClick={resetSearch}
-                      className="default-transition w-full border border-secondary bg-primary text-secondary hover:bg-primary-dark  active:scale-95 xl:w-fit"
+                      className="btn-primary w-full xl:w-fit"
                     >
                       Reset
                     </Button>

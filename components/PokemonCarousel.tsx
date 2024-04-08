@@ -46,7 +46,7 @@ const PokemonCarousel = () => {
           "
           >
             <Link href={routes.pokemon(index + 1)} className="p-1">
-              <Card className="default-transition group relative hover:border-primary hover:bg-blue-500/20 dark:hover:border-yellow-400 dark:hover:bg-yellow-400/20">
+              <Card className="card group relative">
                 <div className="absolute right-0 top-0 rounded-bl-lg rounded-tr-lg bg-primary p-2 text-white dark:bg-secondary dark:text-primary">
                   #{index + 1}
                 </div>
@@ -64,8 +64,8 @@ const PokemonCarousel = () => {
           </CarouselItem>
         ))}
       </CarouselContent>
-      <CarouselPrevious className="default-transition border border-primary bg-secondary text-primary hover:bg-secondary-dark hover:text-primary active:scale-95" />
-      <CarouselNext className="default-transition border border-primary bg-secondary text-primary hover:bg-secondary-dark hover:text-primary active:scale-95" />
+      <CarouselPrevious className="btn-secondary" />
+      <CarouselNext className="btn-secondary" />
     </Carousel>
   );
 };
